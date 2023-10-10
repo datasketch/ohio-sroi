@@ -187,6 +187,21 @@ const variables = [
         'id': 'var37',
         'description': 'For every $1 spent in a local store, $0.58 will be re-invested in the local community',
         'value': 0.58
+    },
+    {
+        'id': 'var38',
+        'description': 'Total Annual Operating Costs ',
+        'value': 695168
+    },
+    {
+        'id': 'var39',
+        'description': 'Total value of donations of materials',
+        'value': 10000
+    },
+    {
+        'id': 'var40',
+        'description': 'Arist support person time spent finding transportation',
+        'value': 2424
     }
 ]
 
@@ -641,6 +656,7 @@ export default function Interactive() {
     const isGeneric = true
     const [outputs, setOutputs] = useState(variables)
     const [tables, setTables] = useState(tablesReal)
+    const [socialValue, setSocialValue] = useState(5.32)
 
     const updateFieldChanged = index => e => {
         let newArr = [...outputs]
@@ -652,6 +668,7 @@ export default function Interactive() {
 
     const updateTable = () => {
         let newTable = [...tables]
+        let social = 0
         for (let t of newTable) {
             let total = 0
             for (let r of t.rows) {
@@ -686,7 +703,10 @@ export default function Interactive() {
             const listaTotales = t.rows.map(ele => ele.value)
             t.totalValue = total
             t.formula = t.f_formula(listaTotales, t.totalValue)
+            social = social + total
         }
+        social = social / (outputs[37].value + outputs[38].value)
+        setSocialValue(social)
         setTables(tables)
     }
 
@@ -695,7 +715,7 @@ export default function Interactive() {
             <div className='u-container'>
                 <div className='rounded-2xl overflow-hidden mb-20'>
                     <div className='flex'>
-                        <div>
+                        <div className='m-5'>
                             <h2 className="text-2xl text-center">
                                 For every
                                 <span className="font-semibold" style={{ color }}> $1</span>
@@ -707,7 +727,7 @@ export default function Interactive() {
                             >
                                 <p>A social value</p>
                                 <p className="text-3xl font-semibold mt-1" >
-                                    $ 5.32
+                                    $ {socialValue.toFixed(2)}
                                 </p>
                                 <div className="bg-silver h-[0.5px] mt-5"></div>
                                 <p className="text-gray-2 text-center mt-3 text-sm">
@@ -737,7 +757,7 @@ export default function Interactive() {
                                 </div>
                             </div>
                             {
-                                outputs.slice(0, 3).map((item, i) => (
+                                outputs.slice(37, 40).map((item, i) => (
                                     <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
                                         <div className="col-span-8">
                                             <h4 className='text-black'>
@@ -745,7 +765,7 @@ export default function Interactive() {
                                             </h4>
                                         </div>
                                         <div className="col-span-4 pl-8">
-                                            <input type="text" value={item.value} onChange={updateFieldChanged(i)} className="text-right w-14 " />
+                                            <input type="text" value={item.value} onChange={updateFieldChanged(i + 37)} className="text-right w-14 " />
                                         </div>
                                     </div>
                                 ))

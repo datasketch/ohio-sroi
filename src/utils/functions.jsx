@@ -83,7 +83,7 @@ export function environmental(a, b, c) {
     values.push(1.54)
     values.push(151)
     values.push(values[6] * values[7] * values[8])
-    total = values[2] + values[5] + values[9]
+    let total = values[2] + values[5] + values[9]
 
     return {
         out,
