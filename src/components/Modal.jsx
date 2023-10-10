@@ -17,7 +17,7 @@ export default function Modal({ color, amount, title, description }) {
                             <h3>
                                 {title}
                             </h3>
-                            <p className='mt-2 font-semibold text-4xl lg:text-5xl' style={{ color }}>
+                            <p className='mt-2 font-semibold text-2xl lg:text-3xl' style={{ color }}>
                                 ${amount}
                             </p>
                         </div>

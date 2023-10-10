@@ -69,8 +69,7 @@ export function environmental(a, b, c) {
         "Total Tons of reused/upcycled materials (pounds to tons converstion)",
         "metric tons CO2 equivalent per ton of food waste (O'Brien, 2016, Table 6)",
         "Social Cost of Carbon",
-        "Total carbon cost avoided of reused materials",
-        "Total environmental savings - emobdied energy and social cost of carbon averted"
+        "Total carbon cost avoided of reused materials"
     ]
     const values = []
 
@@ -84,11 +83,12 @@ export function environmental(a, b, c) {
     values.push(1.54)
     values.push(151)
     values.push(values[6] * values[7] * values[8])
-    values.push(values[2] + values[5] + values[9])
+    total = values[2] + values[5] + values[9]
 
     return {
         out,
-        values
+        values, 
+        total
     }
 }
 

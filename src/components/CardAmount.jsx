@@ -13,7 +13,7 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
                 className="mt-9 bg-robin-egg-blue/5 py-8 px-10 rounded-lg text-center"
             >
                 <p>{cardAmount.title}</p>
-                <p className="text-5xl font-semibold mt-1" style={{ color }}>
+                <p className="text-3xl font-semibold mt-1" style={{ color }}>
                     $ {cardAmount.amount}
                 </p>
                 <div className="bg-silver h-[0.5px] mt-5"></div>

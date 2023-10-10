@@ -2,11 +2,13 @@ import classNames from 'classnames';
 import TableAccordion from './TableAccordion';
 import { useState } from 'react';
 import { valueFormat } from '../utils/functions'
+import { Tooltip } from 'react-tooltip'
 
 export default function Table({ color, data, isLarge }) {
     const [isOpen, setIsOpen] = useState(false)
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows
+    const anchor = `.${data.tooltip}`
     if (isLarge) {
         return (
             <div className='rounded-2xl overflow-hidden'>
@@ -18,7 +20,7 @@ export default function Table({ color, data, isLarge }) {
                         <div className='flex items-center gap-x-2'>
                             <h3 className={classNames('text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}</h3>
                             {hasRow && (
-                                <button>
+                                <button className={data.tooltip}>
                                     {!isGeneric && (<img src="/images/icons/information-icon.svg" alt="information icon" />)}
                                     {isGeneric && (<img src="/images/icons/information-generic-icon.svg" alt="information icon" />)}
                                 </button>
@@ -31,7 +33,7 @@ export default function Table({ color, data, isLarge }) {
                                         Total Value
                                     </p>
                                     <div className={classNames('bg-white rounded py-0.5 px-5', { 'border': isGeneric })} style={{ borderColor: color }}>
-                                        <p className='text-xl'><span className='text-silver-2'>$</span>{valueFormat(data.totalValue)}</p>
+                                        <p className='text-xl'><span className='text-black'>$</span>{valueFormat(data.totalValue)}</p>
                                     </div>
                                 </div>
                             )
@@ -44,12 +46,12 @@ export default function Table({ color, data, isLarge }) {
                         <div className='grid grid-cols-12 py-1 px-5 bg-white'>
                             <div className="col-span-3">
                                 <h4 className='text-gray-2 text-sm'>
-                                    Stakeholders
+                                    Who is impacted?
                                 </h4>
                             </div>
                             <div className="col-span-7">
                                 <h4 className='text-gray-2 text-sm'>
-                                    Outcomes
+                                    What changed?
                                 </h4>
                             </div>
                             <div className="col-span-2 pl-12">
@@ -59,18 +61,6 @@ export default function Table({ color, data, isLarge }) {
                             </div>
                         </div>
                         {(data.type === 'economic_impact' || data.type === 'social_impact' || data.type === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} />}
-                        <div className='flex items-center justify-between py-4 px-5 bg-white'>
-                            <div>
-                                <p className={classNames('text-gray-2 text-sm duration-300', { 'invisible opacity-0': isOpen, 'visible opacity-100': !isOpen })}>
-                                    Formula
-                                </p>
-                            </div>
-                            <div className='pr-[4vw]'>
-                                <p className={classNames('text-gray-2 text-sm duration-300', { 'invisible opacity-0': isOpen, 'visible opacity-100': !isOpen })}>
-                                    {data.formula}
-                                </p>
-                            </div>
-                        </div>
                     </>
                 )}
                 {
@@ -82,7 +72,11 @@ export default function Table({ color, data, isLarge }) {
                         </div>
                     )
                 }
+                <Tooltip anchorSelect={anchor} place="right" style={{width: "250px"}}>
+                    {data.tooltipText}
+                </Tooltip>
             </div>
+
         )
     } else {
         return (

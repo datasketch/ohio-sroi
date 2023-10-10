@@ -46,7 +46,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
                             <div className='AccordionContentChildren' style={{ borderColor: color }}>
                                 <div className="col-span-3">
                                     <p className='text-black text-sm'>
-                                        {item.rows?.stakeholders}
+                                        How do we calculate this?
                                     </p>
                                 </div>
                                 <div className="col-span-7">
