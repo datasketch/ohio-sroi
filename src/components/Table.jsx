@@ -16,9 +16,9 @@ export default function Table({ color, data, isLarge }) {
                 <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
                     backgroundColor: isGeneric ? '#fff' : color
                 }}>
-                    <div className='flex items-center justify-between'>
+                    <div className='flex flex-col lg:flex-col items-center justify-between'>
                         <div className='flex items-center gap-x-2'>
-                            <h3 className={classNames('text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}</h3>
+                            <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}</h3>
                             {hasRow && (
                                 <button className={data.tooltip}>
                                     {!isGeneric && (<img src="/images/icons/information-icon.svg" alt="information icon" />)}
@@ -28,12 +28,12 @@ export default function Table({ color, data, isLarge }) {
                         </div>
                         {
                             hasRow && (
-                                <div className='flex items-center gap-x-4'>
-                                    <p className={classNames('text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
+                                <div className='flex items-center justify-between gap-x-4'>
+                                    <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
                                         Total Value
                                     </p>
                                     <div className={classNames('bg-white rounded py-0.5 px-5', { 'border': isGeneric })} style={{ borderColor: color }}>
-                                        <p className='text-xl'><span className='text-black'>$</span>{valueFormat(data.totalValue)}</p>
+                                        <p className='text-base lg:text-xl'><span className='text-black'>$</span>{valueFormat(data.totalValue)}</p>
                                     </div>
                                 </div>
                             )
@@ -45,17 +45,17 @@ export default function Table({ color, data, isLarge }) {
                     <>
                         <div className='grid grid-cols-12 py-1 px-5 bg-white'>
                             <div className="col-span-3">
-                                <h4 className='text-gray-2 text-sm'>
+                                <h4 className='text-gray-2 text-xs lg:text-sm'>
                                     Who is impacted?
                                 </h4>
                             </div>
                             <div className="col-span-7">
-                                <h4 className='text-gray-2 text-sm'>
+                                <h4 className='text-gray-2 text-xs lg:text-sm'>
                                     What changed?
                                 </h4>
                             </div>
                             <div className="col-span-2 pl-12">
-                                <h4 className='text-gray-2 text-sm'>
+                                <h4 className='text-gray-2 text-xs lg:text-sm'>
                                     Value
                                 </h4>
                             </div>

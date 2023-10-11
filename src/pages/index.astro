@@ -8,37 +8,52 @@ import data from "../data/index.json";
 <BaseLayout title="Home Page" description="Esta es la página inicial">
   <div>
     <img
-      class="w-full h-full object-cover object-center"
+      class="w-full h-36 lg:h-full object-cover object-center"
       src="/images/banner.jpg"
       alt="banner"
     />
   </div>
   <!--  -->
-  <div class="relative pb-24">
-    <div class="-mt-32 u-container bg-white">
+  <div class="relative pb-16 lg:pb-24">
+    <div class="-mt-20 lg:-mt-32 u-container bg-white">
       <div class="py-12">
         <div class="mx-auto max-w-xl">
-          <div class="flex items-center justify-between">
-            <div class="flex-shrink-0">
-              <img src={data.logo} alt={data.title} />
+          <div class="block lg:hidden">
+            <div class="flex flex-col items-center justify-between">
+              <div class="text-center">
+                <h2 class="text-base lg:text-xl">{data.subtitle}</h2>
+                <h1 class="font-monserrat font-semibold text-2xl lg:text-3xl pt-3">
+                  {data.title}
+                </h1>
+              </div>
+              <div class="flex-shrink-0 mt-10">
+                <img src={data.logo} alt={data.title} />
+              </div>
             </div>
-            <div class="text-center">
-              <h2 class="text-xl">{data.subtitle}</h2>
-              <h1 class="font-monserrat font-semibold text-3xl pt-3">
-                {data.title}
-              </h1>
+          </div>
+          <div class="hidden lg:block">
+            <div class="flex items-center justify-between">
+              <div class="flex-shrink-0">
+                <img src={data.logo} alt={data.title} />
+              </div>
+              <div class="text-center">
+                <h2 class="text-base lg:text-xl">{data.subtitle}</h2>
+                <h1 class="font-monserrat font-semibold text-2xl lg:text-3xl pt-3">
+                  {data.title}
+                </h1>
+              </div>
             </div>
           </div>
         </div>
-        <div class="mx-auto max-w-[720px] text-center mt-10">
-          <p>
+        <div class="mx-auto max-w-[720px] text-center mt-10 px-4">
+          <p class="text-sm lg:text-base">
             {data.description}
           </p>
         </div>
-        <div class="bg-gray h-[1px] max-w-[936px] mx-auto mt-12"></div>
-        <div class="mt-20">
-          <div class="flex gap-x-28 items-center">
-            <div class="w-1/2">
+        <div class="bg-gray h-[1px] max-w-[936px] mx-auto mt-8 lg:mt-12 px-9"></div>
+        <div class="mt-10 lg:mt-20">
+          <div class="flex flex-col lg:flex-row lg:gap-x-28 items-center">
+            <div class="px-5 lg:w-1/2">
               <CardAmount
                 title={data.statistics_section.title}
                 amount={data.statistics_section.amount}
@@ -47,7 +62,7 @@ import data from "../data/index.json";
                 client:load
               />
             </div>
-            <div class="w-1/2">
+            <div class="mt-14 lg:w-1/2">
               <img
                 src={data.statistics_section.src_graph}
                 alt={data.statistics_section.title}

@@ -8,7 +8,7 @@
 @layer components {
   /* TABS */
   .TabsTrigger {
-    @apply relative py-3 px-6 rounded-tr-lg rounded-tl-lg;
+    @apply text-sm lg:text-base relative py-3 px-6 rounded-tr-lg rounded-tl-lg;
   }
 
   .TabsTrigger:not([data-state="active"]) {

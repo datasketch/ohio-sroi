@@ -20,12 +20,12 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
                     <Accordion.Item key={i} className='AccordionItem' value={`item-${i}`}>
                         <Accordion.Header className='AccordionHeader' style={{ color: rgb, backgroundColor: rgba, borderColor: color }}>
                             <div className="col-span-3">
-                                <h4 className='text-black'>
+                                <h4 className='text-sm truncate lg:text-base text-black'>
                                     {item.stakeholders}
                                 </h4>
                             </div>
                             <div className="col-span-7">
-                                <h4 className='text-black'>
+                                <h4 className='text-sm truncate lg:text-base text-black'>
                                     {item.outcomes}
                                 </h4>
                             </div>
