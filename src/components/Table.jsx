@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import TableAccordion from './TableAccordion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { valueFormat } from '../utils/functions'
 import { Tooltip } from 'react-tooltip'
 
@@ -9,9 +9,32 @@ export default function Table({ color, data, isLarge }) {
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows
     const anchor = `.${data.tooltip}`
+    const tableRef = useRef()
+    const [hasLimit, setHasLimit] = useState(false)
+
+    useEffect(() => {
+        const element = tableRef.current
+        const { offsetWidth, scrollWidth } = element
+        const limitWidth = scrollWidth - offsetWidth
+
+        const handleScroll = (e) => {
+            const { scrollLeft } = e.target
+
+            if ((limitWidth - 5) > scrollLeft) {
+                setHasLimit(false)
+            } else {
+                setHasLimit(true)
+            }
+        }
+
+        element.addEventListener('scroll', handleScroll)
+
+        return () => element.removeEventListener('scroll', handleScroll)
+    }, [tableRef.current])
+
     if (isLarge) {
         return (
-            <div className='rounded-2xl overflow-hidden shadow'>
+            <div className='rounded-2xl overflow-hidden shadow relative'>
                 {/* HEADING */}
                 <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
                     backgroundColor: isGeneric ? '#fff' : color
@@ -43,7 +66,7 @@ export default function Table({ color, data, isLarge }) {
                 {/* ROW SUB HEADING */}
                 {hasRow && (
                     <>
-                        <div className='overflow-x-scroll lg:overflow-hidden'>
+                        <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden'>
                             <div className='w-[1000px] lg:w-auto'>
                                 <div className='grid grid-cols-12 py-1 px-5 bg-white'>
                                     <div className="col-span-3">
@@ -67,7 +90,6 @@ export default function Table({ color, data, isLarge }) {
                             <Tooltip anchorSelect=".tooltip-rev" place="right" style={{ width: "250px" }}>
                                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.
                             </Tooltip>
-
                         </div>
                     </>
                 )}
@@ -83,6 +105,12 @@ export default function Table({ color, data, isLarge }) {
                 <Tooltip anchorSelect={anchor} place="right" style={{ width: "250px" }}>
                     {data.tooltipText}
                 </Tooltip>
+                <div className={classNames('absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-right-full': hasLimit, 'right-4': !hasLimit})}>
+                    {'>'}
+                </div>
+                <div className={classNames('absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-left-full': !hasLimit, 'left-4': hasLimit})}>
+                    {'<'}
+                </div>
             </div>
 
         )
