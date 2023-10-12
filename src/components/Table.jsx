@@ -11,7 +11,7 @@ export default function Table({ color, data, isLarge }) {
     const anchor = `.${data.tooltip}`
     if (isLarge) {
         return (
-            <div className='rounded-2xl overflow-hidden'>
+            <div className='rounded-2xl overflow-hidden shadow'>
                 {/* HEADING */}
                 <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
                     backgroundColor: isGeneric ? '#fff' : color
@@ -44,7 +44,7 @@ export default function Table({ color, data, isLarge }) {
                 {hasRow && (
                     <>
                         <div className='overflow-x-scroll lg:overflow-hidden'>
-                            <div className='w-[1088px] lg:w-auto'>
+                            <div className='w-[1000px] lg:w-auto'>
                                 <div className='grid grid-cols-12 py-1 px-5 bg-white'>
                                     <div className="col-span-3">
                                         <h4 className='text-gray-2 text-xs lg:text-sm'>
