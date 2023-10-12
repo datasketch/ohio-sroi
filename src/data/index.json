@@ -394,6 +394,42 @@
                                 ]
                             },
                             "formula": "430.20 + 10244.88 + 14.87 = 10689.95"
+                        },
+                        {
+                            "stakeholders": "Suppliers/Vendors",
+                            "outcomes": "Higher property values due to brownfield sites remediated and building revitalization",
+                            "value": 37188733.53,
+                            "rows": {
+                                "stakeholders": "Proxy 19",
+                                "outcomes": [
+                                    "Brownfields Remediated",
+                                    "Number of Households",
+                                    "Square Miles",
+                                    "Households per sq mi",
+                                    "Square miles of impact",
+                                    "Total houses of impact",
+                                    "Average Huntington Home value",
+                                    "Increase in home value (low)",
+                                    "Increase in home value (high)",
+                                    "Total Increase in home values per brownfield site (low)",
+                                    "Total Increase in home values per brownfield site (high)"
+
+                                ],
+                                "value": [
+                                    2,
+                                    19757,
+                                    16.22,
+                                    1218.064,
+                                    5.22,
+                                    6364.72,
+                                    116859,
+                                    5842.95,
+                                    17762.5,
+                                    37188733.53,
+                                    113053749.92
+                                ]
+                            },
+                            "formula": ""
                         }
                     ],
                     "formula": "430.20 + 10244.88 + 14.87 = 10689.95"
