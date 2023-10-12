@@ -57,13 +57,16 @@ export default function Table({ color, data, isLarge }) {
                                         </h4>
                                     </div>
                                     <div className="col-span-2 pl-12">
-                                        <h4 className='text-gray-2 text-xs lg:text-sm'>
-                                            Value
+                                        <h4 className='text-gray-2 text-xs lg:text-sm flex gap-1'>
+                                            Value <img className='tooltip-rev' src="/images/icons/information-generic-icon.svg" alt="information icon" />
                                         </h4>
                                     </div>
                                 </div>
                                 {(data.type === 'economic_impact' || data.type === 'social_impact' || data.type === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} />}
                             </div>
+                            <Tooltip anchorSelect=".tooltip-rev" place="right" style={{ width: "250px" }}>
+                                The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.
+                            </Tooltip>
 
                         </div>
                     </>

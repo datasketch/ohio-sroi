@@ -28,7 +28,6 @@ export default function TabSection({ color = '#00694E', tabs }) {
                                 item.type === 'table' && (
                                     <div className='pt-12 pb-9'>
                                         <div className='u-container'>
-                                            <div className='bg-[#00694E]/[.2] flex justify-center w-56 mx-auto rounded-md py-4 mb-12'><p className='text-sm lg:text-base'>A look at the details</p></div>
                                             <div className='space-y-12'>
                                                 {/* TABLES */}
                                                 {
