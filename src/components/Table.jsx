@@ -43,24 +43,29 @@ export default function Table({ color, data, isLarge }) {
                 {/* ROW SUB HEADING */}
                 {hasRow && (
                     <>
-                        <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                            <div className="col-span-3">
-                                <h4 className='text-gray-2 text-xs lg:text-sm'>
-                                    Who is impacted?
-                                </h4>
+                        <div className='overflow-x-scroll lg:overflow-hidden'>
+                            <div className='w-[1088px] lg:w-auto'>
+                                <div className='grid grid-cols-12 py-1 px-5 bg-white'>
+                                    <div className="col-span-3">
+                                        <h4 className='text-gray-2 text-xs lg:text-sm'>
+                                            Who is impacted?
+                                        </h4>
+                                    </div>
+                                    <div className="col-span-7">
+                                        <h4 className='text-gray-2 text-xs lg:text-sm'>
+                                            What changed?
+                                        </h4>
+                                    </div>
+                                    <div className="col-span-2 pl-12">
+                                        <h4 className='text-gray-2 text-xs lg:text-sm'>
+                                            Value
+                                        </h4>
+                                    </div>
+                                </div>
+                                {(data.type === 'economic_impact' || data.type === 'social_impact' || data.type === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} />}
                             </div>
-                            <div className="col-span-7">
-                                <h4 className='text-gray-2 text-xs lg:text-sm'>
-                                    What changed?
-                                </h4>
-                            </div>
-                            <div className="col-span-2 pl-12">
-                                <h4 className='text-gray-2 text-xs lg:text-sm'>
-                                    Value
-                                </h4>
-                            </div>
+
                         </div>
-                        {(data.type === 'economic_impact' || data.type === 'social_impact' || data.type === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} />}
                     </>
                 )}
                 {
@@ -72,7 +77,7 @@ export default function Table({ color, data, isLarge }) {
                         </div>
                     )
                 }
-                <Tooltip anchorSelect={anchor} place="right" style={{width: "250px"}}>
+                <Tooltip anchorSelect={anchor} place="right" style={{ width: "250px" }}>
                     {data.tooltipText}
                 </Tooltip>
             </div>
