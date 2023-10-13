@@ -10,56 +10,270 @@
         "title": "Invested in Passion Works",
         "invested": 1,
         "label": "A social value",
-        "return": 5.32,
+        "return": 5.85,
         "description": "Of social, economic, and environmental value is created.",
-        "information": "This dollar amount reflects the ripple eects caused by experiential learning and service learning. After participating in experiential or service learning, students experience short term outcomes such as increased academic success and longer term impacts such as increased likelihood of being hired and earning higher wages. Communities benefit from increased sta capacity and increased resources. Impacts to the university from experiential learning or service learning include cultivating a reputation for student engagement that impacts potential new enrollment."
+        "information": "This dollar amount reflects the ripple eects caused by experiential learning and service learning. After participating in experiential or service learning, students experience short term outcomes such as increased academic success and longer term impacts such as increased likelihood of being hired and earning higher wages. Communities benefit from increased sta capacity and increased resources. Impacts to the university from experiential learning or service learning include cultivating a reputation for student engagement that impacts potential new enrollment.",
+        "src_graph": "/images/image-graph.png",
+        "tooltip": "Social value includes both financial and non-financial impacts of a program, activity, or organization. For the purposes of this calculator, social value is understood to encompass social, environmental, and economic impacts."
     },
-    "references": {
-        "label": "References",
-        "list": [
-            {
-                "title": "Azagba, S., Sharaf, M.F. Psychosocial working conditions and the utilization of health care services. BMC Public Health 11, 642 (2011).",
-                "href": "https://doi.org/10.1186/1471-2458-11-642"
-            },
-            {
-                "title": "Hendricks, A., Myran, S., Katsioloudis, P. J., Owings, W., & Kaplan, L. (2021). Career and Technical Education Industry Credentials and Its Potential Impact on a State’s Economy. Journal of Applied Business & Economics, 23(8), 1–10.",
-                "href": ""
-            },
-            {
-                "title": "JAE UK CHUN, JOHN J. SOSIK, & NAM YI YUN. (2012). A longitudinal study of mentor and protégé outcomes in formal mentoring relationships. Journal of Organizational Behavior, 33(8), 1071–1094.",
-                "href": "https://doi-org.proxy.library.ohio.edu/10.1002/job.1781"
-            },
-            {
-                "title": "Phillips, P. P., Phillips, J. J., & Ray, R. (2020). Proving the value of soft skills: Measuring impact and calculating ROI. ATD Press.",
-                "href": ""
-            }
-        ]
-    },
+    "tabs": [
+        {
+            "label": "Dashboard",
+            "type": "table",
+            "tables": [
+                {
+                    "id": "economic_impact",
+                    "title": "What economic impact is created?",
+                    "tooltip": "Economic impact includes changes to individual or collective financial assets including profit, savings, currency circulation, and built capital.",
+                    "totalValue": 325328,
+                    "rows": [
+                        {
+                            "id": "proxy_1",
+                            "stakeholders": "Core Artists",
+                            "description": "Ability to make a wage in a creative capacity",
+                            "value": 57267,
+                            "variables": "artists_employed,hours_work_artist,wage_earned_artist",
+                            "formula": "artists_employed * hours_work_artist * wage_earned_artist"
+                        },
+                        {
+                            "id": "proxy_2",
+                            "stakeholders": "Staff Artists",
+                            "description": "Increased ability to be employed in a creative capacity",
+                            "value": 221811,
+                            "variables": "fulltime_staff,wage_fulltime_staff,part_time_staff,wage_part_time_staff,cottage_artists,wage_cottage_artists",
+                            "formula": "fulltime_staff * wage_fulltime_staff + part_time_staff * wage_part_time_staff + cottage_artists * wage_cottage_artists"
+                        },
+                        {
+                            "id": "proxy_3",
+                            "stakeholders": "OU Students",
+                            "description": "Increased experiential learning experience",
+                            "value": 32500,
+                            "variables": "OU_interns_annual,starting_salary_increase",
+                            "formula": "OU_interns_annual * starting_salary_increase"
+                        },
+                        {
+                            "id": "proxy_4",
+                            "stakeholders": "Customers",
+                            "description": "Ability to purchase goods to support a mission (consious consumption)",
+                            "value": 13750,
+                            "variables": "revenue_sales,consumers_willing_pay",
+                            "formula": "revenue_sales * consumers_willing_pay"
+                        },
+                        {
+                            "id": "proxy_5",
+                            "stakeholders": "Similar Organizations",
+                            "description": "Increased Sustainability",
+                            "value": "",
+                            "variables": "",
+                            "formula": ""
+                        }
+                    ],
+                    "formula": "proxy_1 + proxy_2 + proxy_3 + proxy_4 + proxy_5"
+                },
+                {
+                    "id": "social_impact",
+                    "title": "What social impact is created?",
+                    "tooltip": "Social impact includes changes to individuals, groups of people, and organizations in areas such as health, well-being, safety, relationship, and belonging.",
+                    "totalValue": 3791157,
+                    "rows": [
+                        {
+                          "id": "proxy_6",
+                          "type": "social_impact",
+                          "stakeholders": "Core Artists",
+                          "description": "Artists build a sense of identity",
+                          "value": 45000,
+                          "variables": "artists_employed,valuation_sense_identity",
+                          "formula": "artists_employed * valuation_sense_identity"
+                        },
+                        {
+                          "id": "proxy_7",
+                          "type": "social_impact",
+                          "stakeholders": "Core Artists",
+                          "description": "Increased maturity and self-reliance",
+                          "value": 75000,
+                          "variables": "artists_employed,valuation_independence",
+                          "formula": "artists_employed * valuation_independence"
+                        },
+                        {
+                          "id": "proxy_8",
+                          "type": "social_impact",
+                          "stakeholders": "Core Artists",
+                          "description": "Elevated well-being",
+                          "value": 60000,
+                          "variables": "artists_employed,health_benefits_connection",
+                          "formula": "artists_employed * health_benefits_connection"
+                        },
+                        {
+                          "id": "proxy_9",
+                          "type": "social_impact",
+                          "stakeholders": "Core Artists",
+                          "description": "Increased reciprocal learning - reciprocal mentoring (skill building/proficiency)",
+                          "value": 85500,
+                          "variables": "artists_employed,fulltime_staff,part_time_staff,time_learn_from_peers,FMV_teacher",
+                          "formula": "(artists_employed + fulltime_staff + part_time_staff) * time_learn_from_peers * FMV_teacher"
+                        },
+                        {
+                          "id": "proxy_10",
+                          "type": "social_impact",
+                          "stakeholders": "Staff Artists",
+                          "description": "Increased sense of purpose",
+                          "value": 20000,
+                          "variables": "fulltime_staff,part_time_staff,health_benefits_purpose",
+                          "formula": "(fulltime_staff + part_time_staff ) * health_benefits_purpose"
+                        },
+                        {
+                          "id": "proxy_11",
+                          "type": "social_impact",
+                          "stakeholders": "Artist Support People",
+                          "description": "Increased help with caretaking",
+                          "value": 79198.56,
+                          "variables": "artists_employed,hours_work_artist,cost_respite_care_ohio,discount_counterfactual",
+                          "formula": "(artists_employed * hours_work_artist * cost_respite_care_ohio) - (artists_employed * hours_work_artist * cost_respite_care_ohio * discount_counterfactual)"
+                        },
+                        {
+                          "id": "proxy_12",
+                          "type": "social_impact",
+                          "stakeholders": "Artist Support People",
+                          "description": "Increased sense of community and community inclusion",
+                          "value": 96000,
+                          "variables": "artists_employed,valuation_community_connection",
+                          "formula": "2 * artists_employed * valuation_community_connection"
+                        },
+                        {
+                          "id": "proxy_13",
+                          "type": "social_impact",
+                          "stakeholders": "Artist Support People",
+                          "description": "Stress reduction",
+                          "value": 156000,
+                          "variables": "artists_employed,health_caregiving_safe",
+                          "formula": "2 * artists_employed * health_caregiving_safe"
+                        },
+                        {
+                          "id": "proxy_14",
+                          "type": "social_impact",
+                          "stakeholders": "Community Members",
+                          "description": "Improved community pride and identity",
+                          "value": 2413000,
+                          "variables": "population_athens,value_placemaking",
+                          "formula": "population_athens * value_placemaking"
+                        },
+                        {
+                          "id": "proxy_15",
+                          "type": "social_impact",
+                          "stakeholders": "Community Members",
+                          "description": "A place where people network and connect",
+                          "value": 224959.04,
+                          "variables": "volunteer_hours_PW,volunteer_hour",
+                          "formula": "volunteer_hours_PW * volunteer_hour"
+                        },
+                        {
+                          "id": "proxy_16",
+                          "type": "social_impact",
+                          "stakeholders": "Ohio University Students",
+                          "description": "Development of cultural competence",
+                          "value": 377000,
+                          "variables": "OU_class_observers,micro_credential_cultural",
+                          "formula": "OU_class_observers * micro_credential_cultural"
+                        },
+                        {
+                          "id": "proxy_17",
+                          "type": "social_impact",
+                          "stakeholders": "Government",
+                          "description": "Increased local money flows",
+                          "value": 159500,
+                          "variables": "revenue_sales,reinvested_community",
+                          "formula": "revenue_sales * reinvested_community"
+                        }
+                      ],
+                    "formula": "proxy_6 + proxy_7 + proxy_8 + proxy_9 + proxy_10 + proxy_11 + proxy_12 + proxy_13 + proxy_14 + proxy_15 + proxy_16 + proxy_17"
+                },
+                {
+                    "id": "environmental_impact",
+                    "title": "What environmental impact is created?",
+                    "tooltip": "Environmental impact includes changes to biophysical systems and natural capital including energy use, pollution, and preservation of ecosystems.",
+                    "totalValue": 10689.95,
+                    "rows": [
+                        {
+                            "id": "proxy_18",
+                            "stakeholders": "Vendors",
+                            "description": "Total embodied carbon cost savings of aluminum reused",
+                            "value": 10244.88,
+                            "variables": "LBS_aluminum,value_aluminum",
+                            "formula": "0.45 * LBS_aluminum * value_aluminum / 1000"
+                        },
+                        {
+                            "id": "proxy_19",
+                            "stakeholders": "Vendors",
+                            "description": "Total embodied carbon cost savings of processed wood reused",
+                            "value": 14.8716,
+                            "variables": "LBS_wood,value_wood",
+                            "formula": "0.45 * LBS_wood * value_wood / 1000"
+                        },
+                        {
+                            "id": "proxy_20",
+                            "stakeholders": "Vendors",
+                            "description": "Total carbon cost avoided of reused materials",
+                            "value": 430.199,
+                            "variables": "LBS_aluminum,LBS_wood,LBS_fabric,co2_by_waste,social_cost_carbon",
+                            "formula": "(LBS_aluminum + LBS_wood + LBS_fabric) * co2_by_waste * social_cost_carbon / 2000"
+                        }
+                    ],
+                    "formula": "proxy_18 + proxy_19 + proxy_20 "
+                }
+            ]
+        },
+        {
+            "label": "References",
+            "type": "references",
+            "list": [
+                {
+                    "title": "Azagba, S., Sharaf, M.F. Psychosocial working conditions and the utilization of health care services. BMC Public Health 11, 642 (2011).",
+                    "href": "https://doi.org/10.1186/1471-2458-11-642"
+                },
+                {
+                    "title": "Hendricks, A., Myran, S., Katsioloudis, P. J., Owings, W., & Kaplan, L. (2021). Career and Technical Education Industry Credentials and Its Potential Impact on a State’s Economy. Journal of Applied Business & Economics, 23(8), 1–10.",
+                    "href": ""
+                },
+                {
+                    "title": "JAE UK CHUN, JOHN J. SOSIK, & NAM YI YUN. (2012). A longitudinal study of mentor and protégé outcomes in formal mentoring relationships. Journal of Organizational Behavior, 33(8), 1071–1094.",
+                    "href": "https://doi-org.proxy.library.ohio.edu/10.1002/job.1781"
+                },
+                {
+                    "title": "Phillips, P. P., Phillips, J. J., & Ray, R. (2020). Proving the value of soft skills: Measuring impact and calculating ROI. ATD Press.",
+                    "href": ""
+                }
+            ]
+        },
+        {
+            "label": "Program Details",
+            "type": "interative"
+        }
+    ],
     "proxy_inputs": [
         {
             "id": "anual_operating_cost",
-            "value": "$695,168.00",
+            "value": 695168,
             "type": "cost",
             "unit": "currency",
             "description": "Total Annual Operating Costs"
         },
         {
             "id": "value_materials",
-            "value": "$10,000.00",
+            "value": 10000,
             "type": "cost",
             "unit": "currency",
             "description": "Total value of donations of materials"
         },
         {
             "id": "time_find_transportation",
-            "value": "$2,424.00",
+            "value": 2424,
             "type": "cost",
             "unit": "currency",
             "description": "Arist support person time spent finding transportation"
         },
         {
             "id": "artists_employed",
-            "value": 24,
+            "value": 30,
             "type": "user_input",
             "unit": "",
             "description": "Number of artists employed"
@@ -94,7 +308,7 @@
         },
         {
             "id": "wage_fulltime_staff",
-            "value": "$32,409.00",
+            "value": 32409,
             "type": "user_input",
             "unit": "currency",
             "description": "Average wage of full-time staff artists (non administrative roles)"
@@ -108,7 +322,7 @@
         },
         {
             "id": "wage_part_time_staff",
-            "value": "$11,172.00",
+            "value": 11172,
             "type": "user_input",
             "unit": "currency",
             "description": "Average wage of part-time staff artists"
@@ -122,7 +336,7 @@
         },
         {
             "id": "wage_cottage_artists",
-            "value": "$1,671.00",
+            "value": 1671,
             "type": "user_input",
             "unit": "currency",
             "description": "Average wage of cottage artists"
@@ -164,20 +378,20 @@
         },
         {
             "id": "revenue_sales",
-            "value": "$275,000.00",
+            "value": 275000,
             "type": "user_input",
             "unit": "currency",
             "description": "Total revenue from sales"
         },
         {
             "id": "cost_PW",
-            "value": "$91.50",
+            "value": 91.5,
             "type": "user_input",
             "unit": "currency",
             "description": "Average cost of PW flower (33-150)"
         },
         {
-            "id": "LBS_alouminum",
+            "id": "LBS_aluminum",
             "value": 1600,
             "type": "user_input",
             "unit": "",
@@ -198,16 +412,16 @@
             "description": "LBS of fabric"
         }
     ],
-    "proxy_constants": [
+    "proxy_values": [
         {
             "id": "starting_salary_increase",
-            "value": "$6,500.00",
+            "value": 6500,
             "unit": "currency",
             "description": "Increase in average reported FTE and PTE starting salary for graduates with service learning experience (Matthews et al., 2015)"
         },
         {
             "id": "consumers_willing_pay",
-            "value": "5%",
+            "value": 0.05,
             "unit": "percentage",
             "description": "Consumers are willing to pay up to 5% more for environmentally friendly products (Holbrook, 2019)."
         },
@@ -231,7 +445,7 @@
         },
         {
             "id": "time_learn_from_peers",
-            "value": "15%",
+            "value": 0.15,
             "unit": "percentage",
             "description": "% time spent informally learning from peers"
         },
@@ -300,6 +514,30 @@
             "value": 0.58,
             "unit": "",
             "description": "For every $1 spent in a local store, $0.58 will be re-invested in the local community"
+        },
+        {
+            "id": "value_aluminum",
+            "value": 14229,
+            "unit": "currency",
+            "description": "Dollar Value of EC per 1000 kg of aluminum framing ($) (Greenspec, 2023)"
+        },
+        {
+            "id": "value_wood",
+            "value": 36.72,
+            "unit": "currency",
+            "description": "Dollar Value of EC per 1000 kg of processed wood ($) (Greenspec, 2023)"
+        },
+        {
+            "id": "co2_by_waste",
+            "value": 1.54,
+            "unit": "",
+            "description": "metric tons CO2 equivalent per ton of food waste (O'Brien, 2016, Table 6)"
+        },
+        {
+            "id": "social_cost_carbon",
+            "value": 151,
+            "unit": "",
+            "description": "Social Cost of Carbon"
         }
     ]
 }

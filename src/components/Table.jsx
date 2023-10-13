@@ -8,7 +8,7 @@ export default function Table({ color, data, isLarge, count }) {
     const [isOpen, setIsOpen] = useState(false)
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows
-    const anchor = `.${data.tooltip}`
+    const anchor = `.tooltip-value${count}`
     const tableRef = useRef()
     const [hasLimit, setHasLimit] = useState(false)
 
@@ -43,7 +43,7 @@ export default function Table({ color, data, isLarge, count }) {
                         <div className='flex items-center gap-x-2'>
                             <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}</h3>
                             {hasRow && (
-                                <button className={data.tooltip}>
+                                <button className={`tooltip-value${count}`}>
                                     {!isGeneric && (<img src="/images/icons/information-icon.svg" alt="information icon" />)}
                                     {isGeneric && (<img src="/images/icons/information-generic-icon.svg" alt="information icon" />)}
                                 </button>
@@ -85,7 +85,7 @@ export default function Table({ color, data, isLarge, count }) {
                                         </h4>
                                     </div>
                                 </div>
-                                {(data.type === 'economic_impact' || data.type === 'social_impact' || data.type === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} />}
+                                {(data.id === 'economic_impact' || data.id === 'social_impact' || data.id === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} />}
                             </div>
                             <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px" }}>
                                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.
@@ -103,7 +103,7 @@ export default function Table({ color, data, isLarge, count }) {
                     )
                 }
                 <Tooltip anchorSelect={anchor} place="right" style={{ width: "250px" }}>
-                    {data.tooltipText}
+                    {data.tooltip}
                 </Tooltip>
                 <div className={classNames('lg:hidden absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-right-full': hasLimit, 'right-4': !hasLimit})}>
                     {'>'}

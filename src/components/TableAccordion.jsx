@@ -2,6 +2,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 import hexRgb from 'hex-rgb';
 import { valueFormat } from '../utils/functions'
+import data from "../data/format.json";
 
 export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
     const rgb = hexRgb(color, { format: 'array', alpha: 0.1 })
@@ -12,6 +13,23 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
         const isOpen = e.target.closest('.AccordionTrigger').getAttribute('data-state') !== 'open'
         setIsOpen(isOpen)
     }
+
+    
+    
+    const addingRows = () => {
+        const values = [...data.proxy_inputs, ...data.proxy_values]
+        rows = rows.map((item) => {
+            const vars = item.variables.split(",")
+            const vars2 = vars.map((variable) => {
+                const description = values.find(v => v.id === variable)
+                return description
+            })
+            item.rows = vars2
+            return item
+        })
+    }
+
+    addingRows()
 
     return (
         <Accordion.Root type="single" collapsible>
@@ -26,7 +44,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
                             </div>
                             <div className="col-span-7">
                                 <h4 className='text-sm lg:text-base text-black'>
-                                    {item.outcomes}
+                                    {item.description}
                                 </h4>
                             </div>
                             <div className="col-span-2 flex items-center gap-x-8">
@@ -51,10 +69,10 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
                                 </div>
                                 <div className="col-span-7">
                                     <div className='space-y-4'>
-                                        {item.rows?.outcomes.map((item, i) => {
+                                        {item.rows?.map((item, i) => {
                                             return (
                                                 <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
-                                                    {item}
+                                                    {item?.description}
                                                 </p>
                                             );
                                         })}
@@ -62,10 +80,10 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
                                 </div>
                                 <div className="col-span-2">
                                     <div className='space-y-4'>
-                                        {item.rows?.value.map((v, i) => {
+                                        {item.rows?.map((v, i) => {
                                             return (
                                                 <p key={`value-${i + 1}`} className='text-sm font-semibold -translate-x-20 text-right'>
-                                                    {valueFormat(v)}
+                                                    {valueFormat(v?.value)}
                                                 </p>
                                             );
                                         })}
