@@ -3,7 +3,7 @@ import { Tooltip } from 'react-tooltip'
 
 export default function CardAmount({ color = '#00694E', title, amount, cardAmount }) {
     return (
-        <div className="bg-robin-egg-blue/5">
+        <div className="bg-robin-egg-blue/5 py-8 px-10">
             <h2 className="text-2xl text-center">
                 For every
                 <span className="font-semibold" style={{ color }}> ${amount}</span>
@@ -11,11 +11,11 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
                 {title}
             </h2>
             <div
-                className="mt-9 py-8 px-10 rounded-lg text-center"
+                className="mt-9 rounded-lg text-center"
             >
-                <div className="flex justify-center gap-1">
+                <div className="flex justify-center gap-x-2">
                     <p>{cardAmount.title}</p>
-                    <button className="tooltip-rev">
+                    <button className="tooltip-rev2">
                         <img src="/images/icons/information-generic-icon.svg" alt="information icon" />
                     </button>
                 </div>
@@ -23,7 +23,7 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
                     $ {cardAmount.amount}
                 </p>
                 <div className="bg-silver h-[0.5px] mt-5"></div>
-                <p className="text-gray-2 text-center mt-3 text-2xl">
+                <p className="text-gray-2 text-center mt-3 text-lg lg:text-xl">
                     {cardAmount.formula}
                 </p>
                 <Modal
@@ -32,7 +32,7 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
                     title={cardAmount.title}
                     description={cardAmount.information}
                 />
-                <Tooltip anchorSelect=".tooltip-rev" place="right" style={{ width: "250px" }}>
+                <Tooltip anchorSelect=".tooltip-rev2" place="right" style={{ width: "250px" }}>
                     Social value includes both financial and non-financial impacts of a program, activity, or organization. For the purposes of this calculator, social value is understood to encompass social, environmental, and economic impacts.
                 </Tooltip>
             </div>
