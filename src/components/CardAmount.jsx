@@ -13,7 +13,7 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
             <div
                 className="mt-9 rounded-lg text-center"
             >
-                <div className="flex justify-center gap-x-2">
+                <div className="flex justify-center text-2xl gap-x-2">
                     <p>{cardAmount.title}</p>
                     <button className="tooltip-rev2">
                         <img src="/images/icons/information-generic-icon.svg" alt="information icon" />
@@ -23,7 +23,7 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
                     $ {cardAmount.amount}
                 </p>
                 <div className="bg-silver h-[0.5px] mt-5"></div>
-                <p className="text-gray-2 text-center mt-3 text-lg lg:text-xl">
+                <p className="text-gray-2 text-center mt-3 text-lg lg:text-2xl">
                     {cardAmount.formula}
                 </p>
                 <Modal

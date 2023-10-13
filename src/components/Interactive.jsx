@@ -715,22 +715,22 @@ export default function Interactive() {
             <div className='u-container'>
                 <div className='rounded-2xl overflow-hidden mb-20'>
                     <div className='flex'>
-                        <div className='m-5'>
-                            <h2 className="text-2xl text-center">
+                        <div className='m-5 bg-robin-egg-blue/5 pt-8 text-2xl'>
+                            <h2 className=" text-center">
                                 For every
                                 <span className="font-semibold" style={{ color }}> $1</span>
                                 <br />
                                 Invested in Passion Works
                             </h2>
                             <div
-                                className="mt-9 bg-robin-egg-blue/5 py-8 px-10 rounded-lg text-center"
+                                className="mt-9  py-8 px-10 rounded-lg text-center"
                             >
                                 <p>A social value</p>
                                 <p className="text-3xl font-semibold mt-1" >
                                     $ {socialValue.toFixed(2)}
                                 </p>
                                 <div className="bg-silver h-[0.5px] mt-5"></div>
-                                <p className="text-gray-2 text-center mt-3 text-sm">
+                                <p className="text-gray-2 text-center mt-3 ">
                                     Of social, economic, and environmental value is created.
                                 </p>
                             </div>
