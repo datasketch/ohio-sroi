@@ -200,7 +200,7 @@ const variables = [
     },
     {
         'id': 'var40',
-        'description': 'Arist support person time spent finding transportation',
+        'description': 'Artist support person time spent finding transportation',
         'value': 2424
     }
 ]

@@ -34,11 +34,11 @@ export default function TabSection({ color = '#00694E', tabs }) {
                                                     item.tables.map((table, i) => {
                                                         if (table.type === 'economic_impact' || table.type === 'social_impact' || table.type === 'environmental_impact') {
                                                             return (
-                                                                <Table key={`table-${i + 1}`} color={color} data={table} isLarge />
+                                                                <Table key={`table-${i + 1}`} color={color} data={table} isLarge count={i} />
                                                             )
                                                         } else {
                                                             return (
-                                                                <Table key={`table-${i + 1}`} color={color} data={table} />
+                                                                <Table key={`table-${i + 1}`} color={color} data={table} count={i} />
                                                             )
                                                         }
                                                     })
