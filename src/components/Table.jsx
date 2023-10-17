@@ -13,7 +13,7 @@ export default function Table({ color, data, isLarge, count }) {
     const [hasLimit, setHasLimit] = useState(false)
 
     useEffect(() => {
-        const element = tableRef.current
+        /* const element = tableRef.current
         const { offsetWidth, scrollWidth } = element
         const limitWidth = scrollWidth - offsetWidth
 
@@ -29,7 +29,7 @@ export default function Table({ color, data, isLarge, count }) {
 
         element.addEventListener('scroll', handleScroll)
 
-        return () => element.removeEventListener('scroll', handleScroll)
+        return () => element.removeEventListener('scroll', handleScroll) */
     }, [tableRef.current])
 
     if (isLarge) {

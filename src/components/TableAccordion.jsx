@@ -14,12 +14,17 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
         setIsOpen(isOpen)
     }
 
-    
-    
+
+
     const addingRows = () => {
         const values = [...data.proxy_inputs, ...data.proxy_values]
         rows = rows.map((item) => {
             const vars = item.variables.split(",")
+            let temp = item.formula
+            for (let variable of vars) {
+                temp = temp.replaceAll(variable, values.find(ele => ele.id === variable).value)
+            }
+            item.formula_str = `${temp} = ${item.value}`
             const vars2 = vars.map((variable) => {
                 const description = values.find(v => v.id === variable)
                 return description
@@ -103,7 +108,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows }) {
                                 </div>
                                 <div className="col-span-3">
                                     <p className='text-gray-2 text-sm'>
-                                        {item.formula}
+                                        {item.formula_str}
                                     </p>
                                 </div>
                             </div>

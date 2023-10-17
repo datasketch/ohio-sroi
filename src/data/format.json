@@ -40,8 +40,8 @@
                             "stakeholders": "Staff Artists",
                             "description": "Increased ability to be employed in a creative capacity",
                             "value": 221811,
-                            "variables": "fulltime_staff,wage_fulltime_staff,part_time_staff,wage_part_time_staff,cottage_artists,wage_cottage_artists",
-                            "formula": "fulltime_staff * wage_fulltime_staff + part_time_staff * wage_part_time_staff + cottage_artists * wage_cottage_artists"
+                            "variables": "fulltime_staff,wage_fulltime,part_time_staff,wage_part_time,cottage_artists,wage_cottage",
+                            "formula": "fulltime_staff * wage_fulltime + part_time_staff * wage_part_time + cottage_artists * wage_cottage"
                         },
                         {
                             "id": "proxy_3",
@@ -58,17 +58,9 @@
                             "value": 13750,
                             "variables": "revenue_sales,consumers_willing_pay",
                             "formula": "revenue_sales * consumers_willing_pay"
-                        },
-                        {
-                            "id": "proxy_5",
-                            "stakeholders": "Similar Organizations",
-                            "description": "Increased Sustainability",
-                            "value": "",
-                            "variables": "",
-                            "formula": ""
                         }
                     ],
-                    "formula": "proxy_1 + proxy_2 + proxy_3 + proxy_4 + proxy_5"
+                    "formula": "proxy_1 + proxy_2 + proxy_3 + proxy_4"
                 },
                 {
                     "id": "social_impact",
@@ -307,7 +299,7 @@
             "description": "Number of fulltime staff (includes administrative roles)"
         },
         {
-            "id": "wage_fulltime_staff",
+            "id": "wage_fulltime",
             "value": 32409,
             "type": "user_input",
             "unit": "currency",
@@ -321,7 +313,7 @@
             "description": "Number of part-time staff"
         },
         {
-            "id": "wage_part_time_staff",
+            "id": "wage_part_time",
             "value": 11172,
             "type": "user_input",
             "unit": "currency",
@@ -335,7 +327,7 @@
             "description": "Number of cottage industry artists"
         },
         {
-            "id": "wage_cottage_artists",
+            "id": "wage_cottage",
             "value": 1671,
             "type": "user_input",
             "unit": "currency",
@@ -343,7 +335,7 @@
         },
         {
             "id": "community_partnerships",
-            "value": "",
+            "value": 0,
             "type": "user_input",
             "unit": "",
             "description": "Number of major community partnerships"

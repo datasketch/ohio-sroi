@@ -61,7 +61,7 @@ export default function TabSection({ color = '#00694E', tabs }) {
                                 item.type === 'references' && (
                                     <div className='py-12 lg:py-16 xl:py-20'>
                                         <div className='u-container'>
-                                            <References />
+                                            <References list={item.list}/>
                                         </div>
                                     </div>
                                 )
