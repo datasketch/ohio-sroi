@@ -4,13 +4,18 @@ import { useEffect, useRef, useState } from 'react';
 import { valueFormat } from '../utils/functions'
 import { Tooltip } from 'react-tooltip'
 
+<<<<<<< Updated upstream
 export default function Table({ color, data, isLarge, count }) {
+=======
+export default function Table({ color, data, isLarge, top = "top-1/2" }) {
+>>>>>>> Stashed changes
     const [isOpen, setIsOpen] = useState(false)
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows
     const anchor = `.tooltip-value${count}`
     const tableRef = useRef()
     const [hasLimit, setHasLimit] = useState(false)
+
 
     useEffect(() => {
         const element = tableRef.current
@@ -19,7 +24,6 @@ export default function Table({ color, data, isLarge, count }) {
 
         const handleScroll = (e) => {
             const { scrollLeft } = e.target
-
             if ((limitWidth - 5) > scrollLeft) {
                 setHasLimit(false)
             } else {
@@ -105,10 +109,17 @@ export default function Table({ color, data, isLarge, count }) {
                 <Tooltip anchorSelect={anchor} place="right" style={{ width: "250px" }}>
                     {data.tooltip}
                 </Tooltip>
+<<<<<<< Updated upstream
                 <div className={classNames('lg:hidden absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-right-full': hasLimit, 'right-4': !hasLimit})}>
                     {'>'}
                 </div>
                 <div className={classNames('lg:hidden absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-left-full': !hasLimit, 'left-4': hasLimit})}>
+=======
+                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300`, { '-right-full': hasLimit, 'right-4': !hasLimit})}>
+                    {'>'}
+                </div>
+                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300`, { '-left-full': !hasLimit, 'left-4': hasLimit})}>
+>>>>>>> Stashed changes
                     {'<'}
                 </div>
             </div>

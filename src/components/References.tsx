@@ -2,7 +2,7 @@
 export default function References({ list }) {
   return (
     <div>
-        <ul className="list-disc space-y-10">
+        <ul className="list-disc space-y-10 text-sm lg:text-base pl-12 pr-9 lg:pl-40 lg:pr-36">
             <li>
                 Azagba, S., Sharaf, M.F. Psychosocial working conditions and the utilization of health care services. BMC Public Health 11, 642 (2011). <a target="_blank" href="https://doi.org/10.1186/1471-2458-11-642">https://doi.org/10.1186/1471-2458-11-642</a>
             </li>
