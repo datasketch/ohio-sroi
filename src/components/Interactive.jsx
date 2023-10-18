@@ -694,15 +694,19 @@ export default function Interactive() {
         setValues(newValues)
     }
 
-    const numberFormat = (unit, value) => {
+    const formatAs = (value, unit) => {
+        let config = {}
         switch (unit) {
             case 'currency':
-                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+                config = { style: 'currency', currency: 'USD' }
+                break
             case 'percentage':
-                return new Intl.NumberFormat('en-US', { style: 'percent' }).format(value)
+                config = { style: 'percent' }
+                 break
             default:
-                return new Intl.NumberFormat('en-US').format(value)
+                break
         }
+        return new Intl.NumberFormat('en-US', config).format(value)
     }
 
     return (
@@ -760,7 +764,7 @@ export default function Interactive() {
                                             </h4>
                                         </div>
                                         <div className="col-span-4 pl-8">
-                                            <input type="text" value={numberFormat(item.unit, item.value)} onChange={updateFieldChanged(i)} className="w-full" />
+                                            <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i)} className="w-full" />
                                         </div>
                                     </div>
                                 ))
@@ -796,7 +800,7 @@ export default function Interactive() {
                                     </h4>
                                 </div>
                                 <div className="col-span-2 pl-8">
-                                    <input type="text" value={numberFormat(item.unit, item.value)} onChange={updateFieldChanged(i + 3)} className="w-full" />
+                                    <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full" />
                                 </div>
                             </div>
                         ))
