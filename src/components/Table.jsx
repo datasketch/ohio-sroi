@@ -18,7 +18,7 @@ export default function Table({ color, data, isLarge, top = "top-1/2" }) {
 
 
     useEffect(() => {
-        const element = tableRef.current
+        /* const element = tableRef.current
         const { offsetWidth, scrollWidth } = element
         const limitWidth = scrollWidth - offsetWidth
 
@@ -33,7 +33,7 @@ export default function Table({ color, data, isLarge, top = "top-1/2" }) {
 
         element.addEventListener('scroll', handleScroll)
 
-        return () => element.removeEventListener('scroll', handleScroll)
+        return () => element.removeEventListener('scroll', handleScroll) */
     }, [tableRef.current])
 
     if (isLarge) {

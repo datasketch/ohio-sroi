@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Table from './Table';
+import data from '../data/format.json'
 import { proxy1, proxy1_formula, proxy2, proxy2_formula, proxy3, proxy3_formula, proxy9, proxy9_formula, proxy10, proxy10_formula, proxy11, proxy11_formula, proxy12, proxy12_formula, proxy18_formula, environmental, totalTable } from '../utils/functions'
 
-const variables = [
+/* const variables = [
     {
         'id': 'var01',
         'description': 'Number of artists employed',
@@ -203,7 +204,7 @@ const variables = [
         'description': 'Artist support person time spent finding transportation',
         'value': 2424
     }
-]
+] */
 
 const tablesReal = [
     {
@@ -654,9 +655,10 @@ const tablesReal = [
 export default function Interactive() {
     const color = '#00694E'
     const isGeneric = true
-    const [outputs, setOutputs] = useState(variables)
-    const [tables, setTables] = useState(tablesReal)
-    const [socialValue, setSocialValue] = useState(5.32)
+    const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
+    const [outputs, setOutputs] = useState(data.proxy_inputs)
+    const [tables, setTables] = useState(data.tabs[0].tables)
+    const [socialValue, setSocialValue] = useState(data.statistics_section.return)
 
     const updateFieldChanged = index => e => {
         let newArr = [...outputs]
@@ -668,46 +670,28 @@ export default function Interactive() {
 
     const updateTable = () => {
         let newTable = [...tables]
+        let newValues = [...values]
         let social = 0
         for (let t of newTable) {
             let total = 0
             for (let r of t.rows) {
-                if (t.type == "environmental_impact") {
-                    const temp = r.var.reduce((result, item) => {
-                        const found = outputs.find(ele => ele.id === item)
-                        return [...result, found.value]
-                    }, [])
-                    const result = r.funtion(temp[0], temp[1], temp[2])
-                    r.rows.outcomes = result.out
-                    r.rows.value = result.values
-                    r.value = result.total
-                    r.formula = r.f_formula(r.rows.value[2], r.rows.value[5], r.rows.value[9], r.value)
-                    total = total + r.value
-                } else {
-                    r.rows.outcomes = []
-                    r.rows.value = []
-                    if (r.var) {
-                        r.var.forEach(item => {
-                            const found = outputs.find(ele => ele.id === item)
-                            r.rows.outcomes.push(found.description)
-                            r.rows.value.push(found.value)
-                        })
-                        const total_row = r.funtion(r.rows.value)
-                        r.value = total_row
-                        r.formula = r.f_formula([...r.rows.value, total_row])
-                        total = total + total_row
-                    }
+                const vars = r.variables.split(",")
+                let temp = r.formula
+                for (let variable of vars) {
+                    temp = temp.replaceAll(variable, newValues.find(ele => ele.id === variable).value)
                 }
-
+                r.value = eval(`${temp}`)
+                r.formula_str = `${temp} = ${r.value}`
+                total = total + r.value
             }
             const listaTotales = t.rows.map(ele => ele.value)
             t.totalValue = total
-            t.formula = t.f_formula(listaTotales, t.totalValue)
             social = social + total
         }
-        social = social / (outputs[37].value + outputs[38].value)
+        social = social / (outputs[0].value + outputs[1].value)
         setSocialValue(social)
         setTables(tables)
+        setValues(newValues)
     }
 
     return (
@@ -757,7 +741,7 @@ export default function Interactive() {
                                 </div>
                             </div>
                             {
-                                outputs.slice(37, 40).map((item, i) => (
+                                outputs.slice(0, 3).map((item, i) => (
                                     <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
                                         <div className="col-span-8">
                                             <h4 className='text-black'>
@@ -765,7 +749,7 @@ export default function Interactive() {
                                             </h4>
                                         </div>
                                         <div className="col-span-4 pl-8">
-                                            <input type="text" value={item.value} onChange={updateFieldChanged(i + 37)} className="text-right w-14 " />
+                                            <input type="text" value={item.value} onChange={updateFieldChanged(i)} className="text-right w-14 " />
                                         </div>
                                     </div>
                                 ))
@@ -793,7 +777,7 @@ export default function Interactive() {
                         </div>
                     </div>
                     {
-                        outputs.slice(0, 20).map((item, i) => (
+                        outputs.slice(3, 23).map((item, i) => (
                             <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
                                 <div className="col-span-10">
                                     <h4 className='text-black'>
@@ -801,7 +785,7 @@ export default function Interactive() {
                                     </h4>
                                 </div>
                                 <div className="col-span-2 pl-8">
-                                    <input type="text" value={item.value} onChange={updateFieldChanged(i)} className="text-right w-14 " />
+                                    <input type="text" value={item.value} onChange={updateFieldChanged(i + 3)} className="text-right w-14 " />
                                 </div>
                             </div>
                         ))
@@ -812,7 +796,7 @@ export default function Interactive() {
                     {/* TABLES */}
                     {
                         tables.map((table, i) => {
-                            if (table.type === 'economic_impact' || table.type === 'social_impact' || table.type === 'environmental_impact') {
+                            if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
                                 return (
                                     <Table key={`table-${i + 1}`} color={color} data={table} isLarge />
                                 )
