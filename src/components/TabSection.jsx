@@ -10,7 +10,7 @@ export default function TabSection({ color = '#00694E', tabs }) {
         // TAB PARENT
         <Tabs.Root defaultValue="tab1" orientation="vertical">
             {/* TABS CHILDREN */}
-            <Tabs.List className='u-container' aria-label="tabs">
+            <Tabs.List className='u-container flex' aria-label="tabs">
                 {
                     tabs.map(({ label }, i) => {
                         return (

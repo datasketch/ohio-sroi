@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Table from './Table';
 import data from '../data/format.json'
 import { proxy1, proxy1_formula, proxy2, proxy2_formula, proxy3, proxy3_formula, proxy9, proxy9_formula, proxy10, proxy10_formula, proxy11, proxy11_formula, proxy12, proxy12_formula, proxy18_formula, environmental, totalTable } from '../utils/functions'
+import classNames from 'classnames';
 
 /* const variables = [
     {
@@ -652,6 +653,8 @@ const tablesReal = [
     }
 ]
 
+
+
 export default function Interactive() {
     const color = '#00694E'
     const isGeneric = true
@@ -659,6 +662,8 @@ export default function Interactive() {
     const [outputs, setOutputs] = useState(data.proxy_inputs)
     const [tables, setTables] = useState(data.tabs[0].tables)
     const [socialValue, setSocialValue] = useState(data.statistics_section.return)
+    const tableRef = useRef()
+    const [hasLimit, setHasLimit] = useState(false)
 
     const updateFieldChanged = index => e => {
         let newArr = [...outputs]
@@ -694,103 +699,146 @@ export default function Interactive() {
         setValues(newValues)
     }
 
+    useEffect(() => {
+        const element = tableRef.current
+        const { offsetWidth, scrollWidth } = element
+        const limitWidth = scrollWidth - offsetWidth
+
+        const handleScroll = (e) => {
+            const { scrollLeft } = e.target
+            if ((limitWidth - 5) > scrollLeft) {
+                setHasLimit(false)
+            } else {
+                setHasLimit(true)
+            }
+        }
+
+        element.addEventListener('scroll', handleScroll)
+
+        return () => element.removeEventListener('scroll', handleScroll)
+    }, [tableRef.current])
+
     return (
         <div className='pt-12 pb-9'>
             <div className='u-container'>
                 <div className='rounded-2xl overflow-hidden mb-20'>
-                    <div className='flex'>
-                        <div className='m-5 bg-robin-egg-blue/5 pt-8 text-2xl'>
-                            <h2 className=" text-center">
+                    <div className='flex flex-col md:flex-row'>
+                        <div className='m-5 bg-robin-egg-blue/5 pt-8 text-2xl py-8 px-10'>
+                            <h2 className="text-2xl text-center">
                                 For every
-                                <span className="font-semibold" style={{ color }}> $1</span>
                                 <br />
-                                Invested in Passion Works
+                                <span className="font-semibold" style={{ color }}>$1</span>
+                                <br />
+                                invested in Passion Works
                             </h2>
-                            <div
-                                className="mt-9  py-8 px-10 rounded-lg text-center"
-                            >
-                                <p>A social value</p>
+                            <div className="mt-5 rounded-lg text-center">
+                                {/* <p className='text-2xl'>A social value</p> */}
                                 <p className="text-3xl font-semibold mt-1" >
                                     $ {socialValue.toFixed(2)}
                                 </p>
                                 <div className="bg-silver h-[0.5px] mt-5"></div>
-                                <p className="text-gray-2 text-center mt-3 ">
-                                    Of social, economic, and environmental value is created.
+                                <p className="text-gray-2 text-center mt-3 text-lg lg:text-2xl">
+                                    of social, economic, and environmental value is created.
                                 </p>
                             </div>
                         </div>
                         <div>
-                            <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
+                            <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
+                                <div className='w-[800px] lg:w-auto'>
+                                    <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
+                                        backgroundColor: isGeneric ? '#fff' : color
+                                    }}>
+                                        <div className='flex items-center gap-x-2'>
+                                            <h3 className='text-xl text-black'>Program Inputs</h3>
+                                        </div>
+                                    </div>
+                                    <div className='grid grid-cols-12 py-1 px-5 bg-white'>
+                                        <div className="col-span-8">
+                                            <h4 className='text-gray-2 text-sm'>
+                                                What are the costs?
+                                            </h4>
+                                        </div>
+                                        <div className="col-span-4 pl-12">
+                                            <h4 className='text-gray-2 text-sm'>
+                                                What are the numbers?
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    {
+                                        outputs.slice(0, 3).map((item, i) => (
+                                            <div key={i} className='grid pb-3 grid-cols-12 py-1 px-5 bg-white '>
+                                                <div className="col-span-8">
+                                                    <h4 className='text-black'>
+                                                        {item.description}
+                                                    </h4>
+                                                </div>
+                                                <div className="col-span-4 pl-8">
+                                                    <input type="text" value={item.value} onChange={updateFieldChanged(i)} className="text-right w-14 " />
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                                {/* <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
+                                    {'>'}
+                                </div>
+                                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
+                                    {'<'}
+                                </div> */}
+                            </div>
+                            {/* <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
+                                {'>'}
+                            </div>
+                            <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
+                                {'<'}
+                            </div> */}
+                        </div>
+                    </div>
+
+                    <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
+                        <div className='w-[800px] lg:w-auto'>
+                            <div className='pt-5 pb-2.5 pl-5 pr-8 mt-5' style={{
                                 backgroundColor: isGeneric ? '#fff' : color
                             }}>
                                 <div className='flex items-center gap-x-2'>
-                                    <h3 className='text-xl text-black'>Program Inputs</h3>
+                                    <h3 className='text-xl text-black'>Program Outputs</h3>
                                 </div>
                             </div>
 
                             <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                                <div className="col-span-8">
+                                <div className="col-span-10">
                                     <h4 className='text-gray-2 text-sm'>
-                                        What are the costs?
+                                        Description
                                     </h4>
                                 </div>
-                                <div className="col-span-4 pl-12">
+                                <div className="col-span-2 pl-12">
                                     <h4 className='text-gray-2 text-sm'>
-                                        What are the numbers?
+                                        Value
                                     </h4>
                                 </div>
                             </div>
                             {
-                                outputs.slice(0, 3).map((item, i) => (
-                                    <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
-                                        <div className="col-span-8">
+                                outputs.slice(3, 23).map((item, i) => (
+                                    <div key={i} className='grid grid-cols-12 pb-3 py-1 px-5 bg-white '>
+                                        <div className="col-span-10">
                                             <h4 className='text-black'>
                                                 {item.description}
                                             </h4>
                                         </div>
-                                        <div className="col-span-4 pl-8">
-                                            <input type="text" value={item.value} onChange={updateFieldChanged(i)} className="text-right w-14 " />
+                                        <div className="col-span-2 pl-8">
+                                            <input type="text" value={item.value} onChange={updateFieldChanged(i + 3)} className="text-right w-14 " />
                                         </div>
                                     </div>
                                 ))
                             }
-                        </div>
-                    </div>
-                    <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
-                        backgroundColor: isGeneric ? '#fff' : color
-                    }}>
-                        <div className='flex items-center gap-x-2'>
-                            <h3 className='text-xl text-black'>Program Outputs</h3>
-                        </div>
-                    </div>
-
-                    <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                        <div className="col-span-10">
-                            <h4 className='text-gray-2 text-sm'>
-                                Description
-                            </h4>
-                        </div>
-                        <div className="col-span-2 pl-12">
-                            <h4 className='text-gray-2 text-sm'>
-                                Value
-                            </h4>
-                        </div>
-                    </div>
-                    {
-                        outputs.slice(3, 23).map((item, i) => (
-                            <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
-                                <div className="col-span-10">
-                                    <h4 className='text-black'>
-                                        {item.description}
-                                    </h4>
-                                </div>
-                                <div className="col-span-2 pl-8">
-                                    <input type="text" value={item.value} onChange={updateFieldChanged(i + 3)} className="text-right w-14 " />
-                                </div>
+                            {/* <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
+                                {'>'}
                             </div>
-                        ))
-                    }
-
+                            <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
+                                {'<'}
+                            </div> */}
+                        </div>
+                    </div>
                 </div>
                 <div className='space-y-12'>
                     {/* TABLES */}
