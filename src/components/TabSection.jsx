@@ -10,7 +10,7 @@ export default function TabSection({ color = '#00694E', tabs }) {
         // TAB PARENT
         <Tabs.Root defaultValue="tab1" orientation="vertical">
             {/* TABS CHILDREN */}
-            <Tabs.List className='u-container' aria-label="tabs">
+            <Tabs.List className='u-container flex' aria-label="tabs">
                 {
                     tabs.map(({ label }, i) => {
                         return (
@@ -32,7 +32,7 @@ export default function TabSection({ color = '#00694E', tabs }) {
                                                 {/* TABLES */}
                                                 {
                                                     item.tables.map((table, i) => {
-                                                        if (table.type === 'economic_impact' || table.type === 'social_impact' || table.type === 'environmental_impact') {
+                                                        if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
                                                             return (
                                                                 <Table key={`table-${i + 1}`} color={color} data={table} isLarge count={i} />
                                                             )
@@ -61,7 +61,7 @@ export default function TabSection({ color = '#00694E', tabs }) {
                                 item.type === 'references' && (
                                     <div className='py-12 lg:py-16 xl:py-20'>
                                         <div className='u-container'>
-                                            <References />
+                                            <References list={item.list}/>
                                         </div>
                                     </div>
                                 )

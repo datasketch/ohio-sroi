@@ -2,7 +2,7 @@
 import CardAmount from "../components/CardAmount";
 import TabSection from "../components/TabSection";
 import BaseLayout from "../layout/BaseLayout.astro";
-import data from "../data/index.json";
+import data from "../data/format.json";
 ---
 
 <BaseLayout title="Home Page" description="Esta es la página inicial">
@@ -21,25 +21,25 @@ import data from "../data/index.json";
           <div class="block lg:hidden">
             <div class="flex flex-col items-center justify-between">
               <div class="text-center">
-                <h2 class="text-base lg:text-xl">{data.subtitle}</h2>
+                <h2 class="text-base lg:text-xl">{data.general.subtitle}</h2>
                 <h1 class="font-monserrat font-semibold text-2xl lg:text-3xl pt-3">
-                  {data.title}
+                  {data.general.title}
                 </h1>
               </div>
               <div class="flex-shrink-0 mt-10">
-                <img src={data.logo} alt={data.title} />
+                <img src={data.general.logo} alt={data.general.title} />
               </div>
             </div>
           </div>
           <div class="hidden lg:block">
             <div class="flex items-center justify-between">
               <div class="flex-shrink-0">
-                <img src={data.logo} alt={data.title} />
+                <img src={data.general.logo} alt={data.general.title} />
               </div>
               <div class="text-center">
-                <h2 class="text-base lg:text-xl">{data.subtitle}</h2>
+                <h2 class="text-base lg:text-xl">{data.general.subtitle}</h2>
                 <h1 class="font-monserrat font-semibold text-2xl lg:text-3xl pt-3">
-                  {data.title}
+                  {data.general.title}
                 </h1>
               </div>
             </div>
@@ -47,7 +47,7 @@ import data from "../data/index.json";
         </div>
         <div class="mx-auto max-w-[720px] text-center mt-10 px-4">
           <p class="text-sm lg:text-base">
-            {data.description}
+            {data.general.description}
           </p>
         </div>
         <div class="bg-gray h-[1px] max-w-[936px] mx-auto mt-8 lg:mt-12 px-9"></div>
@@ -56,9 +56,9 @@ import data from "../data/index.json";
             <div class="px-5 lg:w-1/2">
               <CardAmount
                 title={data.statistics_section.title}
-                amount={data.statistics_section.amount}
-                cardAmount={data.statistics_section.cardAmount}
-                color={data.theme}
+                amount={data.statistics_section.invested}
+                cardAmount={data.statistics_section}
+                color={data.general.theme}
                 client:load
               />
             </div>
@@ -72,10 +72,10 @@ import data from "../data/index.json";
         </div>
       </div>
     </div>
-    <div class='bg-[#00694E]/[.2] flex justify-center w-56 mx-auto rounded-md py-4 '><p class='text-2xl lg:text-base'>A look at the details</p></div>
+    <div class='flex items-center justify-center'><p class='text-darmouth-green text-xl md:text-2xl font-semibold'>Look at the details</p></div>
   </div>
   <!--  -->
   <div>
-    <TabSection color={data.theme} tabs={data.tabs} client:load />
+    <TabSection color={data.general.theme} tabs={data.tabs} client:load />
   </div>
 </BaseLayout>
