@@ -655,15 +655,17 @@ import classNames from 'classnames';
 
 
 
-export default function Interactive() {
+export default function Interactive({top = "top-2/3"}) {
     const color = '#00694E'
     const isGeneric = true
     const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
     const [outputs, setOutputs] = useState(data.proxy_inputs)
     const [tables, setTables] = useState(data.tabs[0].tables)
     const [socialValue, setSocialValue] = useState(data.statistics_section.return)
-    const tableRef = useRef()
+    const tableRefCosts = useRef()
+    const tableRefNumbers = useRef()
     const [hasLimit, setHasLimit] = useState(false)
+    const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
 
     const updateFieldChanged = index => e => {
         let newArr = [...outputs]
@@ -699,8 +701,8 @@ export default function Interactive() {
         setValues(newValues)
     }
 
-    useEffect(() => {
-        const element = tableRef.current
+    /* useEffect(() => {
+        const element = tableRefCosts.current && tableRefNumbers.current
         const { offsetWidth, scrollWidth } = element
         const limitWidth = scrollWidth - offsetWidth
 
@@ -716,7 +718,45 @@ export default function Interactive() {
         element.addEventListener('scroll', handleScroll)
 
         return () => element.removeEventListener('scroll', handleScroll)
-    }, [tableRef.current])
+    }, [tableRefCosts.current, tableRefNumbers.current]) */
+
+    useEffect(() => {
+        const element = tableRefCosts.current
+        const { offsetWidth, scrollWidth } = element
+        const limitWidth = scrollWidth - offsetWidth
+
+        const handleScroll = (e) => {
+            const { scrollLeft } = e.target
+            if ((limitWidth - 5) > scrollLeft) {
+                setHasLimit(false)
+            } else {
+                setHasLimit(true)
+            }
+        }
+
+        element.addEventListener('scroll', handleScroll)
+
+        return () => element.removeEventListener('scroll', handleScroll)
+    }, [tableRefCosts.current])
+
+    useEffect(() => {
+        const element = tableRefNumbers.current
+        const { offsetWidth, scrollWidth } = element
+        const limitWidth = scrollWidth - offsetWidth
+
+        const handleScroll = (e) => {
+            const { scrollLeft } = e.target
+            if ((limitWidth - 5) > scrollLeft) {
+                setHasLimitNumbers(false)
+            } else {
+                setHasLimitNumbers(true)
+            }
+        }
+
+        element.addEventListener('scroll', handleScroll)
+
+        return () => element.removeEventListener('scroll', handleScroll)
+    }, [tableRefNumbers.current])
 
     const formatAs = (value, unit) => {
         let config = {}
@@ -758,7 +798,7 @@ export default function Interactive() {
                             </div>
                         </div>
                         <div className='relative'>
-                            <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
+                            <div ref={tableRefCosts} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
                                 <div className='w-[450px] lg:w-auto'>
                                     <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
                                         backgroundColor: isGeneric ? '#fff' : color
@@ -774,7 +814,7 @@ export default function Interactive() {
                                             </h4>
                                         </div>
                                         <div className="col-span-4 pl-12">
-                                            <h4 className='text-gray-2 text-sm'>
+                                            <h4 className='text-gray-2 text-sm text-end'>
                                                 Value
                                             </h4>
                                         </div>
@@ -804,42 +844,50 @@ export default function Interactive() {
                         </div>
                     </div>
 
-                    <div className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow mt-5'>
-                        <div className='w-[600px] lg:w-auto'>
-                            <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
-                                backgroundColor: isGeneric ? '#fff' : color
-                            }}>
-                                <div className='flex items-center gap-x-2'>
-                                    <h3 className='text-base lg:text-xl text-black font-medium'>What are the numbers?</h3>
-                                </div>
-                            </div>
-
-                            <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                                <div className="col-span-10">
-                                    <h4 className='text-gray-2 text-sm'>
-                                        Description
-                                    </h4>
-                                </div>
-                                <div className="col-span-2 pl-12">
-                                    <h4 className='text-gray-2 text-sm'>
-                                        Value
-                                    </h4>
-                                </div>
-                            </div>
-                            {
-                                outputs.slice(3, 23).map((item, i) => (
-                                    <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
-                                        <div className="col-span-10">
-                                            <h4 className='text-black'>
-                                                {item.description}
-                                            </h4>
-                                        </div>
-                                        <div className="col-span-2 pl-8">
-                                            <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full" />
-                                        </div>
+                    <div className='relative'>
+                        <div ref={tableRefNumbers} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow mt-5'>
+                            <div className='w-[800px] lg:w-auto'>
+                                <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
+                                    backgroundColor: isGeneric ? '#fff' : color
+                                }}>
+                                    <div className='flex items-center gap-x-2'>
+                                        <h3 className='text-base lg:text-xl text-black font-medium'>What are the numbers?</h3>
                                     </div>
-                                ))
-                            }
+                                </div>
+
+                                <div className='grid grid-cols-12 py-1 px-5 bg-white'>
+                                    <div className="col-span-10">
+                                        <h4 className='text-gray-2 text-sm'>
+                                            Description
+                                        </h4>
+                                    </div>
+                                    <div className="col-span-2 pl-12">
+                                        <h4 className='text-gray-2 text-sm text-end'>
+                                            Value
+                                        </h4>
+                                    </div>
+                                </div>
+                                {
+                                    outputs.slice(3, 23).map((item, i) => (
+                                        <div key={i} className='grid grid-cols-12 py-2 px-5 bg-white '>
+                                            <div className="col-span-10">
+                                                <h4 className='text-black'>
+                                                    {item.description}
+                                                </h4>
+                                            </div>
+                                            <div className="col-span-2 pl-8">
+                                                <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full text-end" />
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimitNumbers, 'right-4': !hasLimitNumbers })}>
+                                    {'>'}
+                                </div>
+                                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimitNumbers, 'left-4': hasLimitNumbers })}>
+                                    {'<'}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className='mt-12 space-y-12'>
