@@ -736,9 +736,9 @@ export default function Interactive() {
     return (
         <div className='pt-12 pb-9'>
             <div className='u-container'>
-                <div className='rounded-2xl overflow-hidden mb-20'>
-                    <div className='flex flex-col md:flex-row'>
-                        <div className='m-5 bg-robin-egg-blue/5 pt-8 text-2xl py-8 px-10'>
+                <div className='rounded-2xl overflow-hidden'>
+                    <div className='flex flex-col md:flex-row gap-5'>
+                        <div className='bg-robin-egg-blue/5 pt-8 text-2xl py-8 px-10'>
                             <h2 className="text-2xl text-center">
                                 For every
                                 <br />
@@ -757,7 +757,7 @@ export default function Interactive() {
                                 </p>
                             </div>
                         </div>
-                        <div>
+                        <div className='relative'>
                             <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
                                 <div className='w-[450px] lg:w-auto'>
                                     <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
@@ -788,31 +788,25 @@ export default function Interactive() {
                                                     </h4>
                                                 </div>
                                                 <div className="col-span-4 pl-8">
-                                                    <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i)} className="w-full" />
+                                                    <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i)} className="w-full text-right" />
                                                 </div>
                                             </div>
                                         ))
                                     }
+                                    <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
+                                        {'>'}
+                                    </div>
+                                    <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
+                                        {'<'}
+                                    </div>
                                 </div>
-                                {/* <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
-                                    {'>'}
-                                </div>
-                                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
-                                    {'<'}
-                                </div> */}
-                            </div>
-                            <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
-                                {'>'}
-                            </div>
-                            <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
-                                {'<'}
                             </div>
                         </div>
                     </div>
 
-                    <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
+                    <div className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow mt-5'>
                         <div className='w-[600px] lg:w-auto'>
-                            <div className='pt-5 pb-2.5 pl-5 pr-8 mt-5' style={{
+                            <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
                                 backgroundColor: isGeneric ? '#fff' : color
                             }}>
                                 <div className='flex items-center gap-x-2'>
@@ -847,40 +841,6 @@ export default function Interactive() {
                                 ))
                             }
                         </div>
-                        <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
-                            backgroundColor: isGeneric ? '#fff' : color
-                        }}>
-                            <div className='flex items-center gap-x-2'>
-                                <h3 className='text-xl text-black'>Program Outputs</h3>
-                            </div>
-                        </div>
-
-                        <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                            <div className="col-span-10">
-                                <h4 className='text-gray-2 text-sm'>
-                                    Description
-                                </h4>
-                            </div>
-                            <div className="col-span-2 pl-12">
-                                <h4 className='text-gray-2 text-sm'>
-                                    Value
-                                </h4>
-                            </div>
-                        </div>
-                        {
-                            outputs.slice(3, 23).map((item, i) => (
-                                <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
-                                    <div className="col-span-10">
-                                        <h4 className='text-black'>
-                                            {item.description}
-                                        </h4>
-                                    </div>
-                                    <div className="col-span-2 pl-8">
-                                        <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full" />
-                                    </div>
-                                </div>
-                            ))
-                        }
                     </div>
                     <div className='mt-12 space-y-12'>
                         {/* TABLES */}
