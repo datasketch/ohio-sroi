@@ -726,7 +726,7 @@ export default function Interactive() {
                 break
             case 'percentage':
                 config = { style: 'percent' }
-                 break
+                break
             default:
                 break
         }
@@ -788,7 +788,7 @@ export default function Interactive() {
                                                     </h4>
                                                 </div>
                                                 <div className="col-span-4 pl-8">
-                                                    <input type="text" value={item.value} onChange={updateFieldChanged(i)} className="text-right w-14 " />
+                                                    <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i)} className="w-full" />
                                                 </div>
                                             </div>
                                         ))
@@ -834,78 +834,70 @@ export default function Interactive() {
                             </div>
                             {
                                 outputs.slice(3, 23).map((item, i) => (
-                                    <div key={i} className='grid grid-cols-12 pb-3 py-1 px-5 bg-white '>
+                                    <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
                                         <div className="col-span-10">
-                                            <h4 className='text-sm lg:text-base text-black'>
+                                            <h4 className='text-black'>
                                                 {item.description}
                                             </h4>
                                         </div>
                                         <div className="col-span-2 pl-8">
-                                            <input type="text" value={item.value} onChange={updateFieldChanged(i + 3)} className="text-right w-14" />
-                                        <div className="col-span-4 pl-8">
-                                            <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i)} className="w-full" />
+                                            <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full" />
                                         </div>
                                     </div>
                                 ))
                             }
-                            {/* <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
-                                {'>'}
+                        </div>
+                        <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
+                            backgroundColor: isGeneric ? '#fff' : color
+                        }}>
+                            <div className='flex items-center gap-x-2'>
+                                <h3 className='text-xl text-black'>Program Outputs</h3>
                             </div>
-                            <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
-                                {'<'}
-                            </div> */}
                         </div>
-                    </div>
-                    <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
-                        backgroundColor: isGeneric ? '#fff' : color
-                    }}>
-                        <div className='flex items-center gap-x-2'>
-                            <h3 className='text-xl text-black'>Program Outputs</h3>
-                        </div>
-                    </div>
 
-                    <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                        <div className="col-span-10">
-                            <h4 className='text-gray-2 text-sm'>
-                                Description
-                            </h4>
-                        </div>
-                        <div className="col-span-2 pl-12">
-                            <h4 className='text-gray-2 text-sm'>
-                                Value
-                            </h4>
-                        </div>
-                    </div>
-                    {
-                        outputs.slice(3, 23).map((item, i) => (
-                            <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
-                                <div className="col-span-10">
-                                    <h4 className='text-black'>
-                                        {item.description}
-                                    </h4>
-                                </div>
-                                <div className="col-span-2 pl-8">
-                                    <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full" />
-                                </div>
+                        <div className='grid grid-cols-12 py-1 px-5 bg-white'>
+                            <div className="col-span-10">
+                                <h4 className='text-gray-2 text-sm'>
+                                    Description
+                                </h4>
                             </div>
-                        ))
-                    }
-                </div>
-                <div className='space-y-12'>
-                    {/* TABLES */}
-                    {
-                        tables.map((table, i) => {
-                            if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
-                                return (
-                                    <Table key={`table-${i + 1}`} color={color} data={table} isLarge />
-                                )
-                            } else {
-                                return (
-                                    <Table key={`table-${i + 1}`} color={color} data={table} />
-                                )
-                            }
-                        })
-                    }
+                            <div className="col-span-2 pl-12">
+                                <h4 className='text-gray-2 text-sm'>
+                                    Value
+                                </h4>
+                            </div>
+                        </div>
+                        {
+                            outputs.slice(3, 23).map((item, i) => (
+                                <div key={i} className='grid grid-cols-12 py-1 px-5 bg-white '>
+                                    <div className="col-span-10">
+                                        <h4 className='text-black'>
+                                            {item.description}
+                                        </h4>
+                                    </div>
+                                    <div className="col-span-2 pl-8">
+                                        <input type="text" value={formatAs(item.value, item.unit)} onChange={updateFieldChanged(i + 3)} className="w-full" />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className='mt-12 space-y-12'>
+                        {/* TABLES */}
+                        {
+                            tables.map((table, i) => {
+                                if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
+                                    return (
+                                        <Table key={`table-${i + 1}`} color={color} data={table} isLarge />
+                                    )
+                                } else {
+                                    return (
+                                        <Table key={`table-${i + 1}`} color={color} data={table} />
+                                    )
+                                }
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         </div>
