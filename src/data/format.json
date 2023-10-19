@@ -7,11 +7,11 @@
         "description": "Social Return on Investment (SROI) is a method of calculating and communicating impact using dollar values. SROI measures the social value created by an organization’s activities, products, services or community initiatives. SROI combines social, economic, and environmental impacts into a comprehensive financial measurement of social value in a holistic measure of impact."
     },
     "statistics_section": {
-        "title": "Invested in Passion Works",
+        "title": "invested in Passion Works",
         "invested": 1,
         "label": "A social value",
         "return": 5.85,
-        "description": "Of social, economic, and environmental value is created.",
+        "description": "of social, economic, and environmental value is created.",
         "information": "This dollar amount reflects the ripple eects caused by experiential learning and service learning. After participating in experiential or service learning, students experience short term outcomes such as increased academic success and longer term impacts such as increased likelihood of being hired and earning higher wages. Communities benefit from increased sta capacity and increased resources. Impacts to the university from experiential learning or service learning include cultivating a reputation for student engagement that impacts potential new enrollment.",
         "src_graph": "/images/image-graph.png",
         "tooltip": "Social value includes both financial and non-financial impacts of a program, activity, or organization. For the purposes of this calculator, social value is understood to encompass social, environmental, and economic impacts."

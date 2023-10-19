@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { valueFormat } from '../utils/functions'
 import { Tooltip } from 'react-tooltip'
 
-export default function Table({ color, data, isLarge, count }) {
+export default function Table({ color, data, isLarge, top = "top-2/3", count }) {
     const [isOpen, setIsOpen] = useState(false)
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows
@@ -12,14 +12,14 @@ export default function Table({ color, data, isLarge, count }) {
     const tableRef = useRef()
     const [hasLimit, setHasLimit] = useState(false)
 
+
     useEffect(() => {
-        /* const element = tableRef.current
+        const element = tableRef.current
         const { offsetWidth, scrollWidth } = element
         const limitWidth = scrollWidth - offsetWidth
 
         const handleScroll = (e) => {
             const { scrollLeft } = e.target
-
             if ((limitWidth - 5) > scrollLeft) {
                 setHasLimit(false)
             } else {
@@ -29,29 +29,30 @@ export default function Table({ color, data, isLarge, count }) {
 
         element.addEventListener('scroll', handleScroll)
 
-        return () => element.removeEventListener('scroll', handleScroll) */
+        return () => element.removeEventListener('scroll', handleScroll)
     }, [tableRef.current])
 
     if (isLarge) {
         return (
             <div className='rounded-2xl overflow-hidden shadow relative'>
                 {/* HEADING */}
-                <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
+                <div className='pt-5 pb-2.5 pl-5 pr-4' style={{
                     backgroundColor: isGeneric ? '#fff' : color
                 }}>
-                    <div className='flex flex-col lg:flex-col items-center justify-between'>
+                    <div className='flex flex-col md:flex-row space-y-2 md:space-y-0 justify-between'>
                         <div className='flex items-center gap-x-2'>
-                            <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}</h3>
+                            <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}
                             {hasRow && (
-                                <button className={`tooltip-value${count}`}>
+                                <button className={`pl-1 tooltip-value${count}`}>
                                     {!isGeneric && (<img src="/images/icons/information-icon.svg" alt="information icon" />)}
                                     {isGeneric && (<img src="/images/icons/information-generic-icon.svg" alt="information icon" />)}
                                 </button>
                             )}
+                            </h3>
                         </div>
                         {
                             hasRow && (
-                                <div className='flex items-center justify-between gap-x-4'>
+                                <div className='flex md:justify-end justify-between items-center gap-x-4'>
                                     <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
                                         Total Value
                                     </p>
@@ -105,14 +106,13 @@ export default function Table({ color, data, isLarge, count }) {
                 <Tooltip anchorSelect={anchor} place="right" style={{ width: "250px" }}>
                     {data.tooltip}
                 </Tooltip>
-                <div className={classNames('lg:hidden absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-right-full': hasLimit, 'right-4': !hasLimit})}>
+                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit})}>
                     {'>'}
                 </div>
-                <div className={classNames('lg:hidden absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300', { '-left-full': !hasLimit, 'left-4': hasLimit})}>
+                <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit})}>
                     {'<'}
                 </div>
             </div>
-
         )
     } else {
         return (
