@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { valueFormat } from '../utils/functions'
 import { Tooltip } from 'react-tooltip'
 
-export default function Table({ color, data, isLarge, top = "top-1/2", count }) {
+export default function Table({ color, data, isLarge, top = "top-2/3", count }) {
     const [isOpen, setIsOpen] = useState(false)
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows

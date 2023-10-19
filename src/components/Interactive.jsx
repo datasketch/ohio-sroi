@@ -744,31 +744,31 @@ export default function Interactive() {
                         </div>
                         <div>
                             <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
-                                <div className='w-[800px] lg:w-auto'>
+                                <div className='w-[450px] lg:w-auto'>
                                     <div className='pt-5 pb-2.5 pl-5 pr-8' style={{
                                         backgroundColor: isGeneric ? '#fff' : color
                                     }}>
                                         <div className='flex items-center gap-x-2'>
-                                            <h3 className='text-xl text-black'>Program Inputs</h3>
+                                            <h3 className='text-base lg:text-xl text-black font-medium'>What are the costs?</h3>
                                         </div>
                                     </div>
                                     <div className='grid grid-cols-12 py-1 px-5 bg-white'>
                                         <div className="col-span-8">
                                             <h4 className='text-gray-2 text-sm'>
-                                                What are the costs?
+                                                Description
                                             </h4>
                                         </div>
                                         <div className="col-span-4 pl-12">
                                             <h4 className='text-gray-2 text-sm'>
-                                                What are the numbers?
+                                                Value
                                             </h4>
                                         </div>
                                     </div>
                                     {
                                         outputs.slice(0, 3).map((item, i) => (
-                                            <div key={i} className='grid pb-3 grid-cols-12 py-1 px-5 bg-white '>
+                                            <div key={i} className='grid pb-3 grid-cols-12 py-1 px-5 bg-white'>
                                                 <div className="col-span-8">
-                                                    <h4 className='text-black'>
+                                                    <h4 className='text-sm lg:text-base text-black'>
                                                         {item.description}
                                                     </h4>
                                                 </div>
@@ -786,22 +786,22 @@ export default function Interactive() {
                                     {'<'}
                                 </div> */}
                             </div>
-                            {/* <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
+                            <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
                                 {'>'}
                             </div>
                             <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-left-full': !hasLimit, 'left-4': hasLimit })}>
                                 {'<'}
-                            </div> */}
+                            </div>
                         </div>
                     </div>
 
                     <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
-                        <div className='w-[800px] lg:w-auto'>
+                        <div className='w-[600px] lg:w-auto'>
                             <div className='pt-5 pb-2.5 pl-5 pr-8 mt-5' style={{
                                 backgroundColor: isGeneric ? '#fff' : color
                             }}>
                                 <div className='flex items-center gap-x-2'>
-                                    <h3 className='text-xl text-black'>Program Outputs</h3>
+                                    <h3 className='text-base lg:text-xl text-black font-medium'>What are the numbers?</h3>
                                 </div>
                             </div>
 
@@ -821,12 +821,12 @@ export default function Interactive() {
                                 outputs.slice(3, 23).map((item, i) => (
                                     <div key={i} className='grid grid-cols-12 pb-3 py-1 px-5 bg-white '>
                                         <div className="col-span-10">
-                                            <h4 className='text-black'>
+                                            <h4 className='text-sm lg:text-base text-black'>
                                                 {item.description}
                                             </h4>
                                         </div>
                                         <div className="col-span-2 pl-8">
-                                            <input type="text" value={item.value} onChange={updateFieldChanged(i + 3)} className="text-right w-14 " />
+                                            <input type="text" value={item.value} onChange={updateFieldChanged(i + 3)} className="text-right w-14" />
                                         </div>
                                     </div>
                                 ))
