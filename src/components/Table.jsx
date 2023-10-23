@@ -57,7 +57,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count }) 
                                         Total Value
                                     </p>
                                     <div className={classNames('bg-white rounded py-0.5 px-5', { 'border': isGeneric })} style={{ borderColor: color }}>
-                                        <p className='text-base lg:text-xl'><span className='text-black'>$</span>{valueFormat(data.totalValue)}</p>
+                                        <p className='text-base lg:text-xl'>{valueFormat(data.totalValue, data?.unit)}</p>
                                     </div>
                                 </div>
                             )
@@ -140,14 +140,14 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count }) 
                 </div>
                 <div className='bg-white pb-10 pl-5 pr-8'>
                     {
-                        data.rows.map(({ description, value }, i) => {
+                        data.rows.map(({ description, value, unit }, i) => {
                             return (
                                 <div key={`row-${i + 1}`} className='flex items-center justify-between border-b-[0.5px] border-b-silver py-1'>
                                     <p className='text-black'>
                                         {description}
                                     </p>
                                     <p className='text-sm font-semibold text-black'>
-                                        ${valueFormat(value)}
+                                        {valueFormat(value, unit)}
                                     </p>
                                 </div>
                             )

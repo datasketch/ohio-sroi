@@ -42,7 +42,7 @@ export function proxy11(lista) {
     return proxy1(lista) - (lista[0] * lista[1] * lista[2] * lista[3])
 }
 
-export  function proxy11_formula(lista) {
+export function proxy11_formula(lista) {
     return `(${lista[0]} * ${lista[1]} * ${lista[2]}) - (${lista[0]} * ${lista[1]} * ${lista[2]} * ${lista[3]}) = ${lista[4]}`
 }
 
@@ -54,7 +54,7 @@ export function proxy12_formula(lista) {
     return `2 * ${lista[0]} * ${lista[1]} = ${lista[2]}`
 }
 
-export  function proxy18_formula(a, b, c, d) {
+export function proxy18_formula(a, b, c, d) {
     return `${a} + ${b} + ${c} = ${d}`
 }
 
@@ -87,7 +87,7 @@ export function environmental(a, b, c) {
 
     return {
         out,
-        values, 
+        values,
         total
     }
 }
@@ -106,6 +106,25 @@ export function totalTable(lista, total) {
     return str
 }
 
-export function valueFormat(value) {
-    return Intl.NumberFormat("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(value)
+export function valueFormat(value, unit) {
+    let config = {}
+
+    switch (unit) {
+        case 'currency':
+            config = { style: 'currency', currency: 'USD' }
+            break;
+        case 'percentage':
+            config = { style: 'percent' }
+            break;
+        case '':
+            config = {}
+            break;
+        default:
+            config = { style: 'currency', currency: 'USD' }
+            break;
+    }
+
+    return Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2, ...config }).format(+value)
 }
+
+export const getNumbers = (txt) => parseFloat(txt.match(/[\d.]+/g).join(''))
