@@ -702,25 +702,6 @@ export default function Interactive({top = "top-2/3"}) {
         setValues(newValues)
     }
 
-    /* useEffect(() => {
-        const element = tableRefCosts.current && tableRefNumbers.current
-        const { offsetWidth, scrollWidth } = element
-        const limitWidth = scrollWidth - offsetWidth
-
-        const handleScroll = (e) => {
-            const { scrollLeft } = e.target
-            if ((limitWidth - 5) > scrollLeft) {
-                setHasLimit(false)
-            } else {
-                setHasLimit(true)
-            }
-        }
-
-        element.addEventListener('scroll', handleScroll)
-
-        return () => element.removeEventListener('scroll', handleScroll)
-    }, [tableRefCosts.current, tableRefNumbers.current]) */
-
     useEffect(() => {
         const element = tableRefCosts.current
         const { offsetWidth, scrollWidth } = element
