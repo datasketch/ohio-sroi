@@ -2,10 +2,7 @@
 import CardAmount from "../components/CardAmount";
 import TabSection from "../components/TabSection";
 import BaseLayout from "../layout/BaseLayout.astro";
-/* import data from "../data/format.json"; */
-
-const response = await fetch(Astro.url + '/data/format.json')
-const data = await response.json();
+import Home from '../components/Home'
 ---
 
 <BaseLayout title="Home Page" description="Esta es la página inicial">
@@ -17,74 +14,5 @@ const data = await response.json();
     />
   </div>
   <!--  -->
-  <div class="relative">
-    <div class="-mt-20 lg:-mt-32 u-container bg-white">
-      <div class="py-12">
-        <div class="mx-auto max-w-xl">
-          <div class="block lg:hidden">
-            <div class="flex flex-col items-center justify-between">
-              <div class="text-center">
-                <h2 class="text-base lg:text-xl">{data.general.subtitle}</h2>
-                <h1
-                  class="font-monserrat font-semibold text-2xl lg:text-3xl pt-3"
-                >
-                  {data.general.title}
-                </h1>
-              </div>
-              <div class="flex-shrink-0 mt-10">
-                <img src={data.general.logo} alt={data.general.title} />
-              </div>
-            </div>
-          </div>
-          <div class="hidden lg:block">
-            <div class="flex items-center justify-between">
-              <div class="flex-shrink-0">
-                <img src={data.general.logo} alt={data.general.title} />
-              </div>
-              <div class="text-center">
-                <h2 class="text-base lg:text-xl">{data.general.subtitle}</h2>
-                <h1
-                  class="font-monserrat font-semibold text-2xl lg:text-3xl pt-3"
-                >
-                  {data.general.title}
-                </h1>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-gray h-[1px] max-w-[936px] mx-auto mt-8 lg:mt-12 px-9">
-        </div>
-        <div class="mt-10 lg:mt-14">
-          <div class="flex flex-col lg:flex-row lg:gap-x-28 items-center">
-            <div class="px-5 lg:w-1/2">
-              <CardAmount
-                title={data.statistics_section.title}
-                amount={data.statistics_section.invested}
-                cardAmount={data.statistics_section}
-                color={data.general.theme}
-                client:load
-              />
-            </div>
-            <div class="mt-14 lg:w-1/2">
-              <img
-                src={data.statistics_section.src_graph}
-                alt={data.statistics_section.title}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--  -->
-  <div>
-    <TabSection color={data.general.theme} tabs={data.tabs} url={Astro.url} client:load />
-  </div>
-  <div class='u-container py-16 flex gap-x-16 items-center'>
-    <img src="/images/idea 1.svg" alt="">
-    <img src="/images/div2.svg" alt="">
-    <p class="text-sm lg:text-base">
-      {data.general.description}
-    </p>
-  </div>
+  <Home client:only />
 </BaseLayout>
