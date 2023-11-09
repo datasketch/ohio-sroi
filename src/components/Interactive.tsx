@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Table from './Table';
 import classNames from 'classnames';
-import { formatAs, parseToNumber } from '../utils';
+import { parseToNumber } from '../utils';
 import CurrencyInput from 'react-currency-input-field';
 
 

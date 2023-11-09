@@ -3,7 +3,7 @@ import { Tooltip } from 'react-tooltip'
 
 export default function CardAmount({ color = '#00694E', title, amount, cardAmount }) {
     return (
-        <div className="bg-robin-egg-blue/5 py-8 px-10">
+        <div className=" py-8 px-10">
             <h2 className="text-xl text-center">
                 For every
                 <span className="font-semibold text-3xl" style={{ color }}> ${amount}</span>

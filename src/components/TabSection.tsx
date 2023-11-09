@@ -3,14 +3,15 @@ import Table from './Table';
 import Interactive from './Interactive'
 import OutcomeChain from './OutcomeChain';
 import References from './References';
-import { useEffect, useState } from 'react';
 
 
-export default function TabSection({ color = '#00694E', tabs, url, data }) {
-    
+export default function TabSection({ color = '#00694E', tabs, url, data }) {   
+    const searchParams = new URLSearchParams(url)
+    const tab = searchParams.get("query") === "ref"  ? "tab2" : "tab1"
+
     return (
         // TAB PARENT
-        <Tabs.Root defaultValue={url === '?query=ref' ? 'tab2' : 'tab1'} orientation="vertical">
+        <Tabs.Root defaultValue={tab} orientation="vertical">
             {/* TABS CHILDREN */}
             <Tabs.List className='u-container flex' aria-label="tabs">
                 {

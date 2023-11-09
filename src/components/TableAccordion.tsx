@@ -75,17 +75,19 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                                         {item.rows?.map((item, i) => {
                                             if (item.ref) {
                                                 return (
-                                                    <a key={`outcomes-${i + 1}`} href="/?query=ref#tabs" target="_blank"><p key={`outcomes-${i + 1}`} className='text-black text-sm'>
-                                                        {item?.description}
-                                                    </p></a>
+                                                    <>
+                                                        <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
+                                                            {item?.description.slice(0, -18)}
+                                                            <a key={`outcomes-${i + 1}`} href="/?query=ref#tabs" target="_blank" className='text-[#A4D65E] underline'>{item?.description.slice(-18)}</a></p>
+                                                    </>
                                                 )
-                                            } else {
-                                                return (
-                                                    <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
-                                                        {item?.description}
-                                                    </p>
-                                                );
                                             }
+                                            return (
+                                                <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
+                                                    {item?.description}
+                                                </p>
+                                            );
+
                                         })}
                                     </div>
                                 </div>
