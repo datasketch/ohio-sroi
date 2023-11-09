@@ -1,11 +1,10 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 import hexRgb from 'hex-rgb';
-import data from "../data/format.json";
 import { formatAs, valueFormat } from '../utils';
 import classNames from 'classnames';
 
-export default function TableAccordion({ color = '#00694E', setIsOpen, rows, span = true }) {
+export default function TableAccordion({ color = '#00694E', setIsOpen, rows, span = true, data }) {
     const rgb = hexRgb(color, { format: 'array', alpha: 0.1 })
     const rgba = `rgba(${rgb.join(', ')})`
 
@@ -14,8 +13,6 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
         const isOpen = e.target.closest('.AccordionTrigger').getAttribute('data-state') !== 'open'
         setIsOpen(isOpen)
     }
-
-
 
     const addingRows = () => {
         const values = [...data.proxy_inputs, ...data.proxy_values]
@@ -76,11 +73,19 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                                 <div className="col-span-7">
                                     <div className='space-y-4'>
                                         {item.rows?.map((item, i) => {
-                                            return (
-                                                <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
-                                                    {item?.description}
-                                                </p>
-                                            );
+                                            if (item.ref) {
+                                                return (
+                                                    <a key={`outcomes-${i + 1}`} href="/?query=ref#tabs" target="_blank"><p key={`outcomes-${i + 1}`} className='text-black text-sm'>
+                                                        {item?.description}
+                                                    </p></a>
+                                                )
+                                            } else {
+                                                return (
+                                                    <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
+                                                        {item?.description}
+                                                    </p>
+                                                );
+                                            }
                                         })}
                                     </div>
                                 </div>

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { formatAs, valueFormat } from '../utils';
 
-export default function Table({ color, data, isLarge, top = "top-2/3", count, span = true }) {
+export default function Table({ color, data, isLarge, top = "top-2/3", count, span = true, data2 }) {
     const [isOpen, setIsOpen] = useState(false)
     const isGeneric = color === '#00694E'
     const hasRow = !!data.rows
@@ -86,7 +86,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
                                         </h4>
                                     </div>
                                 </div>
-                                {(data.id === 'economic_impact' || data.id === 'social_impact' || data.id === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} />}
+                                {(data.id === 'economic_impact' || data.id === 'social_impact' || data.id === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} />}
                             </div>
                             <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px" }}>
                                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.

@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import Table from './Table';
-import data from '../data/format.json'
 import classNames from 'classnames';
 import { formatAs, parseToNumber } from '../utils';
 import CurrencyInput from 'react-currency-input-field';
 
 
-export default function Interactive({ top = "top-2/3" }) {
+export default function Interactive({ top = "top-2/3", data }) {
+    console.log(data);
     const color = '#00694E'
     const isGeneric = true
     const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
@@ -227,7 +227,7 @@ export default function Interactive({ top = "top-2/3" }) {
                             tables.map((table, i) => {
                                 if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
                                     return (
-                                        <Table key={`table-${i + 1}`} color={color} data={table} isLarge span={false} />
+                                        <Table key={`table-${i + 1}`} color={color} data={table} isLarge span={false} data2={data} />
                                     )
                                 } else {
                                     return (

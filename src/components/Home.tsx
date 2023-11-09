@@ -1,11 +1,14 @@
 import CardAmount from "./CardAmount";
 import TabSection from "./TabSection";
+import { useEffect, useState } from 'react';
 
 const data = await fetch('/data/format.json').then((response) =>
   response.json()
 );
 
 export default function Home() {
+  const [url, setUrl] = useState(window.location.search)
+
   return (
     <>
       <div className="relative">
@@ -66,8 +69,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div>
-        <TabSection color={data.general.theme} tabs={data.tabs} />
+      <div id='tabs'>
+        <TabSection color={data.general.theme} tabs={data.tabs} url={url} data={data} />
       </div>
       <div className='u-container py-16 flex gap-x-16 items-center'>
         <img src="/images/idea 1.svg" alt="" />
