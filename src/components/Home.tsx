@@ -1,13 +1,13 @@
 import CardAmount from "./CardAmount";
 import TabSection from "./TabSection";
-import { useEffect, useState } from 'react';
+import { suseState } from 'react';
 
 const data = await fetch('/data/format.json').then((response) =>
   response.json()
 );
 
 export default function Home() {
-  const [url, setUrl] = useState(window.location.search)
+  const url = window.location.search
 
   return (
     <>
@@ -49,7 +49,7 @@ export default function Home() {
             <div className="bg-gray h-[1px] max-w-[936px] mx-auto mt-8 lg:mt-12 px-9">
             </div>
             <div className="mt-10 lg:mt-14">
-              <div className="flex flex-col lg:flex-row lg:gap-x-28 items-center">
+              <div className="flex flex-col  lg:gap-x-28 items-center">
                 <div className="px-5 lg:w-1/2">
                   <CardAmount
                     title={data.statistics_section.title}

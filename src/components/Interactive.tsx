@@ -6,7 +6,6 @@ import CurrencyInput from 'react-currency-input-field';
 
 
 export default function Interactive({ top = "top-2/3", data }) {
-    console.log(data);
     const color = '#00694E'
     const isGeneric = true
     const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
