@@ -2,7 +2,10 @@
 import CardAmount from "../components/CardAmount";
 import TabSection from "../components/TabSection";
 import BaseLayout from "../layout/BaseLayout.astro";
-import data from "../data/format.json";
+/* import data from "../data/format.json"; */
+
+const response = await fetch(Astro.url + '/data/format.json')
+const data = await response.json();
 ---
 
 <BaseLayout title="Home Page" description="Esta es la página inicial">
@@ -14,7 +17,7 @@ import data from "../data/format.json";
     />
   </div>
   <!--  -->
-  <div class="relative pb-16 lg:pb-24">
+  <div class="relative">
     <div class="-mt-20 lg:-mt-32 u-container bg-white">
       <div class="py-12">
         <div class="mx-auto max-w-xl">
@@ -51,7 +54,7 @@ import data from "../data/format.json";
         </div>
         <div class="bg-gray h-[1px] max-w-[936px] mx-auto mt-8 lg:mt-12 px-9">
         </div>
-        <div class="mt-10 lg:mt-20">
+        <div class="mt-10 lg:mt-14">
           <div class="flex flex-col lg:flex-row lg:gap-x-28 items-center">
             <div class="px-5 lg:w-1/2">
               <CardAmount
@@ -75,7 +78,7 @@ import data from "../data/format.json";
   </div>
   <!--  -->
   <div>
-    <TabSection color={data.general.theme} tabs={data.tabs} client:load />
+    <TabSection color={data.general.theme} tabs={data.tabs} url={Astro.url} client:load />
   </div>
   <div class='u-container py-16 flex gap-x-16 items-center'>
     <img src="/images/idea 1.svg" alt="">
