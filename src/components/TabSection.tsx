@@ -7,7 +7,7 @@ import References from './References';
 
 export default function TabSection({ color = '#00694E', tabs, url, data }) {
   const searchParams = new URLSearchParams(url)
-  const tab = searchParams.get("query") === "ref" ? "tab2" : "tab1"
+  const tab = searchParams.get("query") === "ref" ? "tab3" : "tab1"
 
   return (
     // TAB PARENT

@@ -90,9 +90,42 @@ export default function Interactive({ top = "top-2/3", data }) {
   }, [tableRefNumbers.current])
 
   return (
-    <div className='pt-12 pb-9'>
-      <div className='m-10'>
-        <div className='rounded-2xl overflow-hidden flex gap-x-5'>
+    <div className='pb-9'>
+      <div className='mx-10 pt-10'>
+        <div className="flex items-center justify-start pb-12">
+          <p className="text-darmouth-green text-xl md:text-2xl font-semibold">
+            Calculate program
+          </p>
+        </div>
+        <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-11/12 mx-auto'>
+          <h2 className="text-xl text-center">
+            For every
+            <span className="font-semibold" style={{ color }}> $1 </span>
+            invested in Passion Works ${socialValue.toFixed(2)}
+          </h2>
+          <div className="mt-5 rounded-lg text-center">
+            <p className="text-gray-2 text-center mt-3 text-lg lg:text-xl">
+              of social, economic, and environmental value is created.
+            </p>
+          </div>
+        </div>
+        <div className='overflow-hidden flex gap-x-5'>
+          <div className='space-y-12 w-2/3 flex flex-col justify-center'>
+            {/* TABLES */}
+            {
+              tables.map((table, i) => {
+                if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
+                  return (
+                    <Table key={`table-${i + 1}`} color={color} data={table} isLarge count={i} span={false} data2={data} />
+                  )
+                } else {
+                  return (
+                    <Table key={`table-${i + 1}`} color={color} count={i} data={table} />
+                  )
+                }
+              })
+            }
+          </div>
           <div className='flex flex-col gap-5 w-1/3 mt-16'>
             <div className='relative'>
               <div ref={tableRefCosts} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
@@ -200,41 +233,6 @@ export default function Interactive({ top = "top-2/3", data }) {
                 </div>
               </div>
             </div>
-          </div>
-          <div className='space-y-12 w-2/3 flex flex-col justify-center'>
-            <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-1/2 mx-auto'>
-              <h2 className="text-xl text-center">
-                For every
-                <br />
-                <span className="font-semibold" style={{ color }}>$1</span>
-                <br />
-                invested in Passion Works
-              </h2>
-              <div className="mt-5 rounded-lg text-center">
-                {/* <p className='text-2xl'>A social value</p> */}
-                <p className="text-2xl font-semibold mt-1" >
-                  $ {socialValue.toFixed(2)}
-                </p>
-                <div className="bg-silver h-[0.5px] mt-5"></div>
-                <p className="text-gray-2 text-center mt-3 text-lg lg:text-xl">
-                  of social, economic, and environmental value is created.
-                </p>
-              </div>
-            </div>
-            {/* TABLES */}
-            {
-              tables.map((table, i) => {
-                if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
-                  return (
-                    <Table key={`table-${i + 1}`} color={color} data={table} isLarge span={false} data2={data} />
-                  )
-                } else {
-                  return (
-                    <Table key={`table-${i + 1}`} color={color} data={table} />
-                  )
-                }
-              })
-            }
           </div>
         </div>
       </div>

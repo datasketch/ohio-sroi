@@ -7,13 +7,14 @@ const data = await fetch('./data/format.json').then((response) =>
 
 export default function Home() {
   const url = window.location.search
+  const color = data.general.theme
 
   return (
     <>
       <div className="relative">
         <div className="-mt-20 lg:-mt-32 u-container bg-white">
           <div className="py-12">
-            <div className="mx-auto max-w-xl">
+            <div className="mx-auto max-w-4xl">
               <div className="block lg:hidden">
                 <div className="flex flex-col items-center justify-between">
                   <div className="text-center">
@@ -29,50 +30,31 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="hidden lg:block">
-                <div className="flex items-center justify-between">
+              <div className="hidden lg:block mb-16">
+                <div className="flex items-center justify-between gap-16">
                   <div className="flex-shrink-0">
                     <img src={data.general.logo} alt={data.general.title} />
                   </div>
                   <div className="text-center">
-                    <h2 className="text-base lg:text-xl">{data.general.subtitle}</h2>
-                    <h1
-                      className="font-monserrat font-semibold text-2xl lg:text-3xl pt-3"
-                    >
-                      {data.general.title}
-                    </h1>
+                    <h1>For every
+                      <span className="font-semibold text-3xl" style={{ color }}> ${data.statistics_section.invested} </span>
+                      invested in ${data.general.title} creates <span className="font-semibold text-3xl" style={{ color }}> ${data.statistics_section.return} </span>{data.statistics_section.description}</h1>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="bg-gray h-[1px] max-w-[936px] mx-auto mt-8 lg:mt-12 px-9">
-            </div>
-            <div className="mt-10 lg:mt-14">
-              <div className="flex flex-col lg:gap-x-28 items-center">
-                <div className="px-5 lg:w-1/2">
-                  <CardAmount
-                    title={data.statistics_section.title}
-                    amount={data.statistics_section.invested}
-                    cardAmount={data.statistics_section}
-                    color={data.general.theme}
-                  />
-                </div>
-                <div className="mt-14 lg:w-1/2">
-                  <img
-                    src={data.statistics_section.src_graph}
-                    alt={data.statistics_section.title}
-                  />
-                </div>
+              <img src="/images/home.svg" alt="" />
+              <div className="flex items-center justify-between mt-16">
+                <h3>{data.general.subtitle}</h3>
+                <img src="/images/logo-5.svg" alt="" />
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div >
       <div id='tabs'>
         <TabSection color={data.general.theme} tabs={data.tabs} url={url} data={data} />
       </div>
       <div className='u-container py-16 flex gap-x-16 items-center'>
-        <img src="./images/idea 1.svg" alt="" />
         <img src="./images/div2.svg" alt="" />
         <p className="text-sm lg:text-base">
           {data.general.description}
