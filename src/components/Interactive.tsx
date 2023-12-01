@@ -29,44 +29,9 @@ export default function Interactive({ top = "top-2/3", data }) {
     setPrev(parseToNumber(value))
   }
 
-  /* const updateTable = () => {
-    console.log("enter");
-    let newTable = JSON.parse(JSON.stringify(tables));
-    let newValues = JSON.parse(JSON.stringify(values));
-    console.log(newTable);
-    console.log(newValues);
-    let social = 0
-    for (let t = 0; t < newTable.length; t++) {
-      let total = 0
-      for (let r = 0; r < newTable[t].rows.length; r++) {
-        const vars = newTable[t].rows[r].variables.split(",")
-        let temp = newTable[t].rows[r].formula
-        for (let variable of vars) {
-          temp = temp.replaceAll(variable, newValues.find(ele => ele.id === variable).value)
-        }
-        newTable[t].rows[r].value = eval(`${temp}`)
-        newTable[t].rows[r].formula_str = `${temp} = ${newTable[t].rows[r].value}`
-        if (newTable[t].rows[r].value != tables[t].rows[r].value) {
-          newTable[t].rows[r].changed = true
-          console.log("enter 2");
-        } else {
-          newTable[t].rows[r].changed = false
-        }
-        total = total + newTable[t].rows[r].value
-      }
-      const listaTotales = newTable[t].rows.map(ele => ele.value)
-      newTable[t].totalValue = total
-      social = social + total
-    }
-    social = social / (outputs[0].value + outputs[1].value)
-    setSocialValue(social)
-    console.log(newTable);
-    setTables(newTable)
-    setValues(newValues)
-  } */
+
 
   const updateTable = () => {
-    console.log("enter");
     let newTable = [...tables]
     let newValues = [...values]
     let social = 0
@@ -83,11 +48,7 @@ export default function Interactive({ top = "top-2/3", data }) {
         r.formula_str = `${temp} = ${r.value}`
         total = total + r.value
         if (prev_value != r.value) {
-          console.log("valores:");
           r.changed = true
-          console.log(r.changed);
-          console.log(prev_value);
-          console.log(r.value);
         } else {
           r.changed = false
         }
