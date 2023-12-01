@@ -6,7 +6,7 @@ import CurrencyInput from 'react-currency-input-field';
 
 
 export default function Interactive({ top = "top-2/3", data }) {
-  const color = '#00694E'
+  const color = data.general.theme
   const isGeneric = true
   const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
   const [outputs, setOutputs] = useState(data.proxy_inputs)
@@ -16,16 +16,57 @@ export default function Interactive({ top = "top-2/3", data }) {
   const tableRefNumbers = useRef()
   const [hasLimit, setHasLimit] = useState(false)
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
+  const [prev, setPrev] = useState(0)
 
   const updateFieldChanged = index => (value) => {
     let newArr = [...outputs]
     newArr[index].value = value === '' ? 0 : parseToNumber(value)
 
     setOutputs(newArr);
-    updateTable()
+    if (parseToNumber(value) != prev) {
+      updateTable()
+    }
+    setPrev(parseToNumber(value))
   }
 
+  /* const updateTable = () => {
+    console.log("enter");
+    let newTable = JSON.parse(JSON.stringify(tables));
+    let newValues = JSON.parse(JSON.stringify(values));
+    console.log(newTable);
+    console.log(newValues);
+    let social = 0
+    for (let t = 0; t < newTable.length; t++) {
+      let total = 0
+      for (let r = 0; r < newTable[t].rows.length; r++) {
+        const vars = newTable[t].rows[r].variables.split(",")
+        let temp = newTable[t].rows[r].formula
+        for (let variable of vars) {
+          temp = temp.replaceAll(variable, newValues.find(ele => ele.id === variable).value)
+        }
+        newTable[t].rows[r].value = eval(`${temp}`)
+        newTable[t].rows[r].formula_str = `${temp} = ${newTable[t].rows[r].value}`
+        if (newTable[t].rows[r].value != tables[t].rows[r].value) {
+          newTable[t].rows[r].changed = true
+          console.log("enter 2");
+        } else {
+          newTable[t].rows[r].changed = false
+        }
+        total = total + newTable[t].rows[r].value
+      }
+      const listaTotales = newTable[t].rows.map(ele => ele.value)
+      newTable[t].totalValue = total
+      social = social + total
+    }
+    social = social / (outputs[0].value + outputs[1].value)
+    setSocialValue(social)
+    console.log(newTable);
+    setTables(newTable)
+    setValues(newValues)
+  } */
+
   const updateTable = () => {
+    console.log("enter");
     let newTable = [...tables]
     let newValues = [...values]
     let social = 0
@@ -37,9 +78,19 @@ export default function Interactive({ top = "top-2/3", data }) {
         for (let variable of vars) {
           temp = temp.replaceAll(variable, newValues.find(ele => ele.id === variable).value)
         }
+        const prev_value = r.value
         r.value = eval(`${temp}`)
         r.formula_str = `${temp} = ${r.value}`
         total = total + r.value
+        if (prev_value != r.value) {
+          console.log("valores:");
+          r.changed = true
+          console.log(r.changed);
+          console.log(prev_value);
+          console.log(r.value);
+        } else {
+          r.changed = false
+        }
       }
       const listaTotales = t.rows.map(ele => ele.value)
       t.totalValue = total
@@ -93,30 +144,30 @@ export default function Interactive({ top = "top-2/3", data }) {
     <div className='pb-9'>
       <div className='mx-10 pt-10'>
         <div className="flex items-center justify-start pb-12">
-          <p className="text-darmouth-green text-xl md:text-2xl font-semibold">
+          <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
             Calculate program
           </p>
         </div>
-        <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-11/12 mx-auto'>
+        <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-11/12 mx-auto rounded-2xl shadow-lg'>
           <h2 className="text-xl text-center">
             For every
-            <span className="font-semibold" style={{ color }}> $1 </span>
-            invested in Passion Works ${socialValue.toFixed(2)}
+            <span className="font-semibold text-3xl" style={{ color }}> $1 </span>
+            invested in Passion Works<span className="font-semibold text-3xl" style={{ color }}> ${socialValue.toFixed(2)} </span>
           </h2>
           <div className="mt-5 rounded-lg text-center">
-            <p className="text-gray-2 text-center mt-3 text-lg lg:text-xl">
+            <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
               of social, economic, and environmental value is created.
             </p>
           </div>
         </div>
         <div className='overflow-hidden flex gap-x-5'>
-          <div className='space-y-12 w-2/3 flex flex-col justify-center'>
+          <div className='space-y-16 w-2/3 flex flex-col justify-between mt-16'>
             {/* TABLES */}
             {
               tables.map((table, i) => {
                 if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
                   return (
-                    <Table key={`table-${i + 1}`} color={color} data={table} isLarge count={i} span={false} data2={data} />
+                    <Table key={`table-${i + 1}`} color='#00694E' data={table} isLarge count={i} span={false} data2={data} />
                   )
                 } else {
                   return (
@@ -158,7 +209,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                           </h4>
                         </div>
                         <div className="col-span-5 pl-8">
-                          <CurrencyInput className='w-full text-right' defaultValue={parseToNumber(item.value)} decimalsLimit={2} prefix='$' onValueChange={updateFieldChanged(i)} />
+                          <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1' defaultValue={parseToNumber(item.value)} decimalsLimit={2} prefix='$' onValueChange={updateFieldChanged(i)} />
                         </div>
                       </div>
                     ))
@@ -218,7 +269,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                             </h4>
                           </div>
                           <div className="col-span-5 pl-8">
-                            <CurrencyInput className='w-full text-right' defaultValue={parseToNumber(item.value)} {...config} onValueChange={updateFieldChanged(i + 3)} />
+                            <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1' defaultValue={parseToNumber(item.value)} {...config} onValueChange={updateFieldChanged(i + 3)} />
                           </div>
                         </div>
                       )

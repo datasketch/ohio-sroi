@@ -56,7 +56,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
                   <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
                     Total Value
                   </p>
-                  <div className={classNames('bg-white rounded py-0.5 px-5', { 'border': isGeneric })} style={{ borderColor: color }}>
+                  <div className={classNames('bg-white rounded py-0.5 px-5')} >
                     <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
                   </div>
                 </div>

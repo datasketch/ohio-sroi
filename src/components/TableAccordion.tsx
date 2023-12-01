@@ -39,7 +39,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
       {
         rows && rows.map((item, i) => (
           <Accordion.Item key={i} className='AccordionItem' value={`item-${i}`}>
-            <Accordion.Header className='AccordionHeader' style={{ color: rgb, backgroundColor: rgba, borderColor: color }}>
+            <Accordion.Header className='AccordionHeader py-4' style={{ color: rgb, backgroundColor: rgba, borderColor: color }}>
               <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
                 <h4 className='text-sm lg:text-base text-black'>
                   {item.stakeholders}
@@ -52,7 +52,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
               </div>
               <div className={classNames('flex items-center gap-x-8', { 'col-span-3': !span, 'col-span-2': span })}>
                 <div className='w-9/12'>
-                  <h4 className='text-sm font-semibold text-black text-right'>
+                  <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
                     $ {valueFormat(item.value)}
                   </h4>
                 </div>

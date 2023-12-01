@@ -26,13 +26,13 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
       {
         tabs.map((item, i) => {
           return (
-            <Tabs.Content key={`tab-content-${i + 1}`} className='bg-anti-flash-white' value={`tab${i + 1}`}>
+            <Tabs.Content key={`tab-content-${i + 1}`} className='bg-anti-flash-white' value={`tab${i + 1}`} >
               {
                 item.type === 'table' && (
                   <div className='pt-12 pb-9'>
                     <div className='u-container'>
                       <div className="flex items-center justify-start pb-12">
-                        <p className="text-darmouth-green text-xl md:text-2xl font-semibold">
+                        <p className=" text-xl md:text-2xl font-semibold" style={{ color }}>
                           Look at the details
                         </p>
                       </div>
@@ -42,7 +42,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                           item.tables.map((table, i) => {
                             if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
                               return (
-                                <Table key={`table-${i + 1}`} color={color} data={table} isLarge count={i} data2={data} />
+                                <Table key={`table-${i + 1}`} color={color} data={{...table}} isLarge count={i} data2={data} />
                               )
                             } else {
                               return (
@@ -76,7 +76,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
               }
               {
                 item.type === 'interative' && (
-                  <Interactive data={data} />
+                  <Interactive data={JSON.parse(JSON.stringify(data))} />
                 )
               }
             </Tabs.Content>
