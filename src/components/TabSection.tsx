@@ -26,7 +26,9 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
       {
         tabs.map((item, i) => {
           return (
-            <Tabs.Content key={`tab-content-${i + 1}`} className='bg-anti-flash-white' value={`tab${i + 1}`} >
+            <Tabs.Content key={`tab-content-${i + 1}`} className='bg-anti-flash-white relative' value={`tab${i + 1}`} >
+              <img src="/images/bg-dashboard.svg" alt="bg" className='absolute right-0' />
+              <img src="/images/bg-botton.svg" alt="bgh" className='absolute bottom-0' />
               {
                 item.type === 'table' && (
                   <div className='pt-12 pb-9'>
