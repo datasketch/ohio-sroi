@@ -28,7 +28,7 @@
   .AccordionContent {
     overflow: hidden;
   }
-  
+
   .AccordionContent[data-state='open'] {
      animation: slideDown 300ms ease-out;
   }
@@ -83,7 +83,7 @@
     @apply rounded-md py-1.5 px-2;
   }
 
-  
+
   .AccordionTrigger[data-state='open'] > .AccordionChevron {
     @apply !text-white;
     transform: rotate(90deg);
@@ -125,7 +125,7 @@
       opacity: 1;
     }
   }
-  
+
   @keyframes contentShow {
     from {
       opacity: 0;
@@ -142,4 +142,10 @@
     .u-container {
         @apply mx-auto w-11/12 lg:w-10/12 max-w-[1088px];
     }
+}
+
+.inputclass:focus-visible {
+  border-color: #00C1D4;
+  border-width: 2px;
+  outline: none;
 }

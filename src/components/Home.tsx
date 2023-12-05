@@ -38,7 +38,7 @@ export default function Home() {
                   <div className="text-center">
                     <h1>For every
                       <span className="font-semibold text-3xl" style={{ color }}> ${data.statistics_section.invested} </span>
-                      invested in ${data.general.title} creates <span className="font-semibold text-3xl" style={{ color }}> ${data.statistics_section.return} </span>{data.statistics_section.description}</h1>
+                      invested in {data.general.title} creates <span className="font-semibold text-3xl" style={{ color }}> ${data.statistics_section.return} </span>{data.statistics_section.description}</h1>
                   </div>
                 </div>
               </div>

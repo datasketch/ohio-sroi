@@ -106,7 +106,7 @@ export default function Interactive({ top = "top-2/3", data }) {
       <div className='mx-10 pt-10'>
         <div className="flex items-center justify-start pb-12">
           <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
-            Calculate program
+            Calculate the details
           </p>
         </div>
         <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-11/12 mx-auto rounded-2xl shadow-lg'>
@@ -170,7 +170,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                           </h4>
                         </div>
                         <div className="col-span-5 pl-8">
-                          <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1' defaultValue={parseToNumber(item.value)} decimalsLimit={2} prefix='$' onValueChange={updateFieldChanged(i)} />
+                          <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1 inputclass' defaultValue={parseToNumber(item.value)} decimalsLimit={2} prefix='$' onValueChange={updateFieldChanged(i)} />
                         </div>
                       </div>
                     ))
