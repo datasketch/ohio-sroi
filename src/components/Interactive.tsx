@@ -230,7 +230,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                             </h4>
                           </div>
                           <div className="col-span-5 pl-8">
-                            <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1' defaultValue={parseToNumber(item.value)} {...config} onValueChange={updateFieldChanged(i + 3)} />
+                            <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1 inputclass' defaultValue={parseToNumber(item.value)} {...config} onValueChange={updateFieldChanged(i + 3)} />
                           </div>
                         </div>
                       )
