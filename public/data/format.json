@@ -308,7 +308,7 @@
       "id": "wage_earned_artist",
       "value": 10.1,
       "type": "user_input",
-      "unit": "currency",
+      "unit": "",
       "description": "Average hourly wage earned by an artist",
       "changed": false
     },
@@ -519,7 +519,7 @@
     {
       "id": "discount_counterfactual",
       "value": 0.1,
-      "unit": "",
+      "unit": "percentage",
       "description": "Discount for counterfactual (number of artist support person who said they would take artist to dayhab instead)",
       "changed": false
     },
