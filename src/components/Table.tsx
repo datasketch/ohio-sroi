@@ -56,7 +56,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
                   <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
                     Total Value
                   </p>
-                  <div className={classNames('bg-white rounded py-0.5 px-5')} >
+                  <div className='bg-white rounded py-0.5 px-5' >
                     <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
                 </div>
                 {(data.id === 'economic_impact' || data.id === 'social_impact' || data.id === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} />}
               </div>
-              <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px", color: "black", background: "white", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"}} className='text-blue-400'>
+              <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px", color: "black", background: "white", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" }}>
                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.
               </Tooltip>
             </div>

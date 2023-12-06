@@ -35,7 +35,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                     <img src="/images/bg-botton.svg" alt="bgh" className='absolute bottom-0' />
                     <div className='u-container'>
                       <div className="flex items-center justify-start pb-12">
-                        <p className=" text-xl md:text-2xl font-semibold" style={{ color }}>
+                        <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
                           Look at the details
                         </p>
                       </div>

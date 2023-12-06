@@ -145,7 +145,5 @@
 }
 
 .inputclass:focus-visible {
-  border-color: #00C1D4;
-  border-width: 2px;
-  outline: none;
+  @apply border-2 outline-none border-[#00C1D4];
 }

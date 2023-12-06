@@ -50,7 +50,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div >
+      </div>
       <div id='tabs'>
         <TabSection color={data.general.theme} tabs={data.tabs} url={url} data={data} />
       </div>

@@ -23,7 +23,7 @@ export default function Interactive({ top = "top-2/3", data }) {
     newArr[index].value = value === '' ? 0 : parseToNumber(value)
 
     setOutputs(newArr);
-    if (parseToNumber(value) != prev) {
+    if (parseToNumber(value) !== prev) {
       updateTable()
     }
     setPrev(parseToNumber(value))
@@ -47,11 +47,7 @@ export default function Interactive({ top = "top-2/3", data }) {
         r.value = eval(`${temp}`)
         r.formula_str = `${temp} = ${r.value}`
         total = total + r.value
-        if (prev_value != r.value) {
-          r.changed = true
-        } else {
-          r.changed = false
-        }
+        r.changed = prev_value !== r.value
       }
       const listaTotales = t.rows.map(ele => ele.value)
       t.totalValue = total
@@ -126,15 +122,9 @@ export default function Interactive({ top = "top-2/3", data }) {
             {/* TABLES */}
             {
               tables.map((table, i) => {
-                if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
-                  return (
-                    <Table key={`table-${i + 1}`} color='#00694E' data={table} isLarge count={i} span={false} data2={data} />
-                  )
-                } else {
-                  return (
-                    <Table key={`table-${i + 1}`} color={color} count={i} data={table} />
-                  )
-                }
+                return ['economic_impact', 'social_impact', 'environmental_impact'].includes(table.id) ?
+                <Table key={`table-${i + 1}`} color='#00694E' data={table} isLarge count={i} span={false} data2={data} /> :
+                <Table key={`table-${i + 1}`} color={color} count={i} data={table} />
               })
             }
           </div>
