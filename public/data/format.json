@@ -11,7 +11,7 @@
     "invested": 1,
     "label": "A social value",
     "return": 5.85,
-    "description": "of social, economic, and environmental impact",
+    "description": "of social, environmental, and economic impact",
     "information": "This dollar amount reflects the ripple eects caused by experiential learning and service learning. After participating in experiential or service learning, students experience short term outcomes such as increased academic success and longer term impacts such as increased likelihood of being hired and earning higher wages. Communities benefit from increased sta capacity and increased resources. Impacts to the university from experiential learning or service learning include cultivating a reputation for student engagement that impacts potential new enrollment.",
     "src_graph": "./images/image-graph.png",
     "tooltip": "Social value includes both financial and non-financial impacts of a program, activity, or organization. For the purposes of this calculator, social value is understood to encompass social, environmental, and economic impacts."
@@ -308,7 +308,7 @@
       "id": "wage_earned_artist",
       "value": 10.1,
       "type": "user_input",
-      "unit": "",
+      "unit": "currency",
       "description": "Average hourly wage earned by an artist",
       "changed": false
     },
@@ -469,21 +469,21 @@
     {
       "id": "valuation_sense_identity",
       "value": 1500,
-      "unit": "",
+      "unit": "currency",
       "description": "Wellbeing valuation of sense of identity",
       "changed": false
     },
     {
       "id": "valuation_independence",
       "value": 2500,
-      "unit": "",
+      "unit": "currency",
       "description": "Wellbeing valuation of independence/agency",
       "changed": false
     },
     {
       "id": "health_benefits_connection",
       "value": 2000,
-      "unit": "",
+      "unit": "currency",
       "description": "Health benefits of having a sense of connection with others",
       "changed": false
     },
@@ -497,14 +497,14 @@
     {
       "id": "FMV_teacher",
       "value": 15000,
-      "unit": "",
+      "unit": "currency",
       "description": "FMV of creative teacher",
       "changed": false
     },
     {
       "id": "health_benefits_purpose",
       "value": 2500,
-      "unit": "",
+      "unit": "currency",
       "description": "Health benefits of having sense of purpose at work",
       "changed": false
     },
@@ -547,28 +547,28 @@
     {
       "id": "value_placemaking",
       "value": 100,
-      "unit": "",
+      "unit": "currency",
       "description": "Value of placemaking (living in a place with art murals)",
       "changed": false
     },
     {
       "id": "volunteer_hour",
       "value": 29.17,
-      "unit": "",
+      "unit": "currency",
       "description": "Value of a volunteer hour",
       "changed": false
     },
     {
       "id": "micro_credential_cultural",
       "value": 100,
-      "unit": "",
+      "unit": "currency",
       "description": "Value of a micro-credential in cultural competence",
       "changed": false
     },
     {
       "id": "reinvested_community",
       "value": 0.58,
-      "unit": "",
+      "unit": "currency",
       "description": "For every $1 spent in a local store, $0.58 will be re-invested in the local community",
       "changed": false
     },
@@ -599,7 +599,7 @@
     {
       "id": "social_cost_carbon",
       "value": 151,
-      "unit": "",
+      "unit": "currency",
       "description": "Social Cost of Carbon",
       "changed": false
     }

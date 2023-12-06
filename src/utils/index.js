@@ -6,13 +6,13 @@ export function formatAs(txt, unit = '') {
 
     switch (unit) {
         case 'currency':
-            value = '$0,0'
+            value = '$0,0.00'
             break;
         case 'percentage':
             value = '0%'
             break;
         default:
-            value = '0,0'
+            value = '0,0.00'
             break;
     }
 

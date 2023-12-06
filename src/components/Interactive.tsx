@@ -113,11 +113,11 @@ export default function Interactive({ top = "top-2/3", data }) {
           <h2 className="text-xl text-center">
             For every
             <span className="font-semibold text-3xl" style={{ color }}> $1 </span>
-            invested in Passion Works<span className="font-semibold text-3xl" style={{ color }}> ${socialValue.toFixed(2)} </span>
+            invested in {data.general.title} creates<span className="font-semibold text-3xl" style={{ color }}> ${socialValue.toFixed(2)} </span>
           </h2>
           <div className="mt-5 rounded-lg text-center">
             <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
-              of social, economic, and environmental value is created.
+              {data.statistics_section.description}
             </p>
           </div>
         </div>
