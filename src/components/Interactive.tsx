@@ -20,13 +20,14 @@ export default function Interactive({ top = "top-2/3", data }) {
 
   const updateFieldChanged = index => (value) => {
     let newArr = [...outputs]
-    newArr[index].value = value === '' ? 0 : parseToNumber(value)
+    const newValue = parseToNumber(value)
+    newArr[index].value = value === '' ? 0 : newValue
 
     setOutputs(newArr);
-    if (parseToNumber(value) !== prev) {
+    if (newValue !== prev) {
       updateTable()
     }
-    setPrev(parseToNumber(value))
+    setPrev(newValue)
   }
 
 
