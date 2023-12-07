@@ -8,6 +8,8 @@ import References from './References';
 export default function TabSection({ color = '#00694E', tabs, url, data }) {
   const searchParams = new URLSearchParams(url)
   const tab = searchParams.get("query") === "ref" ? "tab3" : "tab1"
+  const show = searchParams.get("display") === "false" ? false : true
+  console.log(show);
 
   return (
     // TAB PARENT
@@ -16,9 +18,17 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
       <Tabs.List className='u-container flex' aria-label="tabs">
         {
           tabs.map(({ label }, i) => {
+            if (label == "Program Details") {
+              if (show) {
+                return (
+                  <Tabs.Trigger key={`tab-trigger-${i + 1}`} value={`tab${i + 1}`} className="TabsTrigger" style={{ color }}>{label}</Tabs.Trigger>
+                )
+              }
+
+            } else {
             return (
               <Tabs.Trigger key={`tab-trigger-${i + 1}`} value={`tab${i + 1}`} className="TabsTrigger" style={{ color }}>{label}</Tabs.Trigger>
-            )
+            )}
           })
         }
       </Tabs.List>
@@ -78,7 +88,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                 )
               }
               {
-                item.type === 'interative' && (
+                item.type === 'interative' & show && (
                   <Interactive data={JSON.parse(JSON.stringify(data))} />
                 )
               }
