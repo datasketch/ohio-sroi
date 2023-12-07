@@ -11,7 +11,7 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
   const [outputs, setOutputs] = useState(data.proxy_inputs)
   const [tables, setTables] = useState(data.tabs[0].tables)
-  const [socialValue, setSocialValue] = useState(data.statistics_section.return)
+  const [socialValue, setSocialValue] = useState(data.general.return)
   const tableRefCosts = useRef()
   const tableRefNumbers = useRef()
   const [hasLimit, setHasLimit] = useState(false)
@@ -109,17 +109,17 @@ export default function Interactive({ top = "top-2/3", data }) {
         <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-11/12 mx-auto rounded-2xl shadow-lg'>
           <h2 className="text-xl text-center">
             For every
-            <span className="font-semibold text-3xl" style={{ color }}> $1 </span>
+            <span className="font-semibold text-3xl" style={{ color }}> ${data.general.invested} </span>
             invested in {data.general.title} creates<span className="font-semibold text-3xl" style={{ color }}> ${socialValue.toFixed(2)} </span>
           </h2>
           <div className="mt-5 rounded-lg text-center">
             <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
-              {data.statistics_section.description}
+              {data.general.return_description}
             </p>
           </div>
         </div>
-        <div className='overflow-hidden flex gap-x-5'>
-          <div className='space-y-16 w-2/3 flex flex-col justify-between mt-16'>
+        <div className='overflow-hidden flex flex-col lg:flex-row gap-x-5'>
+          <div className='space-y-16 lg:w-2/3 flex flex-col justify-between mt-16'>
             {/* TABLES */}
             {
               tables.map((table, i) => {
@@ -129,7 +129,7 @@ export default function Interactive({ top = "top-2/3", data }) {
               })
             }
           </div>
-          <div className='flex flex-col gap-5 w-1/3 mt-16'>
+          <div className='flex flex-col gap-5 lg:w-1/3 mt-16'>
             <div className='relative'>
               <div ref={tableRefCosts} className='overflow-x-scroll lg:overflow-hidden rounded-2xl shadow'>
                 <div className='w-[450px] lg:w-auto'>

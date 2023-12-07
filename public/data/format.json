@@ -1,20 +1,15 @@
 {
   "general": {
     "theme": "#00C1D4",
+    "top_logo": "/images/logo.svg",
     "logo": "./images/logo-1.svg",
     "title": "PASSION WORKS STUDIO",
+    "invested": 1,
+    "return": 5.85,
+    "return_description": "of social, environmental, and economic impact",
+    "banner": "/images/home.svg",
     "subtitle": "Social Return on Investment Impact Calculator created by",
     "description": "Social Return on Investment (SROI) is a method of calculating and communicating impact using dollar values. SROI measures the social value created by an organization’s activities, products, services or community initiatives. SROI combines social, economic, and environmental impacts into a comprehensive financial measurement of social value in a holistic measure of impact."
-  },
-  "statistics_section": {
-    "title": "invested in Passion Works",
-    "invested": 1,
-    "label": "A social value",
-    "return": 5.85,
-    "description": "of social, environmental, and economic impact",
-    "information": "This dollar amount reflects the ripple eects caused by experiential learning and service learning. After participating in experiential or service learning, students experience short term outcomes such as increased academic success and longer term impacts such as increased likelihood of being hired and earning higher wages. Communities benefit from increased sta capacity and increased resources. Impacts to the university from experiential learning or service learning include cultivating a reputation for student engagement that impacts potential new enrollment.",
-    "src_graph": "./images/image-graph.png",
-    "tooltip": "Social value includes both financial and non-financial impacts of a program, activity, or organization. For the purposes of this calculator, social value is understood to encompass social, environmental, and economic impacts."
   },
   "tabs": [
     {
@@ -454,16 +449,16 @@
       "id": "starting_salary_increase",
       "value": 6500,
       "unit": "currency",
-      "description": "Increase in average reported FTE and PTE starting salary for graduates with service learning experience (Matthews et al., 2015)",
-      "ref": true,
+      "description": "Increase in average reported FTE and PTE starting salary for graduates with service learning experience",
+      "ref": "(Matthews et al., 2015)",
       "changed": false
     },
     {
       "id": "consumers_willing_pay",
       "value": 0.05,
       "unit": "percentage",
-      "description": "Consumers are willing to pay up to 5% more for environmentally friendly products (Holbrook, 2019).",
-      "ref": true,
+      "description": "Consumers are willing to pay up to 5% more for environmentally friendly products.",
+      "ref": "(Holbrook, 2019)",
       "changed": false
     },
     {
@@ -513,7 +508,6 @@
       "value": 15.52,
       "unit": "",
       "description": "Average cost of respite care per hour in Ohio (zip recruiter average Ohio)",
-      "ref": true,
       "changed": false
     },
     {
@@ -576,24 +570,24 @@
       "id": "value_aluminum",
       "value": 14229,
       "unit": "currency",
-      "description": "Dollar Value of EC per 1000 kg of aluminum framing ($) (Greenspec, 2023)",
-      "ref": true,
+      "description": "Dollar Value of EC per 1000 kg of aluminum framing ($)",
+      "ref": "(Greenspec, 2023)",
       "changed": false
     },
     {
       "id": "value_wood",
       "value": 36.72,
       "unit": "currency",
-      "description": "Dollar Value of EC per 1000 kg of processed wood ($) (Greenspec, 2023)",
-      "ref": true,
+      "description": "Dollar Value of EC per 1000 kg of processed wood ($)",
+      "ref": "(Greenspec, 2023)",
       "changed": false
     },
     {
       "id": "co2_by_waste",
       "value": 1.54,
       "unit": "",
-      "description": "metric tons CO2 equivalent per ton of food waste (O'Brien, 2016, Table 6)",
-      "ref": true,
+      "description": "metric tons CO2 equivalent per ton of food waste",
+      "ref": "(O'Brien, 2016, Table 6)",
       "changed": false
     },
     {
