@@ -8,8 +8,7 @@ import References from './References';
 export default function TabSection({ color = '#00694E', tabs, url, data }) {
   const searchParams = new URLSearchParams(url)
   const tab = searchParams.get("query") === "ref" ? "tab3" : "tab1"
-  const show = searchParams.get("display") === "false" ? false : true
-  console.log(show);
+  const show = searchParams.get("display") !== "false"
 
   return (
     // TAB PARENT
@@ -26,9 +25,10 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
               }
 
             } else {
-            return (
-              <Tabs.Trigger key={`tab-trigger-${i + 1}`} value={`tab${i + 1}`} className="TabsTrigger" style={{ color }}>{label}</Tabs.Trigger>
-            )}
+              return (
+                <Tabs.Trigger key={`tab-trigger-${i + 1}`} value={`tab${i + 1}`} className="TabsTrigger" style={{ color }}>{label}</Tabs.Trigger>
+              )
+            }
           })
         }
       </Tabs.List>
