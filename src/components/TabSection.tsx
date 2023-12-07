@@ -10,6 +10,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
   const tab = searchParams.get("query") === "ref" ? "tab3" : "tab1"
   const show = searchParams.get("display") !== "false"
 
+
   return (
     // TAB PARENT
     <Tabs.Root defaultValue={tab} orientation="vertical">

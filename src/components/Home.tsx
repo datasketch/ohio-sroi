@@ -16,6 +16,7 @@ export default function Home() {
           <div className="py-12">
             <div className="mx-auto max-w-4xl">
               {/* <div className="block lg:hidden">
+
                 <div className="flex flex-col items-center justify-between">
                   <div className="text-center">
                     <h2 className="text-base lg:text-xl">{data.general.subtitle}</h2>
