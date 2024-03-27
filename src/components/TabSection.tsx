@@ -89,7 +89,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                 )
               }
               {
-                item.type === 'interative' & show && (
+                item.type === 'interative' && show && (
                   <Interactive data={JSON.parse(JSON.stringify(data))} />
                 )
               }
