@@ -1,8 +1,6 @@
 [[redirects]]
   from = "/zero-waste"
-  to = "/zero-waste/"
-  status = 200
-  force = true
+  to = "https://ousroi.datasketch.co/zero-waste/"
 
 [[redirects]]
   from = "/zero-waste/*"
