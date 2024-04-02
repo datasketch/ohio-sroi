@@ -3,6 +3,8 @@ import Table from './Table';
 import classNames from 'classnames';
 import { parseToNumber } from '../utils';
 import CurrencyInput from 'react-currency-input-field';
+import OutcomeText from './OutcomeText';
+import hexRgb from 'hex-rgb';
 
 
 export default function Interactive({ top = "top-2/3", data }) {
@@ -12,8 +14,8 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [outputs, setOutputs] = useState(data.proxy_inputs)
   const [tables, setTables] = useState(data.tabs[0].tables)
   const [socialValue, setSocialValue] = useState(data.general.return)
-  const tableRefCosts = useRef()
-  const tableRefNumbers = useRef()
+  const tableRefCosts = useRef<HTMLDivElement>()
+  const tableRefNumbers = useRef<HTMLDivElement>()
   const [hasLimit, setHasLimit] = useState(false)
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
@@ -101,32 +103,48 @@ export default function Interactive({ top = "top-2/3", data }) {
   return (
     <div className='pb-9'>
       <div className='mx-10 pt-10'>
-        <div className="flex items-center justify-start pb-12">
-          <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
-            Calculate the details
-          </p>
-        </div>
-        <div className='bg-robin-egg-blue/5  text-2xl py-8 px-10 w-11/12 mx-auto rounded-2xl shadow-lg'>
-          <h2 className="text-xl text-center">
-            For every
-            <span className="font-semibold text-3xl" style={{ color }}> ${data.general.invested} </span>
-            invested in {data.general.title} creates<span className="font-semibold text-3xl" style={{ color }}> ${socialValue.toFixed(2)} </span>
-          </h2>
-          <div className="mt-5 rounded-lg text-center">
-            <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
-              {data.general.return_description}
+        <div className="u-container">
+          <div className="pb-12">
+            <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
+              Calculate the details
             </p>
+          </div>
+          <div className='text-2xl py-8 px-10 rounded-2xl shadow-lg' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }) }}>
+            <h2 className="text-xl text-center">
+              <OutcomeText data={data} color={color} showReturn={false} />
+            </h2>
+            <div className="mt-5 rounded-lg text-center">
+              <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
+                {data.general.return_description}
+              </p>
+            </div>
           </div>
         </div>
         <div className='overflow-hidden flex flex-col lg:flex-row gap-x-5'>
           <div className='space-y-16 lg:w-2/3 flex flex-col justify-between mt-16'>
             {/* TABLES */}
             {
-              tables.map((table, i) => {
-                return ['economic_impact', 'social_impact', 'environmental_impact'].includes(table.id) ?
-                <Table key={`table-${i + 1}`} color='#00694E' data={table} isLarge count={i} span={false} data2={data} /> :
-                <Table key={`table-${i + 1}`} color={color} count={i} data={table} />
-              })
+              tables.map((table, i) =>
+              (['economic_impact', 'social_impact', 'environmental_impact'].includes(table.id) ? (
+                <Table
+                  key={`table-${i + 1}`}
+                  color={color}
+                  data={table}
+                  isLarge
+                  count={i}
+                  span={false}
+                  data2={data}
+                  isGeneric
+                />
+              ) : (
+                <Table
+                  key={`table-${i + 1}`}
+                  color={color}
+                  count={i}
+                  data={table}
+                />
+              )
+              ))
             }
           </div>
           <div className='flex flex-col gap-5 lg:w-1/3 mt-16'>

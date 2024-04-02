@@ -4,13 +4,24 @@ import { useEffect, useRef, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { formatAs, valueFormat } from '../utils';
 
-export default function Table({ color, data, isLarge, top = "top-2/3", count, span = true, data2 }) {
+interface TableProps {
+  color: string
+  data: Record<string, unknown>
+  top?: string
+  count: number
+  span?: boolean
+  data2?: Record<string, unknown>
+  isLarge?: boolean
+  isGeneric?: boolean
+}
+
+export default function Table({ color, data, isLarge = false, top = "top-2/3", count, span = true, data2, isGeneric = false }: TableProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const isGeneric = color === '#00694E'
+  const [hasLimit, setHasLimit] = useState(false)
+
   const hasRow = !!data.rows
   const anchor = `.tooltip-value${count}`
-  const tableRef = useRef()
-  const [hasLimit, setHasLimit] = useState(false)
+  const tableRef = useRef<HTMLDivElement>()
 
 
   useEffect(() => {
@@ -41,7 +52,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
         }}>
           <div className='flex flex-col md:flex-row space-y-2 md:space-y-0 justify-between'>
             <div className='flex items-center gap-x-2'>
-              <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}
+              <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title as string}
                 {hasRow && (
                   <button className={`pl-1 tooltip-value${count}`}>
                     {!isGeneric && (<img src="./images/icons/information-icon.svg" alt="information icon" />)}
@@ -104,7 +115,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
           )
         }
         <Tooltip anchorSelect={anchor} place="right" style={{ width: "250px", color: "black", background: "white", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" }}>
-          {data.tooltip}
+          {data.tooltip as string}
         </Tooltip>
         <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimit, 'right-4': !hasLimit })}>
           {'>'}
@@ -122,7 +133,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
           backgroundColor: isGeneric ? '#fff' : color
         }}>
           <div>
-            <h3 className={classNames('text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title}</h3>
+            <h3 className={classNames('text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title as string}</h3>
           </div>
         </div>
         {/* ROW SUB HEADING */}
@@ -140,7 +151,7 @@ export default function Table({ color, data, isLarge, top = "top-2/3", count, sp
         </div>
         <div className='bg-white pb-10 pl-5 pr-8'>
           {
-            data.rows.map(({ description, value, unit }, i) => {
+            (data.rows as Array<Record<string, string | number>>).map(({ description, value, unit }, i) => {
               return (
                 <div key={`row-${i + 1}`} className='flex items-center justify-between border-b-[0.5px] border-b-silver py-1'>
                   <p className='text-black'>

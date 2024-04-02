@@ -3,7 +3,7 @@
     "theme": "#00C1D4",
     "top_logo": "./images/logo.svg",
     "logo": "./images/logo-1.svg",
-    "title": "PASSION WORKS STUDIO",
+    "title": "Passion Works Studio",
     "invested": 1,
     "return": 11.67,
     "return_description": "of social, environmental, and economic impact",
@@ -52,7 +52,7 @@
             {
               "id": "proxy_4",
               "stakeholders": "Customers",
-              "description": "Ability to purchase goods to support a mission (consious consumption)",
+              "description": "Ability to purchase goods to support a mission (conscious consumption)",
               "value": 13750,
               "variables": "revenue_sales,consumers_willing_pay",
               "formula": "revenue_sales * consumers_willing_pay",
@@ -78,43 +78,6 @@
             }
           ],
           "formula": "proxy_1 + proxy_2 + proxy_3 + proxy_4 + proxy_5 + proxy_17",
-          "changed": false
-        },
-        {
-          "id": "environmental_impact",
-          "title": "What social impact is created?",
-          "tooltip": "Environmental impact includes changes to biophysical systems and natural capital including energy use, pollution, and preservation of ecosystems.",
-          "totalValue": "10689.9506",
-          "rows": [
-            {
-              "id": "proxy_18",
-              "stakeholders": "Vendors",
-              "description": "Total embodied carbon cost savings of aluminum reused",
-              "value": 10244.88,
-              "variables": "LBS_aluminum,value_aluminum",
-              "formula": "0.45 * LBS_aluminum * value_aluminum / 1000",
-              "changed": false
-            },
-            {
-              "id": "proxy_19",
-              "stakeholders": "Vendors",
-              "description": "Total embodied carbon cost savings of processed wood reused",
-              "value": 14.8716,
-              "variables": "LBS_wood,value_wood",
-              "formula": "0.45 * LBS_wood * value_wood / 1000",
-              "changed": false
-            },
-            {
-              "id": "proxy_20",
-              "stakeholders": "Vendors",
-              "description": "Total carbon cost avoided of reused materials",
-              "value": 430.199,
-              "variables": "LBS_aluminum,LBS_wood,LBS_fabric,co2_by_waste,social_cost_carbon",
-              "formula": "(LBS_aluminum + LBS_wood + LBS_fabric) * co2_by_waste * social_cost_carbon / 2000",
-              "changed": false
-            }
-          ],
-          "formula": "proxy_18 + proxy_19 + proxy_20",
           "changed": false
         },
         {
@@ -224,6 +187,43 @@
             }
           ],
           "formula": "proxy_6 + proxy_7 + proxy_8 + proxy_9 + proxy_10 + proxy_11 + proxy_12 + proxy_13 + proxy_14 + proxy_15 + proxy_16",
+          "changed": false
+        },
+        {
+          "id": "environmental_impact",
+          "title": "What environmental impact is created?",
+          "tooltip": "Environmental impact includes changes to biophysical systems and natural capital including energy use, pollution, and preservation of ecosystems.",
+          "totalValue": "10689.9506",
+          "rows": [
+            {
+              "id": "proxy_18",
+              "stakeholders": "Vendors",
+              "description": "Total embodied carbon cost savings of aluminum reused",
+              "value": 10244.88,
+              "variables": "LBS_aluminum,value_aluminum",
+              "formula": "0.45 * LBS_aluminum * value_aluminum / 1000",
+              "changed": false
+            },
+            {
+              "id": "proxy_19",
+              "stakeholders": "Vendors",
+              "description": "Total embodied carbon cost savings of processed wood reused",
+              "value": 14.8716,
+              "variables": "LBS_wood,value_wood",
+              "formula": "0.45 * LBS_wood * value_wood / 1000",
+              "changed": false
+            },
+            {
+              "id": "proxy_20",
+              "stakeholders": "Vendors",
+              "description": "Total carbon cost avoided of reused materials",
+              "value": 430.199,
+              "variables": "LBS_aluminum,LBS_wood,LBS_fabric,co2_by_waste,social_cost_carbon",
+              "formula": "(LBS_aluminum + LBS_wood + LBS_fabric) * co2_by_waste * social_cost_carbon / 2000",
+              "changed": false
+            }
+          ],
+          "formula": "proxy_18 + proxy_19 + proxy_20",
           "changed": false
         }
       ],
