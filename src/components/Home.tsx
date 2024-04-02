@@ -46,7 +46,7 @@ export default function Home() {
               <img src={data.general.banner} alt="" />
               <div className="flex flex-col lg:flex-row gap-5 items-center justify-between mt-16">
                 <h2>{data.general.subtitle}</h2>
-                <img src="/images/logo-5.svg" alt="" />
+                <img src="./images/logo-5.svg" alt="" />
               </div>
             </div>
           </div>

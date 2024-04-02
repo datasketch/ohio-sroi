@@ -1,6 +1,8 @@
 [[redirects]]
   from = "/zero-waste"
   to = "/zero-waste/"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/zero-waste/*"
