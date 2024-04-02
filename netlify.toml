@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "/zero-waste"
+  to = "https://ohio-sroi-zero-waste.netlify.app/zero-waste/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/zero-waste/*"
+  to = "https://ohio-sroi-zero-waste.netlify.app/zero-waste/:splat"
+  status = 200
+  force = true
