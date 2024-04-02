@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/zero-waste"
-  to = "https://ohio-sroi-zero-waste.netlify.app/zero-waste/"
+  to = "/zero-waste/"
 
 [[redirects]]
   from = "/zero-waste/*"
