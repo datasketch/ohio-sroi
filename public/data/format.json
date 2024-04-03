@@ -64,7 +64,7 @@
               "description": "Increased value of downtown area due to PW gallery and studio",
               "value": 5595459.59,
               "variables": "total_property_added_high,total_property_added_low",
-              "formula": "total_property_added_high + total_property_added_low) / 2",
+              "formula": "(total_property_added_high + total_property_added_low) / 2",
               "changed": false
             },
             {
@@ -154,8 +154,8 @@
               "stakeholders": "Artist Support People",
               "description": "Stress reduction",
               "value": 191136,
-              "variables": "artists_employed,stressed_caregiver,not_stressed_caregiver",
-              "formula": "2 * artists_employed * stressed_caregiver - not_stressed_caregiver",
+              "variables": "artists_employed,stressed_caregiver_,not_stressed_caregiver",
+              "formula": "2 * artists_employed * stressed_caregiver_ - not_stressed_caregiver",
               "changed": false
             },
             {
@@ -590,7 +590,7 @@
       "changed": false
     },
     {
-      "id": "stressed_caregiver",
+      "id": "stressed_caregiver_",
       "value": 6915,
       "unit": "currency",
       "description": "Annual out of pocket expense for caregivers experiencing stress",
