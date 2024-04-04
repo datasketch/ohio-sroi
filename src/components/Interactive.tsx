@@ -20,6 +20,16 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
 
+  const getCurrencyInputConfig = (item) => {
+    const config: Record<string, string | number> = { decimalsLimit: 2 }
+
+    if (item.unit === 'currency') {
+      config.prefix = '$'
+    }
+
+    return config
+  }
+
   const updateFieldChanged = index => (value) => {
     let newArr = [...outputs]
     const newValue = parseToNumber(value)
@@ -111,7 +121,7 @@ export default function Interactive({ top = "top-2/3", data }) {
           </div>
           <div className='text-2xl py-8 px-10 rounded-2xl shadow-lg' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }) }}>
             <h2 className="text-xl text-center">
-              <OutcomeText data={data} color={color} showReturn={false} />
+              <OutcomeText data={data} color={color} showReturn={false} socialValue={socialValue} />
             </h2>
             <div className="mt-5 rounded-lg text-center">
               <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
@@ -179,7 +189,12 @@ export default function Interactive({ top = "top-2/3", data }) {
                           </h4>
                         </div>
                         <div className="col-span-5 pl-8">
-                          <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1 inputclass' defaultValue={parseToNumber(item.value)} decimalsLimit={2} prefix='$' onValueChange={updateFieldChanged(i)} />
+                          <CurrencyInput
+                            className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
+                            defaultValue={parseToNumber(item.value)}
+                            onValueChange={updateFieldChanged(i)}
+                            {...getCurrencyInputConfig(item)}
+                          />
                         </div>
                       </div>
                     ))
@@ -217,33 +232,23 @@ export default function Interactive({ top = "top-2/3", data }) {
                     </div>
                   </div>
                   {
-                    outputs.slice(3, 23).map((item, i) => {
-                      let config = {}
-
-                      if (item.unit === 'currency') {
-                        config = {
-                          decimalsLimit: 2,
-                          prefix: '$'
-                        }
-                      } else {
-                        config = {
-                          decimalsLimit: 2
-                        }
-                      }
-
-                      return (
-                        <div key={i} className='grid grid-cols-12 py-2 px-5 bg-white '>
-                          <div className="col-span-7">
-                            <h4 className='text-black'>
-                              {item.description}
-                            </h4>
-                          </div>
-                          <div className="col-span-5 pl-8">
-                            <CurrencyInput className='w-full text-right border rounded-md border-black/30 p-1 inputclass' defaultValue={parseToNumber(item.value)} {...config} onValueChange={updateFieldChanged(i + 3)} />
-                          </div>
+                    outputs.slice(3, 23).map((item, i) => (
+                      <div key={i} className='grid grid-cols-12 py-2 px-5 bg-white '>
+                        <div className="col-span-7">
+                          <h4 className='text-black'>
+                            {item.description}
+                          </h4>
                         </div>
-                      )
-                    })
+                        <div className="col-span-5 pl-8">
+                          <CurrencyInput
+                            className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
+                            defaultValue={parseToNumber(item.value)}
+                            onValueChange={updateFieldChanged(i + 3)}
+                            {...getCurrencyInputConfig(item)}
+                          />
+                        </div>
+                      </div>
+                    ))
                   }
                   <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimitNumbers, 'right-4': !hasLimitNumbers })}>
                     {'>'}
