@@ -3,9 +3,18 @@ import Table from './Table';
 import classNames from 'classnames';
 import { parseToNumber } from '../utils';
 import CurrencyInput from 'react-currency-input-field';
+import type { CurrencyInputProps } from 'react-currency-input-field'
 import OutcomeText from './OutcomeText';
 import hexRgb from 'hex-rgb';
+import Mexp from 'math-expression-evaluator'
 
+const mexp = new Mexp()
+
+const safeEval = (expr: string) => {
+  const lexed = mexp.lex(expr);
+  const postfixed = mexp.toPostfix(lexed);
+  return mexp.postfixEval(postfixed);
+}
 
 export default function Interactive({ top = "top-2/3", data }) {
   const color = data.general.theme
@@ -21,7 +30,7 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [prev, setPrev] = useState(0)
 
   const getCurrencyInputConfig = (item) => {
-    const config: Record<string, string | number> = { decimalsLimit: 2 }
+    const config: CurrencyInputProps= { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
 
     if (item.unit === 'currency') {
       config.prefix = '$'
@@ -30,46 +39,75 @@ export default function Interactive({ top = "top-2/3", data }) {
     return config
   }
 
-  const updateFieldChanged = index => (value) => {
-    let newArr = [...outputs]
-    const newValue = parseToNumber(value)
-    newArr[index].value = value === '' ? 0 : newValue
+  const handleFieldChange = (value: string, index: number) => {
+    const parsedValue = parseToNumber(value)
 
-    setOutputs(newArr);
-    if (newValue !== prev) {
+    setOutputs(prevState => {
+      prevState[index].value = parsedValue
+      return [...prevState]
+    })
+
+    if (parsedValue !== prev) {
       updateTable()
     }
-    setPrev(newValue)
+
+    // @pipeleon ¿Esto no debería ser actualizado solo parsedValue !== prev?
+    setPrev(parsedValue)
   }
 
-
-
   const updateTable = () => {
-    let newTable = [...tables]
-    let newValues = [...values]
     let social = 0
-    for (let t of newTable) {
-      let total = 0
-      for (let r of t.rows) {
-        const vars = r.variables.split(",")
-        let temp = r.formula
-        for (let variable of vars) {
-          temp = temp.replaceAll(variable, newValues.find(ele => ele.id === variable).value)
-        }
-        const prev_value = r.value
-        r.value = eval(`${temp}`)
-        r.formula_str = `${temp} = ${r.value}`
-        total = total + r.value
-        r.changed = prev_value !== r.value
-      }
-      const listaTotales = t.rows.map(ele => ele.value)
-      t.totalValue = total
-      social = social + total
-    }
+
+    const update = tables.map(tbl => {
+      const totalValue = tbl.rows.reduce((total, row) => {
+        const vars = row.variables.split(',').map(v => v.trim())
+        const fx = vars.reduce((fx, v) => {
+          const value = values.find(item => item.id === v)?.value
+          return fx.replaceAll(v, value)
+        }, row.formula)
+        const prevValue = row.value
+        const result = safeEval(fx)
+        row.value = result
+        row.formula_str = `${fx} = ${result}`
+        row.changed = prevValue !== result
+        return total + result
+      }, 0)
+      tbl.totalValue = totalValue
+      social += totalValue
+      return tbl
+    })
+
     social = social / (outputs[0].value + outputs[1].value)
+
     setSocialValue(social)
-    setTables(tables)
-    setValues(newValues)
+    setTables(update)
+
+    // let newTable = [...tables]
+    // let newValues = [...values]
+    // for (let tbl of tables) {
+    //   let total = 0
+    //   for (let row of tbl.rows) {
+    //     const vars = row.variables.split(',')
+    //     let fx = row.formula
+    //     for (let v of vars) {
+    //       const value = values.find(item => item.id === v)?.value
+    //       fx = fx.replaceAll(v, value)
+    //     }
+    //     const prevValue = row.value
+    //     const result = safeEval(fx)
+    //     row.value = result
+    //     row.formula_str = `${fx} = ${result}`
+    //     total += result
+    //     row.changed = prevValue !== result
+    //   }
+    //   tbl.totalValue = total
+    //   social += total
+    // }
+
+    // social = social / (outputs[0].value + outputs[1].value)
+
+    // setTables(tables)
+    // setValues(newValues)
   }
 
   useEffect(() => {
@@ -192,7 +230,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
                             defaultValue={parseToNumber(item.value)}
-                            onValueChange={updateFieldChanged(i)}
+                            onValueChange={(value) => handleFieldChange(value, i)}
                             {...getCurrencyInputConfig(item)}
                           />
                         </div>
@@ -243,7 +281,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
                             defaultValue={parseToNumber(item.value)}
-                            onValueChange={updateFieldChanged(i + 3)}
+                            onValueChange={(value) => handleFieldChange(value, i + 3)}
                             {...getCurrencyInputConfig(item)}
                           />
                         </div>

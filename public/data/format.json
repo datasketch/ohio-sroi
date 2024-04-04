@@ -71,7 +71,7 @@
               "id": "proxy_17",
               "stakeholders": "Government",
               "description": "Increased local money flows",
-              "value": 403197.44,
+              "value": 159500,
               "variables": "revenue_sales,reinvested_community",
               "formula": "revenue_sales * reinvested_community",
               "changed": false
