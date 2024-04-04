@@ -7,4 +7,6 @@
 [[redirects]]
   from = "/zero-waste"
   to = "https://ousroi.datasketch.co/zero-waste/"
+  status = 200
+  force = true
 
