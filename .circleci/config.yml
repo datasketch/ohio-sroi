@@ -8,9 +8,6 @@ parameters:
 jobs:
   push_to_build:
     machine: true
-    environment:
-      ACCESS_KEY_ID: $ACCESS_KEY_ID
-      SECRET_ACCESS_KEY: $SECRET_ACCESS_KEY
     steps:
       - checkout
       - add_ssh_keys:
@@ -21,8 +18,16 @@ jobs:
           command: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: echo $ACCESS_KEY_ID
       - run:
+          name: Install deps
+          command: npm ci
+      - run:
           name: Exec transform
-          command: npm run transform
+          command: |
+            export ACCESS_KEY_ID=$ACCESS_KEY_ID
+            export SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
+            echo $ACCESS_KEY_ID
+            echo ACCESS_KEY_ID
+            npm run transform
       - run:
           name: Update repo
           command: |
