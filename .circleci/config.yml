@@ -1,0 +1,42 @@
+version: 2.1
+
+parameters:
+  run_workflow:
+    type: boolean
+    default: false
+
+jobs:
+  push_to_build:
+    machine: true
+    environment:
+      ACCESS_KEY_ID: $ACCESS_KEY_ID
+      SECRET_ACCESS_KEY: $SECRET_ACCESS_KEY
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5dm3nLdPoYaFD2+J8SdKgZxcWR75ju71hSQKwXVPcl0"
+      - run:
+          name: Add github.com to known hosts
+          command: ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run: echo $ACCESS_KEY_ID
+      - run:
+          name: Exec transform
+          command: npm run transform
+      - run:
+          name: Update repo
+          command: |
+            git config --global user.email "gh-machine@datasketch.co"
+            git config --global user.name "Datasketch"
+            git add .
+            git commit --allow-empty -m "Update build"
+            git push origin main
+
+workflows:
+  build_and_deploy:
+    when: << pipeline.parameters.run_workflow >>
+    jobs:
+      - push_to_build:
+          filters:
+            branches:
+              only: main
