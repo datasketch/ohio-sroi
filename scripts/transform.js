@@ -25,7 +25,7 @@ async function getObject(key) {
   return data
 }
 
-const themes = await getObject('ddazal/passion-works/themes.json')
+const themes = await getObject(`ddazal/${process.env.PROXY_DATABASE}/themes.json`)
 
 // TODO: transformar a template
 

@@ -4,6 +4,9 @@ parameters:
   run_workflow:
     type: boolean
     default: false
+  db:
+    type: string
+    default: ''
 
 jobs:
   push_to_build:
@@ -16,7 +19,6 @@ jobs:
       - run:
           name: Add github.com to known hosts
           command: ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - run: echo $ACCESS_KEY_ID
       - run:
           name: Install deps
           command: npm ci
@@ -25,8 +27,7 @@ jobs:
           command: |
             export ACCESS_KEY_ID=$ACCESS_KEY_ID
             export SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
-            echo $ACCESS_KEY_ID
-            echo ACCESS_KEY_ID
+            export PROXY_DATABASE=<< pipeline.parameters.db >>
             npm run transform
       - run:
           name: Update repo
