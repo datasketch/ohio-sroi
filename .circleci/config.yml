@@ -22,9 +22,6 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          name: Add github.com to known hosts
-          command: ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - run:
           name: Process data
           command: |
             export ACCESS_KEY_ID=$ACCESS_KEY_ID
@@ -42,6 +39,9 @@ jobs:
     executor:
       name: 'node/default'
     steps:
+      - run:
+          name: Add github.com to known hosts
+          command: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - add_ssh_keys:
           fingerprints:
             - "SHA256:5dm3nLdPoYaFD2+J8SdKgZxcWR75ju71hSQKwXVPcl0"
