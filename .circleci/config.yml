@@ -10,6 +10,9 @@ parameters:
   db:
     type: string
     default: ''
+  tbl:
+    type: string
+    default: ''
 
 orbs:
   node: circleci/node@5.2.0
