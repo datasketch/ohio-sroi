@@ -1,5 +1,5 @@
 
-const data = await fetch('./data/format.json').then((response) =>
+const data = await fetch(`${import.meta.env.BASE_URL}/data/format.json`).then((response) =>
   response.json()
 );
 

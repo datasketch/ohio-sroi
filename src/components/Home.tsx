@@ -1,8 +1,7 @@
-import CardAmount from "./CardAmount";
 import OutcomeText from "./OutcomeText";
 import TabSection from "./TabSection";
 
-const data = await fetch('./data/format.json').then((response) =>
+const data = await fetch(`${import.meta.env.BASE_URL}/data/format.json`).then((response) =>
   response.json()
 );
 
@@ -35,7 +34,7 @@ export default function Home() {
               <div className="mb-16">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
                   <div className="flex-shrink-0">
-                    <img src={data.general.logo} alt={data.general.title} />
+                    <img src={`${import.meta.env.BASE_URL}${data.general.logo}`} alt={data.general.title} />
                   </div>
                   <div className="text-center text-xl">
                     <h1>
@@ -44,10 +43,10 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <img src={data.general.banner} alt="" />
+              <img src={`${import.meta.env.BASE_URL}${data.general.banner}`} alt="" />
               <div className="flex flex-col lg:flex-row gap-5 items-center justify-between mt-16">
                 <h2>{data.general.subtitle}</h2>
-                <img src="./images/logo-5.svg" alt="" />
+                <img src={`${import.meta.env.BASE_URL}/images/logo-5.svg`} alt="" />
               </div>
             </div>
           </div>
@@ -57,7 +56,7 @@ export default function Home() {
         <TabSection color={data.general.theme} tabs={data.tabs} url={url} data={data} />
       </div>
       <div className='u-container py-16 flex gap-x-16 items-center'>
-        <img src="./images/div2.svg" alt="" />
+        <img src={`${import.meta.env.BASE_URL}/images/div2.svg`} alt="" />
         <p className="text-sm lg:text-base">
           {data.general.description}
         </p>

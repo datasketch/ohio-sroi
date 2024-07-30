@@ -1,6 +1,4 @@
 ---
-import CardAmount from "../components/CardAmount";
-import TabSection from "../components/TabSection";
 import BaseLayout from "../layout/BaseLayout.astro";
 import Home from '../components/Home'
 ---
@@ -9,7 +7,7 @@ import Home from '../components/Home'
   <div>
     <img
       class="w-full h-36 lg:h-full object-cover object-center"
-      src="./images/banner.jpg"
+      src={`${import.meta.env.BASE_URL}/images/banner.jpg`}
       alt="banner"
     />
   </div>

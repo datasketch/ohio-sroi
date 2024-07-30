@@ -2,12 +2,12 @@
   "general": {
     "theme": "#00C1D4",
     "top_logo": "./images/logo.svg",
-    "logo": "./images/logo-1.svg",
-    "title": "PASSION WORKS STUDIO",
+    "logo": "/images/logo-1.svg",
+    "title": "Passion Works Studio",
     "invested": 1,
     "return": 11.67,
     "return_description": "of social, environmental, and economic impact",
-    "banner": "./images/home.svg",
+    "banner": "/images/home.svg",
     "subtitle": "Social Return on Investment Impact Calculator created by",
     "description": "Social Return on Investment (SROI) is a method of calculating and communicating impact using dollar values. SROI measures the social value created by an organization’s activities, products, services or community initiatives. SROI combines social, economic, and environmental impacts into a comprehensive financial measurement of social value in a holistic measure of impact."
   },
@@ -20,7 +20,7 @@
           "id": "economic_impact",
           "title": "What economic impact is created?",
           "tooltip": "Economic impact includes changes to individual or collective financial assets including profit, savings, currency circulation, and built capital.",
-          "totalValue": "6563434.8699999992",
+          "totalValue": 6563434.8699999992,
           "rows": [
             {
               "id": "proxy_1",
@@ -52,7 +52,7 @@
             {
               "id": "proxy_4",
               "stakeholders": "Customers",
-              "description": "Ability to purchase goods to support a mission (consious consumption)",
+              "description": "Ability to purchase goods to support a mission (conscious consumption)",
               "value": 13750,
               "variables": "revenue_sales,consumers_willing_pay",
               "formula": "revenue_sales * consumers_willing_pay",
@@ -64,14 +64,14 @@
               "description": "Increased value of downtown area due to PW gallery and studio",
               "value": 5595459.59,
               "variables": "total_property_added_high,total_property_added_low",
-              "formula": "total_property_added_high + total_property_added_low) / 2",
+              "formula": "(total_property_added_high + total_property_added_low) / 2",
               "changed": false
             },
             {
               "id": "proxy_17",
               "stakeholders": "Government",
               "description": "Increased local money flows",
-              "value": 403197.44,
+              "value": 159500,
               "variables": "revenue_sales,reinvested_community",
               "formula": "revenue_sales * reinvested_community",
               "changed": false
@@ -81,47 +81,10 @@
           "changed": false
         },
         {
-          "id": "environmental_impact",
-          "title": "What social impact is created?",
-          "tooltip": "Environmental impact includes changes to biophysical systems and natural capital including energy use, pollution, and preservation of ecosystems.",
-          "totalValue": "10689.9506",
-          "rows": [
-            {
-              "id": "proxy_18",
-              "stakeholders": "Vendors",
-              "description": "Total embodied carbon cost savings of aluminum reused",
-              "value": 10244.88,
-              "variables": "LBS_aluminum,value_aluminum",
-              "formula": "0.45 * LBS_aluminum * value_aluminum / 1000",
-              "changed": false
-            },
-            {
-              "id": "proxy_19",
-              "stakeholders": "Vendors",
-              "description": "Total embodied carbon cost savings of processed wood reused",
-              "value": 14.8716,
-              "variables": "LBS_wood,value_wood",
-              "formula": "0.45 * LBS_wood * value_wood / 1000",
-              "changed": false
-            },
-            {
-              "id": "proxy_20",
-              "stakeholders": "Vendors",
-              "description": "Total carbon cost avoided of reused materials",
-              "value": 430.199,
-              "variables": "LBS_aluminum,LBS_wood,LBS_fabric,co2_by_waste,social_cost_carbon",
-              "formula": "(LBS_aluminum + LBS_wood + LBS_fabric) * co2_by_waste * social_cost_carbon / 2000",
-              "changed": false
-            }
-          ],
-          "formula": "proxy_18 + proxy_19 + proxy_20",
-          "changed": false
-        },
-        {
           "id": "social_impact",
           "title": "What social impact is created?",
           "tooltip": "Social impact includes changes to individuals, groups of people, and organizations in areas such as health, well-being, safety, relationship, and belonging.",
-          "totalValue": "1654136.43175",
+          "totalValue": 1654136.43175,
           "rows": [
             {
               "id": "proxy_6",
@@ -191,8 +154,8 @@
               "stakeholders": "Artist Support People",
               "description": "Stress reduction",
               "value": 191136,
-              "variables": "artists_employed,stressed_caregiver,not_stressed_caregiver",
-              "formula": "2 * artists_employed * stressed_caregiver - not_stressed_caregiver",
+              "variables": "artists_employed,stressed_caregiver_,not_stressed_caregiver",
+              "formula": "2 * artists_employed * stressed_caregiver_ - not_stressed_caregiver",
               "changed": false
             },
             {
@@ -224,6 +187,43 @@
             }
           ],
           "formula": "proxy_6 + proxy_7 + proxy_8 + proxy_9 + proxy_10 + proxy_11 + proxy_12 + proxy_13 + proxy_14 + proxy_15 + proxy_16",
+          "changed": false
+        },
+        {
+          "id": "environmental_impact",
+          "title": "What environmental impact is created?",
+          "tooltip": "Environmental impact includes changes to biophysical systems and natural capital including energy use, pollution, and preservation of ecosystems.",
+          "totalValue": 10689.9506,
+          "rows": [
+            {
+              "id": "proxy_18",
+              "stakeholders": "Vendors",
+              "description": "Total embodied carbon cost savings of aluminum reused",
+              "value": 10244.88,
+              "variables": "LBS_aluminum,value_aluminum",
+              "formula": "0.45 * LBS_aluminum * value_aluminum / 1000",
+              "changed": false
+            },
+            {
+              "id": "proxy_19",
+              "stakeholders": "Vendors",
+              "description": "Total embodied carbon cost savings of processed wood reused",
+              "value": 14.8716,
+              "variables": "LBS_wood,value_wood",
+              "formula": "0.45 * LBS_wood * value_wood / 1000",
+              "changed": false
+            },
+            {
+              "id": "proxy_20",
+              "stakeholders": "Vendors",
+              "description": "Total carbon cost avoided of reused materials",
+              "value": 430.199,
+              "variables": "LBS_aluminum,LBS_wood,LBS_fabric,co2_by_waste,social_cost_carbon",
+              "formula": "(LBS_aluminum + LBS_wood + LBS_fabric) * co2_by_waste * social_cost_carbon / 2000",
+              "changed": false
+            }
+          ],
+          "formula": "proxy_18 + proxy_19 + proxy_20",
           "changed": false
         }
       ],
@@ -590,7 +590,7 @@
       "changed": false
     },
     {
-      "id": "stressed_caregiver",
+      "id": "stressed_caregiver_",
       "value": 6915,
       "unit": "currency",
       "description": "Annual out of pocket expense for caregivers experiencing stress",

@@ -4,7 +4,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), react()],
+  integrations: [react(), tailwind()],
   site: 'https://ousroi.datasketch.co/passion-works',
   outDir: './dist/passion-works',
   base: '/passion-works',

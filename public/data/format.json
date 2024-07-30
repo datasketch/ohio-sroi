@@ -2,12 +2,12 @@
   "general": {
     "theme": "#00C1D4",
     "top_logo": "./images/logo.svg",
-    "logo": "./images/logo-1.svg",
+    "logo": "/images/logo-1.svg",
     "title": "Passion Works Studio",
     "invested": 1,
     "return": 11.67,
     "return_description": "of social, environmental, and economic impact",
-    "banner": "./images/home.svg",
+    "banner": "/images/home.svg",
     "subtitle": "Social Return on Investment Impact Calculator created by",
     "description": "Social Return on Investment (SROI) is a method of calculating and communicating impact using dollar values. SROI measures the social value created by an organization’s activities, products, services or community initiatives. SROI combines social, economic, and environmental impacts into a comprehensive financial measurement of social value in a holistic measure of impact."
   },

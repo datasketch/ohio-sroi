@@ -55,8 +55,8 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
               <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title as string}
                 {hasRow && (
                   <button className={`pl-1 tooltip-value${count}`}>
-                    {!isGeneric && (<img src="./images/icons/information-icon.svg" alt="information icon" />)}
-                    {isGeneric && (<img src="./images/icons/information-generic-icon.svg" alt="information icon" />)}
+                    {!isGeneric && (<img src={`${import.meta.env.BASE_URL}/images/icons/information-icon.svg`} alt="information icon" />)}
+                    {isGeneric && (<img src={`${import.meta.env.BASE_URL}/images/icons/information-generic-icon.svg`} alt="information icon" />)}
                   </button>
                 )}
               </h3>
@@ -93,7 +93,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                   </div>
                   <div className={classNames('pl-12', { 'col-span-3': !span, 'col-span-2': span })}>
                     <h4 className='text-gray-2 text-xs lg:text-sm flex gap-1'>
-                      Value <img className={`value${count}`} src="./images/icons/information-generic-icon.svg" alt="information icon" />
+                      Value <img className={`value${count}`} src={`${import.meta.env.BASE_URL}/images/icons/information-generic-icon.svg`} alt="information icon" />
                     </h4>
                   </div>
                 </div>
