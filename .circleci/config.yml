@@ -4,45 +4,70 @@ parameters:
   run_workflow:
     type: boolean
     default: false
+  org:
+    type: string
+    default: ''
   db:
     type: string
     default: ''
 
+orbs:
+  node: circleci/node@5.2.0
+
 jobs:
-  push_to_build:
-    machine: true
+  build:
+    executor:
+      name: 'node/default'
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:5dm3nLdPoYaFD2+J8SdKgZxcWR75ju71hSQKwXVPcl0"
+      - node/install-packages
       - run:
           name: Add github.com to known hosts
           command: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
-          name: Install deps
-          command: npm ci
-      - run:
-          name: Exec transform
+          name: Process data
           command: |
             export ACCESS_KEY_ID=$ACCESS_KEY_ID
             export SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
             export PROXY_DATABASE=<< pipeline.parameters.db >>
             npm run transform
       - run:
+          name: Build site
+          command: npm run build -- --site https://sites.dskt.ch --base /<< pipeline.parameters.org >>/<< pipeline.parameters.db >> --outDir ./dist
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/dist
+  deploy:
+    executor:
+      name: 'node/default'
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5dm3nLdPoYaFD2+J8SdKgZxcWR75ju71hSQKwXVPcl0"
+      - attach_workspace:
+          at: ~/
+      - run:
           name: Update repo
           command: |
+            git clone git@github.com:datasketch/users-generated-sites.git --depth 1
+            cd users-generated-sites
+            mkdir -p src/<< pipeline.parameters.org >>/<< pipeline.parameters.db >>
+            cp -r ../dist/* ./src/<< pipeline.parameters.org >>/<< pipeline.parameters.db >>
             git config --global user.email "gh-machine@datasketch.co"
             git config --global user.name "Datasketch"
             git add .
-            git commit --allow-empty -m "Update build"
+            git commit --allow-empty -m "Update builds"
             git push origin main
 
 workflows:
   build_and_deploy:
     when: << pipeline.parameters.run_workflow >>
     jobs:
-      - push_to_build:
+      - build:
           filters:
             branches:
               only: main
+      - deploy:
+          requires:
+            - build
