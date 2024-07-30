@@ -30,6 +30,7 @@ jobs:
             export ACCESS_KEY_ID=$ACCESS_KEY_ID
             export SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
             export PROXY_DATABASE=<< pipeline.parameters.db >>
+            export ORGANIZATION_SLUG=<< pipeline.parameters.org >>
             npm run transform
       - run:
           name: Build site
