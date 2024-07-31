@@ -60,7 +60,7 @@ async function main() {
         } else {
           tmp[item.variable] = item.value
           tmp.tables = []
-          tmp.list = item.value === 'references' ? references : []
+          tmp.list = item.value === 'references' ? references.map(item => omit(item, ["rcd___id"])) : []
           data.tabs.push(tmp)
           counter = true
         }
@@ -76,7 +76,7 @@ async function main() {
           } else {
             tmp2[item.variable] = item.value
             tmp2.changed = false
-            tmp2.rows = proxys.filter(item => item.type === tab + '_impact')
+            tmp2.rows = proxys.map(item => omit(item, ["rcd___id"])).filter(item => item.type === tab + '_impact')
             data.tabs[0].tables.push(tmp2)
             counter2 = true
           }
