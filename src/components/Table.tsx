@@ -25,6 +25,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
 
 
   useEffect(() => {
+    if (!tableRef.current) return
     const element = tableRef.current
     const { offsetWidth, scrollWidth } = element
     const limitWidth = scrollWidth - offsetWidth
