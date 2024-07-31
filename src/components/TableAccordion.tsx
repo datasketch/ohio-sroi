@@ -38,8 +38,8 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
     <Accordion.Root type="single" collapsible>
       {
         rows && rows.map((item, i) => (
-          <Accordion.Item key={i} className='AccordionItem' value={`item-${i}`}>
-            <Accordion.Header className='AccordionHeader py-4' style={{ color: rgb, backgroundColor: rgba, borderColor: color }}>
+          <Accordion.Item key={`acc-item-${i}`} className='AccordionItem' value={`item-${i}`}>
+            <Accordion.Header className='AccordionHeader py-4' style={{ color: `rgb(${rgb.slice(0,3).join(',')})`, backgroundColor: rgba, borderColor: color }}>
               <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
                 <h4 className='text-sm lg:text-base text-black'>
                   {item.stakeholders}

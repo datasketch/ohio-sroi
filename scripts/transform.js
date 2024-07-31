@@ -1,4 +1,3 @@
-// recuperar datos desde s3
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { writeFile } from 'fs/promises'
 import path from 'path'
@@ -36,54 +35,12 @@ async function main() {
     getObject(`${process.env.ORGANIZATION_SLUG}/${process.env.PROXY_DATABASE}/proxy_values.json`)
   ])
 
-  const data = {}
-  data.general = {}
-  data.proxy_inputs = proxy_inputs.map(item => ({ ...omit(item, ["rcd___id"]), changed: false }))
-  data.proxy_values = prooxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false }))
+  const data = {
+    general: {},
+    proxy_inputs: proxy_inputs.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })),
+    proxy_values: prooxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false }))
+  }
 
-  // TODO: transformar a template
-  /* let counter = true
-  let counter2 = true
-  let tmp = {}
-  let tmp2 = {}
-  let tab = ''
-  themes.map(((item, i) => {
-    if (item.section === 'general') {
-      data.general[item.variable] = item.value
-    } else {
-      const lengt_tab = item.section.split('/')
-      if (lengt_tab.length === 2) {
-        if (counter) {
-          tmp = {}
-          tmp[item.variable] = item.value
-          counter = false
-        } else {
-          tmp[item.variable] = item.value
-          tmp.tables = []
-          tmp.list = item.value === 'references' ? references.map(item => omit(item, ["rcd___id"])) : []
-          data.tabs.push(tmp)
-          counter = true
-        }
-      } else {
-        if (counter2) {
-          tmp2 = {}
-          tab = lengt_tab[3]
-          tmp2[item.variable] = item.value
-          counter2 = false
-        } else {
-          if (tab === themes[i + 1].section.split('/')[3]) {
-            tmp2[item.variable] = item.value
-          } else {
-            tmp2[item.variable] = item.value
-            tmp2.changed = false
-            tmp2.rows = proxys.map(item => omit(item, ["rcd___id"])).filter(item => item.type === tab + '_impact')
-            data.tabs[0].tables.push(tmp2)
-            counter2 = true
-          }
-        }
-      }
-    }
-  })) */
 
   // General
   const generalSection = themes.filter(row => row.section.trim() === 'general')
@@ -124,7 +81,7 @@ async function main() {
 
 
   // Guardar en filesystem
-  await writeFile(path.join(process.cwd(), 'public', 'data', 'format.json'), JSON.stringify(data))
+  await writeFile(path.join(process.cwd(), 'src', 'site-data.json'), JSON.stringify(data))
 }
 
 main().catch(err => {

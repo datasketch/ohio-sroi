@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
 import OutcomeText from "./OutcomeText";
 import TabSection from "./TabSection";
 
-const data = await fetch(`${import.meta.env.BASE_URL}/data/format.json`).then((response) =>
-  response.json()
-);
-
-export default function Home() {
-  const url = window.location.search
+export default function Home({ data }) {
+  const [url, setURL] = useState('')
   const color = data.general.theme
+
+  useEffect(() => {
+    setURL(window.location.search)
+  }, [])
+
 
   return (
     <>
@@ -34,7 +36,7 @@ export default function Home() {
               <div className="mb-16">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
                   <div className="flex-shrink-0">
-                    <img src={`${import.meta.env.BASE_URL}${data.general.logo}`} alt={data.general.title} />
+                    <img src={data.general.logo} alt={data.general.title} />
                   </div>
                   <div className="text-center text-xl">
                     <h1>
@@ -43,7 +45,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <img src={`${import.meta.env.BASE_URL}${data.general.banner}`} alt="" />
+              <img src={data.general.banner} alt="" />
               <div className="flex flex-col lg:flex-row gap-5 items-center justify-between mt-16">
                 <h2>{data.general.subtitle}</h2>
                 <img src={`${import.meta.env.BASE_URL}/images/logo-5.svg`} alt="" />

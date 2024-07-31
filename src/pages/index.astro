@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layout/BaseLayout.astro";
 import Home from '../components/Home'
+import siteData from '../site-data.json'
 ---
 
 <BaseLayout title="Home Page" description="Esta es la página inicial">
@@ -12,5 +13,5 @@ import Home from '../components/Home'
     />
   </div>
   <!--  -->
-  <Home client:only />
+  <Home data={siteData} />
 </BaseLayout>

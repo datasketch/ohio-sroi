@@ -220,7 +220,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                   </div>
                   {
                     outputs.slice(0, 3).map((item, i) => (
-                      <div key={i} className='grid pb-3 grid-cols-12 py-1 px-5 bg-white'>
+                      <div key={`output-${i}`} className='grid pb-3 grid-cols-12 py-1 px-5 bg-white'>
                         <div className="col-span-7">
                           <h4 className='text-sm lg:text-base text-black'>
                             {item.description}
@@ -271,7 +271,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                   </div>
                   {
                     outputs.slice(3, 23).map((item, i) => (
-                      <div key={i} className='grid grid-cols-12 py-2 px-5 bg-white '>
+                      <div key={`another-outputs-${i}`} className='grid grid-cols-12 py-2 px-5 bg-white '>
                         <div className="col-span-7">
                           <h4 className='text-black'>
                             {item.description}
