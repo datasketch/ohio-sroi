@@ -8,10 +8,11 @@ interface OutcomeTextProps {
 }
 
 const OutcomeText = ({ data, color, socialValue, showReturn = true }: OutcomeTextProps) => {
-  const ret = socialValue ? socialValue.toFixed(2) : (data.general as Obj).return
+  // @ts-ignore
+  const ret = socialValue ? socialValue.toFixed(2) : data.general.return.toFixed(2)
   return (
     <>
-      For every <span className="font-semibold text-3xl" style={{ color }}> ${(data.general as Obj).invested}</span> invested, {(data.general as Obj).title} creates <span className="font-semibold text-3xl" style={{ color }}> ${ret.toFixed(2)} </span>{showReturn && (data.general as Obj).return_description}
+      For every <span className="font-semibold text-3xl" style={{ color }}> ${(data.general as Obj).invested}</span> invested, {(data.general as Obj).title} creates <span className="font-semibold text-3xl" style={{ color }}> ${ret} </span>{showReturn && (data.general as Obj).return_description}
     </>
   )
 }

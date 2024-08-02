@@ -8,6 +8,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
   const rgb = hexRgb(color, { format: 'array', alpha: 0.1 })
   const rgba = `rgba(${rgb.join(', ')})`
 
+
   // HANDLERS
   const getDataState = (e) => {
     const isOpen = e.target.closest('.AccordionTrigger').getAttribute('data-state') !== 'open'
@@ -20,7 +21,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
       const vars = item.variables.split(",")
       let temp = item.formula
       for (let variable of vars) {
-        temp = temp.replaceAll(variable, values.find(ele => ele.id === variable).value)
+        temp = temp.replaceAll(variable, values.find(ele => ele.id === variable)?.value)
       }
       item.formula_str = `${temp} = ${item.value}`
       const vars2 = vars.map((variable) => {
@@ -73,7 +74,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                 <div className="col-span-7">
                   <div className='space-y-4'>
                     {item.rows?.map((item, i) => {
-                      if (item.ref) {
+                      if (item?.ref) {
                         return (
                           <>
                             <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
