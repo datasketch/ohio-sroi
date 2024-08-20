@@ -30,7 +30,7 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [prev, setPrev] = useState(0)
 
   const getCurrencyInputConfig = (item) => {
-    const config: CurrencyInputProps= { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
+    const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
 
     if (item.unit === 'currency') {
       config.prefix = '$'
@@ -39,11 +39,12 @@ export default function Interactive({ top = "top-2/3", data }) {
     return config
   }
 
-  const handleFieldChange = (value: string, index: number) => {
+  const handleFieldChange = (value: string, index: string) => {
     const parsedValue = parseToNumber(value)
 
     setOutputs(prevState => {
-      prevState[index].value = parsedValue
+      const i = prevState.findIndex(el => el.id === index)
+      prevState[i].value = parsedValue
       return [...prevState]
     })
 
@@ -77,7 +78,16 @@ export default function Interactive({ top = "top-2/3", data }) {
       return tbl
     })
 
-    social = social / (outputs[0].value + outputs[1].value)
+    const div_formula = data.general.formula.split('/')[1]
+
+    const fg = data.general.variables.split(',').map(v => v.trim()).reduce((fg, v) => {
+      const value = values.find(item => item.id === v)?.value
+      return fg.replaceAll(v, value)
+    }, div_formula)
+
+    const div = safeEval(fg)
+
+    social = social / div
 
     setSocialValue(social)
     setTables(update)
@@ -173,25 +183,16 @@ export default function Interactive({ top = "top-2/3", data }) {
             {/* TABLES */}
             {
               tables.map((table, i) =>
-              (['economic_impact', 'social_impact', 'environmental_impact'].includes(table.id) ? (
-                <Table
-                  key={`table-${i + 1}`}
-                  color={color}
-                  data={table}
-                  isLarge
-                  count={i}
-                  span={false}
-                  data2={data}
-                  isGeneric
-                />
-              ) : (
-                <Table
-                  key={`table-${i + 1}`}
-                  color={color}
-                  count={i}
-                  data={table}
-                />
-              )
+              (<Table
+                key={`table-${i + 1}`}
+                color={color}
+                data={table}
+                isLarge
+                count={i}
+                span={false}
+                data2={data}
+                isGeneric
+              />
               ))
             }
           </div>
@@ -219,7 +220,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                     </div>
                   </div>
                   {
-                    outputs.slice(0, 3).map((item, i) => (
+                    outputs.filter(out => out.type === 'cost').map((item, i) => (
                       <div key={`output-${i}`} className='grid pb-3 grid-cols-12 py-1 px-5 bg-white'>
                         <div className="col-span-7">
                           <h4 className='text-sm lg:text-base text-black'>
@@ -230,7 +231,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
                             defaultValue={parseToNumber(item.value)}
-                            onValueChange={(value) => handleFieldChange(value, i)}
+                            onValueChange={(value) => handleFieldChange(value, item.id)}
                             {...getCurrencyInputConfig(item)}
                           />
                         </div>
@@ -270,7 +271,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                     </div>
                   </div>
                   {
-                    outputs.slice(3, 23).map((item, i) => (
+                    outputs.filter(out => out.type !== 'cost').map((item, i) => (
                       <div key={`another-outputs-${i}`} className='grid grid-cols-12 py-2 px-5 bg-white '>
                         <div className="col-span-7">
                           <h4 className='text-black'>
@@ -281,7 +282,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
                             defaultValue={parseToNumber(item.value)}
-                            onValueChange={(value) => handleFieldChange(value, i + 3)}
+                            onValueChange={(value) => handleFieldChange(value, item.id)}
                             {...getCurrencyInputConfig(item)}
                           />
                         </div>

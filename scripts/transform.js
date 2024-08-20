@@ -75,7 +75,7 @@ async function main() {
       return accumulator
     }, {
       changed: false,
-      rows: proxys.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })).filter(item => item.type === tableKey.split('/')[3] + '_impact')
+      rows: proxys.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })).filter(item => item.type === tableKey.split('/')[3])
     })
   })
 

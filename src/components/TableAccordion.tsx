@@ -79,7 +79,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                           <>
                             <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
                               {item?.description}
-                              <a key={`outcomes-${i + 1}`} href="/?query=ref#tabs" target="_blank" className='text-[#A4D65E] underline'>{item?.ref}</a></p>
+                              <a key={`outcomess-${i + 1}`} href="/?query=ref#tabs" target="_blank" className='text-[#A4D65E] underline'>{item?.ref}</a></p>
                           </>
                         )
                       }

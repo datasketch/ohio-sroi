@@ -54,15 +54,9 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                         {/* TABLES */}
                         {
                           item.tables.map((table, i) => {
-                            if (table.id === 'economic_impact' || table.id === 'social_impact' || table.id === 'environmental_impact') {
-                              return (
-                                <Table key={`table-${i + 1}`} color={color} data={{ ...table }} isLarge count={i} data2={data} />
-                              )
-                            } else {
-                              return (
-                                <Table key={`table-${i + 1}`} color={color} data={table} count={i} />
-                              )
-                            }
+                            return (
+                              <Table key={`table-${i + 1}`} color={color} data={{ ...table }} isLarge count={i} data2={data} />
+                            )
                           })
                         }
                       </div>
@@ -89,7 +83,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                 )
               }
               {
-                item.type === 'interative' && show && (
+                item.type === 'interactive' && show && (
                   <Interactive data={JSON.parse(JSON.stringify(data))} />
                 )
               }

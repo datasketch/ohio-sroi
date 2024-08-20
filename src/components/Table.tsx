@@ -98,7 +98,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                     </h4>
                   </div>
                 </div>
-                {(data.id === 'economic_impact' || data.id === 'social_impact' || data.id === 'environmental_impact') && <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} />}
+                <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} />
               </div>
               <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px", color: "black", background: "white", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" }}>
                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.
