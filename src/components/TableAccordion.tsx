@@ -4,7 +4,7 @@ import hexRgb from 'hex-rgb';
 import { formatAs, valueFormat } from '../utils';
 import classNames from 'classnames';
 
-export default function TableAccordion({ color = '#00694E', setIsOpen, rows, span = true, data }) {
+export default function TableAccordion({ color = '#00694E', setIsOpen, rows, span = true, data, groupByStakeholders }) {
   const rgb = hexRgb(color, { format: 'array', alpha: 0.1 })
   const rgba = `rgba(${rgb.join(', ')})`
 
@@ -43,7 +43,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
             <Accordion.Header className='AccordionHeader py-4' style={{ color: `rgb(${rgb.slice(0,3).join(',')})`, backgroundColor: rgba, borderColor: color }}>
               <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
                 <h4 className='text-sm lg:text-base text-black'>
-                  {item.stakeholders}
+                  {groupByStakeholders ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : item.stakeholders}
                 </h4>
               </div>
               <div className="col-span-7">

@@ -1,0 +1,566 @@
+{
+    "general": {
+        "theme": "#00C1D4",
+        "top_logo": "./images/logo.svg",
+        "logo": "https://res.cloudinary.com/randommonkey/image/upload/v1722447583/datasketch/ohio_university/habitat-for-humanity-logo.jpg",
+        "title": "HABITAT FOR HUMANITY",
+        "invested": "1",
+        "return": 13.0953627333,
+        "return_description": "of social, environmental, and economic impact",
+        "banner": "https://res.cloudinary.com/randommonkey/image/upload/v1722447392/datasketch/ohio_university/habitat-for-humanity-banner.png",
+        "subtitle": "Social Return on Investment Impact Calculator created by",
+        "description": "Social Return on Investment (SROI) is a method of calculating and communicating impact using dollar values. SROI measures the social value created by an organization’s activities, products, services or community initiatives. SROI combines social, economic, and environmental impacts into a comprehensive financial measurement of social value in a holistic measure of impact."
+    },
+    "proxy_inputs": [
+        {
+            "id": "construction_company_projects",
+            "value": 18,
+            "type": "user_input",
+            "unit": "",
+            "description": "Number of construction company projects",
+            "changed": false
+        },
+        {
+            "id": "repairs",
+            "value": 15,
+            "type": "user_input",
+            "unit": "",
+            "description": "Number of repairs",
+            "changed": false
+        },
+        {
+            "id": "blighted_houses_rebuilt",
+            "value": 2,
+            "type": "user_input",
+            "unit": "",
+            "description": "Number of blighted houses rebuilt",
+            "changed": false
+        },
+        {
+            "id": "people_per_family",
+            "value": 3.6,
+            "type": "user_input",
+            "unit": "",
+            "description": "Total persons in family of Habitat construction company home",
+            "changed": false
+        },
+        {
+            "id": "adults_per_family",
+            "value": 1.5,
+            "type": "user_input",
+            "unit": "",
+            "description": "Adults served by construction company repairs",
+            "changed": false
+        },
+        {
+            "id": "children_per_family",
+            "value": 2.4,
+            "type": "user_input",
+            "unit": "",
+            "description": "Children served by construction company repairs",
+            "changed": false
+        },
+        {
+            "id": "employees",
+            "value": 3,
+            "type": "user_input",
+            "unit": "",
+            "description": "Number of Habitat for Humanity construction company employees",
+            "changed": false
+        },
+        {
+            "id": "median_salary",
+            "value": 35000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Median Salary for Habitat for Humanity construction company position",
+            "changed": false
+        },
+        {
+            "id": "repair_project_cost",
+            "value": 10000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Average cost of construction company repair projects",
+            "changed": false
+        },
+        {
+            "id": "number_of_contract_jobs",
+            "value": 12,
+            "type": "user_input",
+            "unit": "",
+            "description": "Number of contract jobs created by construction company",
+            "changed": false
+        },
+        {
+            "id": "construction_project_cost",
+            "value": 15000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Average cost of contract jobs created by construction projects",
+            "changed": false
+        },
+        {
+            "id": "average_cost_targeted_home",
+            "value": 90000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Average cost of Habitat construction company targeted house",
+            "changed": false
+        },
+        {
+            "id": "waste_diverted",
+            "value": 2000,
+            "type": "user_input",
+            "unit": "",
+            "description": "Total pounds of waste diverted",
+            "changed": false
+        },
+        {
+            "id": "restore_savings",
+            "value": 1000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Total cost savings from materials sourced from ReStore for rennovation projects",
+            "changed": false
+        },
+        {
+            "id": "total_cost_rebuild",
+            "value": 150000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Total cost of rebuilding blighted housing invested by Habitat construction company",
+            "changed": false
+        },
+        {
+            "id": "improved_relationships",
+            "value": 64.8,
+            "type": "user_input",
+            "unit": "",
+            "description": "Total number of people reporting improved relationships",
+            "changed": false
+        },
+        {
+            "id": "miles_driven",
+            "value": 74,
+            "type": "user_input",
+            "unit": "",
+            "description": "Miles driven from Columbus to Athens",
+            "changed": false
+        },
+        {
+            "id": "women_served_serenity",
+            "value": 4,
+            "type": "user_input",
+            "unit": "",
+            "description": "Increase in number of women served by Serenity Groce through contruction project",
+            "changed": false
+        },
+        {
+            "id": "annual_value_serenity",
+            "value": 42400,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Estimate of basic annual value of Serenity Grove's housing utilities, and food assistance along with other services available",
+            "changed": false
+        },
+        {
+            "id": "operations_cost",
+            "value": 40000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Annual operating cost",
+            "changed": false
+        },
+        {
+            "id": "employee_wages",
+            "value": 140000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Annual personnel costs",
+            "changed": false
+        },
+        {
+            "id": "Revenue from contracts and projects",
+            "value": 250000,
+            "type": "user_input",
+            "unit": "currency",
+            "description": "Annual revenue",
+            "changed": false
+        }
+    ],
+    "proxy_values": [
+        {
+            "id": "cost_of_loneliness",
+            "value": 1692,
+            "unit": "currency",
+            "description": "Cost of loneliness and isolation",
+            "ref": "(Holt-Lunstand et al., 2010)",
+            "changed": false
+        },
+        {
+            "id": "health_cost_substandard_housing",
+            "value": 3100,
+            "unit": "currency",
+            "description": "Health cost of living in substandard housing, per year cost of asthma ",
+            "ref": "(Center for Disease Control, 2021; de Leon & Schilling, 2017; Nunes, et al., 2017) ",
+            "changed": false
+        },
+        {
+            "id": "education_earnings_increase",
+            "value": 817.96,
+            "unit": "currency",
+            "description": "Annual education earnings increase per child as a result of stable housing ",
+            "ref": "(Bureau of Labor Statistics, 2019; Minnesota Office of Higher Education, 2018)",
+            "changed": false
+        },
+        {
+            "id": "value_added_maintenance",
+            "value": 0.01,
+            "unit": "percentage",
+            "description": "Value added per year with regular maintenance",
+            "ref": "(Harding et al., 2006)",
+            "changed": false
+        },
+        {
+            "id": "money_returned_local",
+            "value": 0.58,
+            "unit": "percentage",
+            "description": "% of money returned to local economy",
+            "ref": "(Patel & Martin, 2011)",
+            "changed": false
+        },
+        {
+            "id": "unemployment_cost_to_society",
+            "value": 51350,
+            "unit": "currency",
+            "description": "Cost of unemployed persons to the state and society",
+            "ref": "(Belfield et al., 2012)",
+            "changed": false
+        },
+        {
+            "id": "mileage_reimbursement",
+            "value": 0.14,
+            "unit": "currency",
+            "description": "Mileage reimbursement for charity",
+            "ref": "(IRS, 2021)",
+            "changed": false
+        },
+        {
+            "id": "firearm_violence_prevention",
+            "value": 78,
+            "unit": "currency",
+            "description": "Return on investement for the prevention of firearm violence for every dollar spent on abandoned building remediation ",
+            "ref": "(Branas et al., 2016)",
+            "changed": false
+        },
+        {
+            "id": "metric_tons_co2_per_ton",
+            "value": 1.22,
+            "unit": "conversion",
+            "description": "Metric tons CO2 equivalent per ton of solid waste ",
+            "ref": "(O'Brien, 2016, Table 6)",
+            "changed": false
+        },
+        {
+            "id": "cost_per_ton_co2",
+            "value": 51,
+            "unit": "currency",
+            "description": "$ per ton cost of CO2 ",
+            "ref": "(Exec. Order No. 13990, 2021)",
+            "changed": false
+        },
+        {
+            "id": "people_with_asthma",
+            "value": 0.094,
+            "unit": "percentage",
+            "description": "People with Asthma in Ohio",
+            "ref": "(Center for Disease Control, 2021)",
+            "changed": false
+        },
+        {
+            "id": "percent_affected_rennovation",
+            "value": 0.11,
+            "unit": "percentage",
+            "description": "Percent of House affected by renovation",
+            "ref": "werwer",
+            "changed": false
+        },
+        {
+            "id": "discount_zanesville_crime",
+            "value": 0.1,
+            "unit": "percentage",
+            "description": "Percent discount for Zanesville Crime Rates",
+            "ref": "ewrwerwer",
+            "changed": false
+        },
+        {
+            "id": "property_tax",
+            "value": 1200,
+            "unit": "currency",
+            "description": "Average annual property tax for blighted houses rebuilt",
+            "ref": "rewrwerwq",
+            "changed": false
+        }
+    ],
+    "tabs": [
+        {
+            "tables": [
+                {
+                    "changed": false,
+                    "rows": [
+                        {
+                            "id": "proxy_2",
+                            "type": "economic_impact",
+                            "stakeholders": "Low-Income Persons",
+                            "description": "Increase in home value from regular maintenance",
+                            "value": 13500,
+                            "variables": "average_cost_targeted_home,repairs,value_added_maintenance",
+                            "formula": "average_cost_targeted_home * repairs * value_added_maintenance",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_3",
+                            "type": "economic_impact",
+                            "stakeholders": "Low_income Persons",
+                            "description": "Average Equity Built in houses as a result of repairs",
+                            "value": 150000,
+                            "variables": "repairs,repair_project_cost",
+                            "formula": "repairs * repair_project_cost",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_4",
+                            "type": "economic_impact",
+                            "stakeholders": "Construction Workers",
+                            "description": "Salary from Construction Company",
+                            "value": 105000,
+                            "variables": "employees,median_salary",
+                            "formula": "employees * median_salary",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_5",
+                            "type": "economic_impact",
+                            "stakeholders": "Local Businesses",
+                            "description": "Local money flows from salary",
+                            "value": 60899.99999999999,
+                            "variables": "employees,median_salary,money_returned_local",
+                            "formula": "employees * median_salary * money_returned_local",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_6",
+                            "type": "economic_impact",
+                            "stakeholders": "State of Ohio",
+                            "description": "Total cost savings to the state for employing hard to employ persons",
+                            "value": 154050,
+                            "variables": "employees,unemployment_cost_to_society",
+                            "formula": "employees * unemployment_cost_to_society",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_7",
+                            "type": "economic_impact",
+                            "stakeholders": "Construction Workers",
+                            "description": "Transportation Savings from Local Employment",
+                            "value": 15540,
+                            "variables": "employees,miles_driven,mileage_reimbursement",
+                            "formula": "employees * miles_driven * mileage_reimbursement * 2 * 5 * 50",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_8",
+                            "type": "economic_impact",
+                            "stakeholders": "Contractors",
+                            "description": "Total $ contract jobs created by Habitat for Humanity construction company activity",
+                            "value": 180000,
+                            "variables": "number_of_contract_jobs,construction_project_cost",
+                            "formula": "number_of_contract_jobs * construction_project_cost",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_9",
+                            "type": "economic_impact",
+                            "stakeholders": "Local Businesses",
+                            "description": "Local money flows from contracts",
+                            "value": 104400,
+                            "variables": "number_of_contract_jobs,construction_project_cost,money_returned_local",
+                            "formula": "number_of_contract_jobs * construction_project_cost * money_returned_local",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_10",
+                            "type": "economic_impact",
+                            "stakeholders": "Local Government",
+                            "description": "Property tax generated from rebuilding of blighted houses",
+                            "value": 2400,
+                            "variables": "blighted_houses_rebuilt,property_tax",
+                            "formula": "blighted_houses_rebuilt * property_tax",
+                            "changed": false
+                        }
+                    ],
+                    "id": "economic_impact",
+                    "title": "What economic impact is created?",
+                    "tooltip": "Economic impact includes changes to individual or collective financial assets including profit, savings, currency circulation, and built capital.",
+                    "totalValue": 785790,
+                    "formula": "proxy_2 + proxy_3 + proxy_4 + proxy_5 + proxy_6 + proxy_7 + proxy_8 + proxy_9 + proxy_10"
+                },
+                {
+                    "changed": false,
+                    "rows": [
+                        {
+                            "id": "proxy_13",
+                            "type": "social_impact",
+                            "stakeholders": "Low-Income Persons",
+                            "description": "Improved Relationships",
+                            "value": 109641.59999999999,
+                            "variables": "improved_relationships,cost_of_loneliness",
+                            "formula": "improved_relationships * cost_of_loneliness",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_14",
+                            "type": "social_impact",
+                            "stakeholders": "Low-Income Persons",
+                            "description": "Reduced health costs from diversion from substandard housing",
+                            "value": 15735.6,
+                            "variables": "people_per_family,repairs,health_cost_substandard_housing,people_with_asthma",
+                            "formula": "people_per_family * repairs * health_cost_substandard_housing * people_with_asthma",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_15",
+                            "type": "social_impact",
+                            "stakeholders": "Low_Income Children",
+                            "description": "Increase in Education Earnings as Result of Stable Housing",
+                            "value": 35335.872,
+                            "variables": "education_earnings_increase,repairs,children_per_family",
+                            "formula": "education_earnings_increase * repairs * children_per_family",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_16",
+                            "type": "social_impact",
+                            "stakeholders": "Local Community",
+                            "description": "Benefit from crime reduction",
+                            "value": 1170000,
+                            "variables": "total_cost_rebuild,firearm_violence_prevention,discount_zanesville_crime",
+                            "formula": "total_cost_rebuild * firearm_violence_prevention * discount_zanesville_crime",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_17",
+                            "type": "social_impact",
+                            "stakeholders": "Other Nonprofits",
+                            "description": "Capacity added to local nonprofit through construction project",
+                            "value": 169600,
+                            "variables": "women_served_serenity,annual_value_serenity",
+                            "formula": "women_served_serenity * annual_value_serenity",
+                            "changed": false
+                        }
+                    ],
+                    "id": "social_impact",
+                    "title": "What social impact is created?",
+                    "tooltip": "Social impact includes changes to individuals, groups of people, and organizations in areas such as health, well-being, safety, relationship, and belonging.",
+                    "totalValue": 1500313.072,
+                    "formula": "proxy_13 + proxy_14 + proxy_15 + proxy_16 + proxy_17"
+                },
+                {
+                    "changed": false,
+                    "rows": [
+                        {
+                            "id": "proxy_11",
+                            "type": "environmental_impact",
+                            "stakeholders": "The World",
+                            "description": "Dollars saved in waste diversion",
+                            "value": 62.22,
+                            "variables": "waste_diverted,metric_tons_co2_per_ton,cost_per_ton_co2",
+                            "formula": "waste_diverted * metric_tons_co2_per_ton * cost_per_ton_co2 / 2000",
+                            "changed": false
+                        },
+                        {
+                            "id": "proxy_12",
+                            "type": "environmental_impact",
+                            "stakeholders": "Habitat Restore",
+                            "description": "Savings from sourcing materials from the Restore",
+                            "value": 1000,
+                            "variables": "restore_savings",
+                            "formula": "restore_savings",
+                            "changed": false
+                        }
+                    ],
+                    "id": "environmental_impact",
+                    "title": "What environmental impact is created?",
+                    "tooltip": "Environmental impact includes changes to biophysical systems and natural capital including energy use, pollution, and preservation of ecosystems.",
+                    "totalValue": 1062.22,
+                    "formula": "proxy_11 + proxy_12"
+                }
+            ],
+            "list": [],
+            "label": "Dashboard",
+            "type": "table"
+        },
+        {
+            "tables": [],
+            "list": [],
+            "label": "Program Details",
+            "type": "interactive"
+        },
+        {
+            "tables": [],
+            "list": [
+                {
+                    "title": "Belfield, C. R., Levin, H. M., & Rosen, R. (2012). The economic value of opportunity youth. The Corporation for National and Communty Service and The White House Council for Community Solutions.",
+                    "href": "https://eric.ed.gov/?id=ED528650"
+                },
+                {
+                    "title": "Branas, C. C., Kondo, M. C., Murphy, S. M., South, E. C., Polsky, D. & MacDonald, J. M. (2016). Urban blight remediation as a cost-beneficial solution to firearm violence. American Journal of Public Health, 106(12), 2158–2164. ",
+                    "href": "https://doi.org/10.2105/AJPH.2016.303434"
+                },
+                {
+                    "title": "Bureau of Labor Statistics (2019). Median weekly earnings $606 for high school dropouts, $1,559 for advanced degree holders. US Department of Labor.",
+                    "href": "https://www.bls.gov/pub/ted/2019/median-weekly-earnings-606-for-high-school-dropouts-1559-for-advanced-degree-holders.htm#:~:text=Median%20weekly%20earnings%20%24606%20for%241%2C559%20for%20advanced%20degree%20holders&text=In%20the%20third%20quarter%20ofmedian%20weekly%20earnings%20of%20%24975"
+                },
+                {
+                    "title": "Center for Disease Control. (2021). Most recent asthma state or territory data sets. CDC. ",
+                    "href": "https://www.cdc.gov/asthma/most_recent_data_states.htm"
+                },
+                {
+                    "title": "de Leon, E., & Schilling, J. (2017). Urban blight and public health: Addressing the impact of substandard housing, abandoned buildings, and vacant lots. Urban Institute. ",
+                    "href": "https://www.urban.org/sites/default/files/publication/89491/2017.04.03_urban_blight_and_public_health_vprn_report_finalized.pdf"
+                },
+                {
+                    "title": "Harding, J. P., Rosenthal, S. S., & Sirmans, C. F. (2006). Depreciation of housing capital,",
+                    "href": ""
+                },
+                {
+                    "title": "Holt-Lunstand, J., Smith, T.B., & Layton, J.B. (2010). Social relationships and mortality risk: A meta-analytic review. PLoS Med, 7(7). ",
+                    "href": "www.ncbi.nlm.nih.gov/pmc/articles/PMC2910600/"
+                },
+                {
+                    "title": "IRS. (2021). Standard milage rates. IRS.",
+                    "href": "https://www.irs.gov/tax-professionals/standard-mileage- rates"
+                },
+                {
+                    "title": "Marten, A.L., & Newbold, S.C. (2012). Estimating the social cost of non-CO2 GHG emissions: Methane and nitrous oxide. Energy Policy, 51, 957-972. ",
+                    "href": "https://doi.org/10.1016/j.enpol.2012.09.073"
+                },
+                {
+                    "title": "O'Brien, J. (2016). The landfill impacts of food waste diversion programs. MSW Management. 18 August 2016. ",
+                    "href": "https://www.mswmanagement.com/landfills/article/13025743/the-landfill-impacts-of-food-waste-diversion-programs"
+                },
+                {
+                    "title": "Patel, A. & Martin, G. (2011). Going local: Quantifying the economic impacts of buying from locally owned busineeses in Portland, Maine. Maine Center for Economic Policy.",
+                    "href": "https://www.mecep.org/wp-content/uploads/2011/12/MECEP_Report_-_Buying Local-12-5-2011.pdf"
+                },
+                {
+                    "title": "Nunes, C., Pereira, A. M., & Morais-Almeida, M. (2017). Asthma costs and social impact. Asthma Research and Practice, 3(1).",
+                    "href": "https://doi.org/10.1186/s40733-016-0029-3"
+                }
+            ],
+            "label": "References",
+            "type": "references"
+        }
+    ]
+}

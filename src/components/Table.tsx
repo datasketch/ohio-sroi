@@ -13,9 +13,10 @@ interface TableProps {
   data2?: Record<string, unknown>
   isLarge?: boolean
   isGeneric?: boolean
+  groupByStakeholders?: boolean
 }
 
-export default function Table({ color, data, isLarge = false, top = "top-2/3", count, span = true, data2, isGeneric = false }: TableProps) {
+export default function Table({ color, data, isLarge = false, top = "top-2/3", count, span = true, data2, isGeneric = false, groupByStakeholders }: TableProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [hasLimit, setHasLimit] = useState(false)
 
@@ -56,8 +57,8 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
               <h3 className={classNames('text-base lg:text-xl', { 'text-white': !isGeneric, 'text-black': isGeneric })}>{data.title as string}
                 {hasRow && (
                   <button className={`pl-1 tooltip-value${count}`}>
-                    {!isGeneric && (<img src={`${import.meta.env.BASE_URL}/images/icons/information-icon.svg`} alt="information icon" />)}
-                    {isGeneric && (<img src={`${import.meta.env.BASE_URL}/images/icons/information-generic-icon.svg`} alt="information icon" />)}
+                    {!isGeneric && (<img src={`/images/icons/information-icon.svg`} alt="information icon" />)}
+                    {isGeneric && (<img src={`/images/icons/information-generic-icon.svg`} alt="information icon" />)}
                   </button>
                 )}
               </h3>
@@ -84,7 +85,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                 <div className='grid grid-cols-12 py-1 px-5 bg-white'>
                   <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
                     <h4 className='text-gray-2 text-xs lg:text-sm'>
-                      Who is impacted?
+                      {groupByStakeholders ? 'Type of impact' : 'Who is impacted?'}
                     </h4>
                   </div>
                   <div className="col-span-7">
@@ -94,11 +95,11 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                   </div>
                   <div className={classNames('pl-12', { 'col-span-3': !span, 'col-span-2': span })}>
                     <h4 className='text-gray-2 text-xs lg:text-sm flex gap-1'>
-                      Value <img className={`value${count}`} src={`${import.meta.env.BASE_URL}/images/icons/information-generic-icon.svg`} alt="information icon" />
+                      Value <img className={`value${count}`} src={`/images/icons/information-generic-icon.svg`} alt="information icon" />
                     </h4>
                   </div>
                 </div>
-                <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} />
+                <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} groupByStakeholders={groupByStakeholders} />
               </div>
               <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px", color: "black", background: "white", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" }}>
                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.

@@ -18,7 +18,7 @@ export default function CardAmount({ color = '#00694E', title, amount, cardAmoun
             $ {cardAmount.return}
           </p>
           <button className="tooltip-rev2">
-            <img src={`${import.meta.env.BASE_URL}/images/icons/information-generic-icon.svg`} alt="information icon" />
+            <img src={`/images/icons/information-generic-icon.svg`} alt="information icon" />
           </button>
         </div>
         <div className="bg-silver h-[0.5px] mt-5"></div>

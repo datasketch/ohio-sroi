@@ -35,6 +35,7 @@ async function main() {
     getObject(`${process.env.ORGANIZATION_SLUG}/${process.env.PROXY_DATABASE}/proxy_values.json`)
   ])
 
+
   const data = {
     general: {},
     proxy_inputs: proxy_inputs.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })),

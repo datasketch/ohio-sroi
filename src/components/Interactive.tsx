@@ -78,18 +78,18 @@ export default function Interactive({ top = "top-2/3", data }) {
       return tbl
     })
 
-    const div_formula = data.general.formula.split('/')[1]
+    const div_formula = data.general.formula
 
     const fg = data.general.variables.split(',').map(v => v.trim()).reduce((fg, v) => {
       const value = values.find(item => item.id === v)?.value
       return fg.replaceAll(v, value)
     }, div_formula)
 
-    const div = safeEval(fg)
+    const formula = fg.replaceAll('SUM(proxies)', social)
 
-    social = social / div
+    const result = safeEval(formula)
 
-    setSocialValue(social)
+    setSocialValue(result)
     setTables(update)
 
     // let newTable = [...tables]
