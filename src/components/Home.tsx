@@ -32,7 +32,7 @@ export default function Home({ data }) {
               <img src={data.general.banner} alt="" />
               <div className="flex flex-col lg:flex-row gap-5 items-center justify-between mt-16">
                 <h2>{data.general.subtitle}</h2>
-                <img src={`/images/logo-5.svg`} alt="" />
+                <img src={`${import.meta.env.BASE_URL}/images/logo-5.svg`} alt="" />
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function Home({ data }) {
         <TabSection color={data.general.theme} tabs={data.tabs} url={url} data={data} />
       </div>
       <div className='u-container py-16 flex gap-x-16 items-center'>
-        <img src={`/images/div2.svg`} alt="" />
+        <img src={`${import.meta.env.BASE_URL}/images/div2.svg`} alt="" />
         <p className="text-sm lg:text-base">
           {data.general.description}
         </p>

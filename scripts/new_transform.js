@@ -66,7 +66,9 @@ async function main() {
         general: {
             logo: sites.logo,
             banner: sites.banner,
-            theme: sites.theme
+            theme: sites.theme,
+            bg_image1: sites.bg_image1,
+            bg_image2: sites.bg_image2
         },
         proxy_inputs: proxy_inputs.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })),
         proxy_values: proxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false }))
