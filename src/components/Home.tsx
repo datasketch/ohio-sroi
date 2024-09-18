@@ -29,7 +29,7 @@ export default function Home({ data }) {
                   </div>
                 </div>
               </div>
-              <img src={data.general.banner} alt="" />
+              <img src={data.general.banner} alt="" className="mx-auto"/>
               <div className="flex flex-col lg:flex-row gap-5 items-center justify-between mt-16">
                 <h2>{data.general.subtitle}</h2>
                 <img src={`${import.meta.env.BASE_URL}/images/logo-5.svg`} alt="" />
