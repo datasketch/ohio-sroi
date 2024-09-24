@@ -173,7 +173,7 @@ export default function Interactive({ top = "top-2/3", data }) {
             </h2>
             <div className="mt-5 rounded-lg text-center">
               <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
-                {data.general.return_description}
+                {data.general.returnDescription}
               </p>
             </div>
           </div>
