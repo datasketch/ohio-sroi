@@ -67,6 +67,7 @@ async function main() {
             logo: sites.logo,
             banner: sites.banner,
             theme: sites.theme,
+            main_image: sites.main_image,
             bg_image1: sites.bg_image1,
             bg_image2: sites.bg_image2
         },
@@ -120,7 +121,7 @@ async function main() {
             changed: false,
             rows: groupByStakeholders[tableKey].map(item => omit(item, ["rcd___id"])),
             id: tableKey,
-            title: `What impact has on ${tableKey}?`,
+            title: `What is the impact on ${tableKey}?`,
             totalValue: groupByStakeholders[tableKey].reduce((acc, item) => acc + item.value, 0)
         }
     })

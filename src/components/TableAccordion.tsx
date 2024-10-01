@@ -39,8 +39,8 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
     <Accordion.Root type="single" collapsible>
       {
         rows && rows.map((item, i) => (
-          <Accordion.Item key={`acc-item-${i}`} className='AccordionItem' value={`item-${i}`}>
-            <Accordion.Header className='AccordionHeader py-4' style={{ color: `rgb(${rgb.slice(0,3).join(',')})`, backgroundColor: rgba, borderColor: color }}>
+          <Accordion.Item key={`acc-item-${i}-${item.stakeholders}`} className='AccordionItem' value={`item-${i}`}>
+            <Accordion.Header className='AccordionHeader py-4' style={{ color: `rgb(${rgb.slice(0, 3).join(',')})`, backgroundColor: rgba, borderColor: color }}>
               <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
                 <h4 className='text-sm lg:text-base text-black'>
                   {groupByStakeholders ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : item.stakeholders}
@@ -66,7 +66,35 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
             </Accordion.Header>
             <Accordion.Content className="AccordionContent" style={{ backgroundColor: rgba, borderColor: color }}>
               <div className='AccordionContentChildren' style={{ borderColor: color }}>
-                <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
+                {
+                  item.rows.map((item, i) => {
+                    return (
+                      <>
+                        <div className={classNames('py-2', { 'col-span-2': !span, 'col-span-3': span })}>
+                          {i === 0 && <p className='text-black text-sm'>
+                            How do we calculate this?
+                          </p>}
+                        </div>
+                        <div className="col-span-7 py-2">
+                          {item?.ref ?
+                            <>
+                              <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
+                                {item?.description}
+                                <a key={`outcomess-${i + 1}`} href="/?query=ref#tabs" target="_blank" className='text-[#A4D65E] underline'>{item?.ref}</a></p>
+                            </> :
+                            <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
+                              {item?.description}
+                            </p>
+                          }
+                        </div>
+                        <div className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-2': span })}>
+                          {formatAs(item?.value, item?.unit)}
+                        </div>
+                      </>
+                    )
+                  })
+                }
+                {/* <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
                   <p className='text-black text-sm'>
                     How do we calculate this?
                   </p>
@@ -102,7 +130,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                       );
                     })}
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className='flex flex-row justify-between border-t-[0.5px] py-4 pr-20' style={{ borderColor: rgba }}>
                 <div className="col-span-3">
