@@ -48,14 +48,14 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
               {
                 item.type === 'table' && (
                   <div className='pt-12 pb-9 relative'>
-                    {data.general.bg_image1 && <img src={`${data.general.bg_image1}`} alt="bg" className='absolute right-0' />}
-                    {data.general.bg_image2 && <img src={`${data.general.bg_image2}`} alt="bgh" className='absolute bottom-0' />}
+                    {data.general.bg_image1 && <img src={`${data.general.bg_image1}`} alt="bg" className='absolute right-0 max-w-[400px] opacity-40 -z-0' />}
+                    {data.general.bg_image2 && <img src={`${data.general.bg_image2}`} alt="bgh" className='absolute bottom-0 max-w-[400px] opacity-40 -z-0'  />}
                     <div className='u-container'>
                       <div className="flex items-center justify-between pb-12">
                         <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
                           Look at the details
                         </p>
-                        <div className='flex items-center gap-2'>
+                        <div className='flex items-center gap-2 z-10 '>
                           <label htmlFor="">Group by Stakeholders</label>
                           <Switch.Root
                             checked={groupByStakeholders}
