@@ -13,6 +13,9 @@ parameters:
   tbl:
     type: string
     default: ''
+  token:
+    type: string
+    default: ''
 
 orbs:
   node: circleci/node@5.2.0
