@@ -35,12 +35,18 @@ export default function Interactive({ top = "top-2/3", data }) {
     if (item.unit === 'currency') {
       config.prefix = '$'
     }
+    if (item.unit === 'percentage') {
+      config.suffix = '%'
+    }
 
     return config
   }
 
-  const handleFieldChange = (value: string, index: string) => {
-    const parsedValue = parseToNumber(value)
+  const handleFieldChange = (value: string, index: string, unit: string) => {
+    let parsedValue = parseToNumber(value)
+    if (unit === 'percentage') {
+      parsedValue = parsedValue / 100
+    }
 
     setOutputs(prevState => {
       const i = prevState.findIndex(el => el.id === index)
@@ -230,8 +236,8 @@ export default function Interactive({ top = "top-2/3", data }) {
                         <div className="col-span-5 pl-8">
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                            defaultValue={parseToNumber(item.value)}
-                            onValueChange={(value) => handleFieldChange(value, item.id)}
+                            defaultValue={item.unit === 'percentage' ?  parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                            onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                             {...getCurrencyInputConfig(item)}
                           />
                         </div>
@@ -281,8 +287,8 @@ export default function Interactive({ top = "top-2/3", data }) {
                         <div className="col-span-5 pl-8">
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                            defaultValue={parseToNumber(item.value)}
-                            onValueChange={(value) => handleFieldChange(value, item.id)}
+                            defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                            onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                             {...getCurrencyInputConfig(item)}
                           />
                         </div>

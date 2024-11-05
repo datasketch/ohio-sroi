@@ -1,0 +1,1 @@
+import{j as a}from"./jsx-runtime.01c4bc4a.js";import"./index.55e1fde7.js";await fetch("/data/format.json").then(t=>t.json());function r(){return a.jsx("div",{className:"u-container"})}export{r as default};

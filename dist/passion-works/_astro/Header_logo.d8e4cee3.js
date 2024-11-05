@@ -1,1 +1,0 @@
-import{j as t}from"./jsx-runtime.b9bf4517.js";import"./index.a383d3d5.js";await fetch("/passion-works/data/format.json").then(o=>o.json());function r(){return t.jsx("div",{className:"u-container"})}export{r as default};
