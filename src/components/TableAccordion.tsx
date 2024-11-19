@@ -41,23 +41,23 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
         rows && rows.map((item, i) => (
           <Accordion.Item key={`acc-item-${i}-${item.stakeholders}`} className='AccordionItem' value={`item-${i}`}>
             <Accordion.Header className='AccordionHeader py-4' style={{ color: `rgb(${rgb.slice(0, 3).join(',')})`, backgroundColor: rgba, borderColor: color }}>
-              <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
+              <div className={classNames('', { 'col-span-2': !span, 'col-span-2 px-0': span })}>
                 <h4 className='text-sm lg:text-base text-black'>
                   {groupByStakeholders ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : item.stakeholders}
                 </h4>
               </div>
-              <div className="col-span-7">
+              <div className={classNames({'col-span-7': !span, 'col-span-7 px-0': span})}>
                 <h4 className='text-sm lg:text-base text-black'>
                   {item.description}
                 </h4>
               </div>
-              <div className={classNames('flex items-center gap-x-8', { 'col-span-3': !span, 'col-span-2': span })}>
-                <div className='w-9/12'>
+              <div className={classNames('flex items-center gap-x-8', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
+                <div className='w-10/12'>
                   <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
                     $ {valueFormat(item.value)}
                   </h4>
                 </div>
-                <div className='w-3/12'>
+                <div className='w-2/12 flex justify-end'>
                   <Accordion.Trigger onClick={(e) => getDataState(e)} className="AccordionTrigger" style={{ backgroundColor: color }} aria-label={`${item.stakeholders} details`}>
                     <ChevronRightIcon className="AccordionChevron" aria-hidden />
                   </Accordion.Trigger>
@@ -70,12 +70,12 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                   item.rows.map((item, i) => {
                     return (
                       <>
-                        <div className={classNames('py-2', { 'col-span-2': !span, 'col-span-3': span })}>
+                        <div className={classNames('py-2', { 'col-span-2': !span, 'col-span-2 px-0': span })}>
                           {i === 0 && <p className='text-black text-sm'>
                             How do we calculate this?
                           </p>}
                         </div>
-                        <div className="col-span-7 py-2">
+                        <div className={classNames({'col-span-7 py-2': !span, 'col-span-7 px-0 py-2': span})}>
                           {item?.ref ?
                             <>
                               <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
@@ -87,7 +87,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                             </p>
                           }
                         </div>
-                        <div className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-2': span })}>
+                        <div className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
                           {formatAs(item?.value, item?.unit)}
                         </div>
                       </>

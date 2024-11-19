@@ -83,7 +83,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
             <div ref={tableRef} className='overflow-x-scroll lg:overflow-hidden'>
               <div className='w-[1000px] lg:w-auto'>
                 <div className='grid grid-cols-12 py-1 px-5 bg-white'>
-                  <div className={classNames('', { 'col-span-2': !span, 'col-span-3': span })}>
+                  <div className={classNames('', { 'col-span-2': !span, 'col-span-2 px-0': span })}>
                     <h4 className='text-gray-2 text-xs lg:text-sm'>
                       {groupByStakeholders ? 'Type of impact' : 'Who is impacted?'}
                     </h4>
@@ -93,7 +93,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                       What changed?
                     </h4>
                   </div>
-                  <div className={classNames('pl-12', { 'col-span-3': !span, 'col-span-2': span })}>
+                  <div className={classNames('pl-12', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
                     <h4 className='text-gray-2 text-xs lg:text-sm flex gap-1'>
                       Value <img className={`value${count}`} src={`${import.meta.env.BASE_URL}/images/icons/information-generic-icon.svg`} alt="information icon" />
                     </h4>
