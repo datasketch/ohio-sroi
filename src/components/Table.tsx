@@ -69,9 +69,27 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                   <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
                     Total Value
                   </p>
-                  <div className='bg-white rounded py-0.5 px-5' >
-                    <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
-                  </div>
+                  {
+                    data.ranges ?
+                      <div className='flex flex-col gap-y-2 ml-3'>
+                        <div className='flex items-center gap-x-2 justify-between'>
+                          <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>
+                          <div className='bg-white rounded py-0.5 px-5' >
+                            <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
+                          </div>
+                        </div>
+                        <div className='flex items-center gap-x-2 justify-between'>
+                          <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[low]</p>
+                          <div className='bg-white rounded py-0.5 px-5' >
+                            <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue2)}</p>
+                          </div>
+                        </div>
+                      </div>
+                      :
+                      <div className='bg-white rounded py-0.5 px-5' >
+                        <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
+                      </div>
+                  }
                 </div>
               )
             }

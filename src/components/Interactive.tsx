@@ -23,6 +23,7 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [outputs, setOutputs] = useState(data.proxy_inputs)
   const [tables, setTables] = useState(data.tabs[0].tables)
   const [socialValue, setSocialValue] = useState(data.general.return)
+  const [socialValue2, setSocialValue2] = useState(data.general.return2)
   const tableRefCosts = useRef<HTMLDivElement>()
   const tableRefNumbers = useRef<HTMLDivElement>()
   const [hasLimit, setHasLimit] = useState(false)
@@ -64,6 +65,7 @@ export default function Interactive({ top = "top-2/3", data }) {
 
   const updateTable = () => {
     let social = 0
+    let social2 = 0
 
     const update = tables.map(tbl => {
       const totalValue = tbl.rows.reduce((total, row) => {
@@ -81,6 +83,30 @@ export default function Interactive({ top = "top-2/3", data }) {
       }, 0)
       tbl.totalValue = totalValue
       social += totalValue
+      if (tbl.ranges) {
+        console.log(tbl.rows)
+        const totalValue2 = tbl.rows.reduce((total, row) => {
+          const vars = row.value2 ? row.variables2.split(',').map(v => v.trim()) : row.variables.split(',').map(v => v.trim())
+          console.log(vars)
+          const fx = vars.reduce((fx, v) => {
+            const tmp = values.find(item => item.id === v)
+            const value = tmp?.ranges ? tmp?.value2 : tmp?.value
+            return fx.replaceAll(v, value)
+          }, (row.value2 ? row.formula2 : row.formula))
+          const prevValue = row.value2 ? row.value2 : row.value
+          console.log(fx)
+          const result = safeEval(fx)
+          if (row.value2) {
+            row.value2 = result
+          } else {
+            row.value = result
+          }
+          row.changed = prevValue !== result
+          return total + result
+        }, 0)
+        tbl.totalValue2 = totalValue2
+        social2 += totalValue2
+      }
       return tbl
     })
 
@@ -92,10 +118,13 @@ export default function Interactive({ top = "top-2/3", data }) {
     }, div_formula)
 
     const formula = fg.replaceAll('SUM(proxies)', social)
+    const formula2 = fg.replaceAll('SUM(proxies)', social2)
 
     const result = safeEval(formula)
+    const result2 = safeEval(formula2)
 
     setSocialValue(result)
+    setSocialValue2(result2)
     setTables(update)
 
     // let newTable = [...tables]
@@ -175,7 +204,7 @@ export default function Interactive({ top = "top-2/3", data }) {
           </div>
           <div className='text-2xl py-8 px-10 rounded-2xl shadow-lg' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }) }}>
             <h2 className="text-xl text-center">
-              <OutcomeText data={data} color={color} showReturn={false} socialValue={socialValue} />
+              <OutcomeText data={data} color={color} showReturn={false} socialValue={socialValue} socialValue2={socialValue2} />
             </h2>
             <div className="mt-5 rounded-lg text-center">
               <p className="text-gray-2 text-center mt-3 text-lg lg:text-base">
@@ -236,7 +265,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                         <div className="col-span-5 pl-8">
                           <CurrencyInput
                             className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                            defaultValue={item.unit === 'percentage' ?  parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                            defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
                             onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                             {...getCurrencyInputConfig(item)}
                           />

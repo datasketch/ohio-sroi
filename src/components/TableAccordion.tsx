@@ -4,7 +4,7 @@ import hexRgb from 'hex-rgb';
 import { formatAs, valueFormat } from '../utils';
 import classNames from 'classnames';
 
-export default function TableAccordion({ color = '#00694E', setIsOpen, rows, span = true, data, groupByStakeholders }) {
+export default function TableAccordion({ color = '#00694E', setIsOpen, rows, span = true, data, groupByStakeholders}) {
   const rgb = hexRgb(color, { format: 'array', alpha: 0.1 })
   const rgba = `rgba(${rgb.join(', ')})`
 
@@ -46,16 +46,35 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                   {groupByStakeholders ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : item.stakeholders}
                 </h4>
               </div>
-              <div className={classNames({'col-span-7': !span, 'col-span-7 px-0': span})}>
+              <div className={classNames({ 'col-span-7': !span, 'col-span-7 px-0': span })}>
                 <h4 className='text-sm lg:text-base text-black'>
                   {item.description}
                 </h4>
               </div>
               <div className={classNames('flex items-center gap-x-8', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
                 <div className='w-10/12'>
-                  <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
-                    $ {valueFormat(item.value)}
-                  </h4>
+                  {
+                    item.value2 ?
+                      <div className='flex flex-col gap-y-1'>
+                        <div className='flex items-center gap-x-2 justify-end '>
+                          <p className='text-xs text-black'>[high]</p>
+                          <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
+                            $ {valueFormat(item.value)}
+                          </h4>
+                        </div>
+                        <div className='flex items-center gap-x-2 justify-end '>
+                          <p className='text-xs text-black'>[low]</p>
+                          <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
+                            $ {valueFormat(item.value2)}
+                          </h4>
+                        </div>
+                      </div>
+                      :
+                      <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
+                        $ {valueFormat(item.value)}
+                      </h4>
+                  }
+
                 </div>
                 <div className='w-2/12 flex justify-end'>
                   <Accordion.Trigger onClick={(e) => getDataState(e)} className="AccordionTrigger" style={{ backgroundColor: color }} aria-label={`${item.stakeholders} details`}>
@@ -75,21 +94,29 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                             How do we calculate this?
                           </p>}
                         </div>
-                        <div className={classNames({'col-span-7 py-2': !span, 'col-span-7 px-0 py-2': span})}>
+                        <div className={classNames({ 'col-span-7 py-2': !span, 'col-span-7 px-0 py-2': span })}>
                           {item?.ref ?
                             <>
                               <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
-                                {item?.description}
-                                <a key={`outcomess-${i + 1}`} href="/?query=ref#tabs" target="_blank" className='text-[#A4D65E] underline'>{item?.ref}</a></p>
+                                {item?.description}{" "}
+                                <a key={`outcomess-${i + 1}`} href={`/${data.general.organization}/${data.general.database}/?query=ref#tabs`} target="_blank" className='text-[#A4D65E] underline'>{item?.ref}</a></p>
                             </> :
                             <p key={`outcomes-${i + 1}`} className='text-black text-sm'>
                               {item?.description}
                             </p>
                           }
                         </div>
-                        <div className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
-                          {formatAs(item?.value, item?.unit)}
-                        </div>
+                        {
+                          item.ranges ?
+                            <div className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
+                              {formatAs(item?.value2, item?.unit)} - {formatAs(item?.value, item?.unit)}
+                            </div>
+                            :
+                            <div className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
+                              {formatAs(item?.value, item?.unit)}
+                            </div>
+
+                        }
                       </>
                     )
                   })
