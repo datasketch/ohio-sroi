@@ -20,7 +20,7 @@ export default function Home({ data }) {
               <div className="mb-16">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
                   <div className="flex-shrink-0">
-                    <img src={data.general.logo} alt={data.general.title} />
+                    <img className="max-w-96" src={data.general.logo} alt={data.general.title} />
                   </div>
                   <div className="text-center text-xl">
                     <h1>
