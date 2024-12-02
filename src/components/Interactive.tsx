@@ -84,28 +84,26 @@ export default function Interactive({ top = "top-2/3", data }) {
       tbl.totalValue = totalValue
       social += totalValue
       if (tbl.ranges) {
-        console.log(tbl.rows)
         const totalValue2 = tbl.rows.reduce((total, row) => {
           const vars = row.value2 ? row.variables2.split(',').map(v => v.trim()) : row.variables.split(',').map(v => v.trim())
-          console.log(vars)
           const fx = vars.reduce((fx, v) => {
             const tmp = values.find(item => item.id === v)
             const value = tmp?.ranges ? tmp?.value2 : tmp?.value
             return fx.replaceAll(v, value)
           }, (row.value2 ? row.formula2 : row.formula))
           const prevValue = row.value2 ? row.value2 : row.value
-          console.log(fx)
           const result = safeEval(fx)
           if (row.value2) {
             row.value2 = result
           } else {
             row.value = result
           }
-          row.changed = prevValue !== result
           return total + result
         }, 0)
         tbl.totalValue2 = totalValue2
         social2 += totalValue2
+      } else {
+        social2 += totalValue
       }
       return tbl
     })

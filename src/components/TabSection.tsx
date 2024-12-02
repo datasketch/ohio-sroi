@@ -72,7 +72,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
                         {
                           item[groupByStakeholders ? 'tables_stakeholders' : 'tables'].map((table, i) => {
                             return (
-                              <Table key={`table-${i + 1}`} color={color} data={{ ...table }} isLarge count={i} data2={data} groupByStakeholders={groupByStakeholders}  />
+                              <Table key={`table-${i + 1}-${table.id}`} color={color} data={{ ...table }} isLarge count={i} data2={data} groupByStakeholders={groupByStakeholders}  />
                             )
                           })
                         }
