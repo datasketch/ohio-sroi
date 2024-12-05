@@ -18,11 +18,11 @@ const OutcomeText = ({ data, color, socialValue, socialValue2, showReturn = true
       {
         (data.general as Obj).ranges === 'yes' ?
           <>
-            For every <span className="font-semibold text-3xl" style={{ color }}> ${(data.general as Obj).invested}</span> invested, {(data.general as Obj).title} <br /> creates <span className="font-semibold text-3xl" style={{ color }}>${ret2} - ${ret.toString()} </span>{showReturn && (data.general as Obj).returnDescription}
+            For every <span className="font-semibold text-3xl" style={{ color }}> ${(data.general as Obj).invested}</span> invested, {(data.general as Obj).title} <br /> creates an estimated<span className="font-semibold text-3xl" style={{ color }}>${ret2} - ${ret.toString()} </span>{showReturn && (data.general as Obj).returnDescription}
         </>
         :
         <>
-          For every <span className="font-semibold text-3xl" style={{ color }}> ${(data.general as Obj).invested}</span> invested, {(data.general as Obj).title} creates <span className="font-semibold text-3xl" style={{ color }}> ${ret.toString()} </span>{showReturn && (data.general as Obj).returnDescription}
+          For every <span className="font-semibold text-3xl" style={{ color }}> ${(data.general as Obj).invested}</span> invested, {(data.general as Obj).title} creates an estimated <span className="font-semibold text-3xl" style={{ color }}> ${ret.toString()} </span>{showReturn && (data.general as Obj).returnDescription}
         </>
     }
     </>
