@@ -76,7 +76,7 @@ async function main() {
             bg_image2: sites.bg_image2
         },
         proxy_inputs: proxy_inputs.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })),
-        proxy_values: proxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false, ranges: item.value2 ? true : false }))
+        proxy_values: proxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false, ranges: item.valueMin ? true : false }))
     }
 
 
@@ -122,13 +122,13 @@ async function main() {
     data.tabs.find(tab => tab.type === 'table').tables = Object.keys(groupByImpact).map(tableKey => {
         return {
             changed: false,
-            ranges: groupByImpact[tableKey].reduce((acc, item) => item.value2 ? true : acc, false),
+            ranges: groupByImpact[tableKey].reduce((acc, item) => item.valueMin ? true : acc, false),
             rows: groupByImpact[tableKey].map(item => omit(item, ["rcd___id"])),
             id: tableKey,
             title: tables.find(item => item.id === tableKey).title,
             tooltip: tables.find(item => item.id === tableKey).tooltip,
             totalValue: groupByImpact[tableKey].reduce((acc, item) => acc + item.value, 0),
-            totalValue2: groupByImpact[tableKey].reduce((acc, item) => acc + (item.value2 ? item.value2 : item.value), 0)
+            totalValueMin: groupByImpact[tableKey].reduce((acc, item) => acc + (item.valueMin ? item.valueMin : item.value), 0)
         }
     })
 
@@ -137,13 +137,13 @@ async function main() {
     data.tabs.find(tab => tab.type === 'table').tables_stakeholders = Object.keys(groupByStakeholders).map(tableKey => {
         return {
             changed: false,
-            ranges: groupByStakeholders[tableKey].reduce((acc, item) => item.value2 ? true : acc, false),
+            ranges: groupByStakeholders[tableKey].reduce((acc, item) => item.valueMin ? true : acc, false),
             rows: groupByStakeholders[tableKey].map(item => omit(item, ["rcd___id"])),
             id: tableKey,
             title: tables.find(item => item.id === tableKey).title,
             tooltip: tables.find(item => item.id === tableKey).tooltip,
             totalValue: groupByStakeholders[tableKey].reduce((acc, item) => acc + item.value, 0),
-            totalValue2: groupByStakeholders[tableKey].reduce((acc, item) => acc + (item.value2 ? item.value2 : item.value), 0)
+            totalValueMin: groupByStakeholders[tableKey].reduce((acc, item) => acc + (item.valueMin ? item.valueMin : item.value), 0)
         }
     })
 

@@ -12,7 +12,7 @@ const OutcomeText = ({ data, color, socialValue, socialValue2, showReturn = true
   // @ts-ignore
   const ret = socialValue ? parseFloat(socialValue).toFixed(2) : parseFloat(data.general.return).toFixed(2)
   // @ts-ignore
-  const ret2 = socialValue2 ? parseFloat(socialValue2).toFixed(2) : parseFloat(data.general.return2).toFixed(2)
+  const ret2 = socialValue2 ? parseFloat(socialValue2).toFixed(2) : parseFloat(data.general.returnMin).toFixed(2)
   return (
     <>
       {

@@ -81,7 +81,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                         <div className='flex items-center gap-x-2 justify-end'>
                           <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[low]</p>
                           <div className='bg-white rounded py-0.5 px-5 min-w-[180px]' >
-                            <p className='text-base lg:text-xl text-right'>$ {valueFormat(data.totalValue2)}</p>
+                            <p className='text-base lg:text-xl text-right'>$ {valueFormat(data.totalValueMin)}</p>
                           </div>
                         </div>
                       </div>

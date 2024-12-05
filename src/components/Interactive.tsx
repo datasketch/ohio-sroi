@@ -23,7 +23,7 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [outputs, setOutputs] = useState(data.proxy_inputs)
   const [tables, setTables] = useState(data.tabs[0].tables)
   const [socialValue, setSocialValue] = useState(data.general.return)
-  const [socialValue2, setSocialValue2] = useState(data.general.return2)
+  const [socialValue2, setSocialValue2] = useState(data.general.returnMin)
   const tableRefCosts = useRef<HTMLDivElement>()
   const tableRefNumbers = useRef<HTMLDivElement>()
   const [hasLimit, setHasLimit] = useState(false)
@@ -85,22 +85,22 @@ export default function Interactive({ top = "top-2/3", data }) {
       social += totalValue
       if (tbl.ranges) {
         const totalValue2 = tbl.rows.reduce((total, row) => {
-          const vars = row.value2 ? row.variables2.split(',').map(v => v.trim()) : row.variables.split(',').map(v => v.trim())
+          const vars = row.valueMin ? row.variables2.split(',').map(v => v.trim()) : row.variables.split(',').map(v => v.trim())
           const fx = vars.reduce((fx, v) => {
             const tmp = values.find(item => item.id === v)
-            const value = tmp?.ranges ? tmp?.value2 : tmp?.value
+            const value = tmp?.ranges ? tmp?.valueMin : tmp?.value
             return fx.replaceAll(v, value)
-          }, (row.value2 ? row.formula2 : row.formula))
-          const prevValue = row.value2 ? row.value2 : row.value
+          }, (row.valueMin ? row.formula2 : row.formula))
+          const prevValue = row.valueMin ? row.valueMin : row.value
           const result = safeEval(fx)
-          if (row.value2) {
-            row.value2 = result
+          if (row.valueMin) {
+            row.valueMin = result
           } else {
             row.value = result
           }
           return total + result
         }, 0)
-        tbl.totalValue2 = totalValue2
+        tbl.totalValueMin = totalValue2
         social2 += totalValue2
       } else {
         social2 += totalValue

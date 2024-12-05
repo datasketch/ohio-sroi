@@ -54,7 +54,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
               <div className={classNames('flex items-center gap-x-8', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
                 <div className='w-10/12'>
                   {
-                    item.value2 ?
+                    item.valueMin ?
                       <div className='flex flex-col gap-y-1'>
                         <div className='flex items-center gap-x-2 justify-end '>
                           <p className='text-xs text-black'>[high]</p>
@@ -65,7 +65,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                         <div className='flex items-center gap-x-2 justify-end '>
                           <p className='text-xs text-black'>[low]</p>
                           <h4 className={classNames('text-sm font-semibold text-black text-right', item.changed ? `bg-[#00C1D4]/10 border-[#00C1D4] border-dashed border-2 rounded-md` : '')}>
-                            $ {valueFormat(item.value2)}
+                            $ {valueFormat(item.valueMin)}
                           </h4>
                         </div>
                       </div>
@@ -109,7 +109,7 @@ export default function TableAccordion({ color = '#00694E', setIsOpen, rows, spa
                         {
                           item.ranges ?
                             <div key={`outcomes-${i + 1}-3-${id}-${j}`} className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
-                              {formatAs(item?.value2, item?.unit)} - {formatAs(item?.value, item?.unit)}
+                              {formatAs(item?.valueMin, item?.unit)} - {formatAs(item?.value, item?.unit)}
                             </div>
                             :
                             <div key={`outcomes-${i + 1}-3-${id}-${j}`} className={classNames('text-sm font-semibold -translate-x-20 text-right py-2', { 'col-span-3': !span, 'col-span-3 px-0': span })}>
