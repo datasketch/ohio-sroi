@@ -45,9 +45,10 @@ const transform_data = (data) => {
 }
 
 async function main() {
-    const [sites_raw, themes_raw, proxys_raw, references_raw, proxy_inputs_raw, proxy_value_raw] = await Promise.all([
+    const [sites_raw, themes_raw, tables_raw, proxys_raw, references_raw, proxy_inputs_raw, proxy_value_raw] = await Promise.all([
         get_data('sroi-impact-calculators', 'sites'),
         get_data(`${process.env.PROXY_DATABASE}`, 'themes'),
+        get_data(`${process.env.PROXY_DATABASE}`, 'tables'),
         get_data(`${process.env.PROXY_DATABASE}`, 'proxies'),
         get_data(`${process.env.PROXY_DATABASE}`, 'list_references'),
         get_data(`${process.env.PROXY_DATABASE}`, 'proxy_inputs'),
@@ -56,6 +57,7 @@ async function main() {
 
 
     const themes = transform_data(themes_raw)
+    const tables = transform_data(tables_raw)
     const proxys = transform_data(proxys_raw)
     const references = transform_data(references_raw)
     const proxy_inputs = transform_data(proxy_inputs_raw)
@@ -64,6 +66,8 @@ async function main() {
 
     const data = {
         general: {
+            organization: process.env.ORGANIZATION_SLUG,
+            database: process.env.PROXY_DATABASE,
             logo: sites.logo,
             banner: sites.banner,
             theme: sites.theme,
@@ -72,7 +76,7 @@ async function main() {
             bg_image2: sites.bg_image2
         },
         proxy_inputs: proxy_inputs.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })),
-        proxy_values: proxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false }))
+        proxy_values: proxy_value.map(item => ({ ...omit(item, ["rcd___id"]), changed: false, ranges: item.valueMin ? true : false }))
     }
 
 
@@ -99,7 +103,7 @@ async function main() {
     })
 
     // Tables
-    const tables = themes.filter(item => item.section.split('/').length === 4)
+    /* const tables = themes.filter(item => item.section.split('/').length === 4)
 
     const groupByTables = groupBy(tables, 'section')
 
@@ -111,18 +115,35 @@ async function main() {
             changed: false,
             rows: proxys.map(item => ({ ...omit(item, ["rcd___id"]), changed: false })).filter(item => item.type === tableKey.split('/')[3])
         })
+    }) */
+
+    const groupByImpact = groupBy(proxys, 'type')
+
+    data.tabs.find(tab => tab.type === 'table').tables = Object.keys(groupByImpact).map(tableKey => {
+        return {
+            changed: false,
+            ranges: groupByImpact[tableKey].reduce((acc, item) => item.valueMin ? true : acc, false),
+            rows: groupByImpact[tableKey].map(item => omit(item, ["rcd___id"])),
+            id: tableKey,
+            title: tables.find(item => item.id === tableKey).title,
+            tooltip: tables.find(item => item.id === tableKey).tooltip,
+            totalValue: groupByImpact[tableKey].reduce((acc, item) => acc + item.value, 0),
+            totalValueMin: groupByImpact[tableKey].reduce((acc, item) => acc + (item.valueMin ? item.valueMin : item.value), 0)
+        }
     })
 
     const groupByStakeholders = groupBy(proxys, 'stakeholders')
 
-
     data.tabs.find(tab => tab.type === 'table').tables_stakeholders = Object.keys(groupByStakeholders).map(tableKey => {
         return {
             changed: false,
+            ranges: groupByStakeholders[tableKey].reduce((acc, item) => item.valueMin ? true : acc, false),
             rows: groupByStakeholders[tableKey].map(item => omit(item, ["rcd___id"])),
             id: tableKey,
-            title: `What is the impact on ${tableKey}?`,
-            totalValue: groupByStakeholders[tableKey].reduce((acc, item) => acc + item.value, 0)
+            title: tables.find(item => item.id === tableKey).title,
+            tooltip: tables.find(item => item.id === tableKey).tooltip,
+            totalValue: groupByStakeholders[tableKey].reduce((acc, item) => acc + item.value, 0),
+            totalValueMin: groupByStakeholders[tableKey].reduce((acc, item) => acc + (item.valueMin ? item.valueMin : item.value), 0)
         }
     })
 

@@ -69,9 +69,27 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                   <p className={classNames('text-xs lg:text-sm', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>
                     Total Value
                   </p>
-                  <div className='bg-white rounded py-0.5 px-5' >
-                    <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
-                  </div>
+                  {
+                    data.ranges ?
+                      <div className='flex flex-col gap-y-2 ml-3'>
+                        <div className='flex items-center gap-x-2 justify-end'>
+                          <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>
+                          <div className='bg-white rounded py-0.5 px-5 min-w-[180px] text-right' >
+                            <p className='text-base lg:text-xl'>$ {valueFormat(data.totalValue)}</p>
+                          </div>
+                        </div>
+                        <div className='flex items-center gap-x-2 justify-end'>
+                          <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[low]</p>
+                          <div className='bg-white rounded py-0.5 px-5 min-w-[180px]' >
+                            <p className='text-base lg:text-xl text-right'>$ {valueFormat(data.totalValueMin)}</p>
+                          </div>
+                        </div>
+                      </div>
+                      :
+                      <div className='bg-white rounded py-0.5 px-5 min-w-[180px] w-' >
+                        <p className='text-base lg:text-xl text-right'>$ {valueFormat(data.totalValue)}</p>
+                      </div>
+                  }
                 </div>
               )
             }
@@ -99,7 +117,7 @@ export default function Table({ color, data, isLarge = false, top = "top-2/3", c
                     </h4>
                   </div>
                 </div>
-                <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} groupByStakeholders={groupByStakeholders} />
+                <TableAccordion setIsOpen={setIsOpen} color={color} rows={data.rows} span={span} data={data2} groupByStakeholders={groupByStakeholders} id={data.id} />
               </div>
               <Tooltip anchorSelect={`.value${count}`} place="right" style={{ width: "250px", color: "black", background: "white", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" }}>
                 The values listed below are fiscal proxies, which are monetary representations of impacts for which there is no set market value. Fiscal proxies often take the form of costs avoided or benefits achieved.
