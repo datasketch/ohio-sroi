@@ -43,17 +43,25 @@ export default function Interactive({ top = "top-2/3", data }) {
     return config
   }
 
-  const handleFieldChange = (value: string, index: string, unit: string) => {
+  const handleFieldChange = (value: string, index: string, unit: string, min = false) => {
     let parsedValue = parseToNumber(value)
     if (unit === 'percentage') {
       parsedValue = parsedValue / 100
     }
 
-    setOutputs(prevState => {
-      const i = prevState.findIndex(el => el.id === index)
-      prevState[i].value = parsedValue
-      return [...prevState]
-    })
+    if (min) {
+      setOutputs(prevState => {
+        const i = prevState.findIndex(el => el.id === index)
+        prevState[i].valueMin = parsedValue
+        return [...prevState]
+      })
+    } else {
+      setOutputs(prevState => {
+        const i = prevState.findIndex(el => el.id === index)
+        prevState[i].value = parsedValue
+        return [...prevState]
+      })
+    }
 
     if (parsedValue !== prev) {
       updateTable()
@@ -261,12 +269,27 @@ export default function Interactive({ top = "top-2/3", data }) {
                           </h4>
                         </div>
                         <div className="col-span-5 pl-8">
-                          <CurrencyInput
-                            className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                            defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
-                            onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
-                            {...getCurrencyInputConfig(item)}
-                          />
+                          <div className='flex items-center gap-x-2 justify-end'>
+                            {item.ranges && <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>}
+                            <CurrencyInput
+                              className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
+                              defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                              onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
+                              {...getCurrencyInputConfig(item)}
+                            />
+                          </div>
+                          {
+                            item.ranges &&
+                            <div className='flex items-center gap-x-2 justify-end'>
+                              <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>
+                              <CurrencyInput
+                                className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
+                                defaultValue={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
+                                onValueChange={(value) => handleFieldChange(value, item.id, item.unit, true)}
+                                {...getCurrencyInputConfig(item)}
+                              />
+                            </div>
+                          }
                         </div>
                       </div>
                     ))
@@ -312,12 +335,27 @@ export default function Interactive({ top = "top-2/3", data }) {
                           </h4>
                         </div>
                         <div className="col-span-5 pl-8">
-                          <CurrencyInput
-                            className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                            defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
-                            onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
-                            {...getCurrencyInputConfig(item)}
-                          />
+                          <div className='flex items-center gap-x-2 justify-end'>
+                            {item.ranges && <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>}
+                            <CurrencyInput
+                              className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
+                              defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                              onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
+                              {...getCurrencyInputConfig(item)}
+                            />
+                          </div>
+                          {
+                            item.ranges &&
+                            <div className='flex items-center gap-x-2 justify-end'>
+                              <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[low]</p>
+                              <CurrencyInput
+                                className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
+                                defaultValue={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
+                                onValueChange={(value) => handleFieldChange(value, item.id, item.unit, true)}
+                                {...getCurrencyInputConfig(item)}
+                              />
+                            </div>
+                          }
                         </div>
                       </div>
                     ))
