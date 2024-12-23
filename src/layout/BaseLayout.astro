@@ -27,10 +27,13 @@ const { title, description } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="font-poppins">
+    <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
+    <!-- Simple Analytics - 100% privacy-first analytics -->
+    <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   </body>
 </html>
