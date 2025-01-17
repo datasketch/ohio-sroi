@@ -16,7 +16,7 @@ const safeEval = (expr: string) => {
   return mexp.postfixEval(postfixed);
 }
 
-export default function Interactive({ top = "top-2/3", data }) {
+export default function Interactive({ top = "top-2/3", data, url }) {
   const color = data.general.theme
   const isGeneric = true
   const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
@@ -29,6 +29,8 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [hasLimit, setHasLimit] = useState(false)
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
+
+  console.log(outputs)
 
   const getCurrencyInputConfig = (item) => {
     const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
@@ -132,33 +134,6 @@ export default function Interactive({ top = "top-2/3", data }) {
     setSocialValue(result)
     setSocialValue2(result2)
     setTables(update)
-
-    // let newTable = [...tables]
-    // let newValues = [...values]
-    // for (let tbl of tables) {
-    //   let total = 0
-    //   for (let row of tbl.rows) {
-    //     const vars = row.variables.split(',')
-    //     let fx = row.formula
-    //     for (let v of vars) {
-    //       const value = values.find(item => item.id === v)?.value
-    //       fx = fx.replaceAll(v, value)
-    //     }
-    //     const prevValue = row.value
-    //     const result = safeEval(fx)
-    //     row.value = result
-    //     row.formula_str = `${fx} = ${result}`
-    //     total += result
-    //     row.changed = prevValue !== result
-    //   }
-    //   tbl.totalValue = total
-    //   social += total
-    // }
-
-    // social = social / (outputs[0].value + outputs[1].value)
-
-    // setTables(tables)
-    // setValues(newValues)
   }
 
   useEffect(() => {
@@ -198,6 +173,20 @@ export default function Interactive({ top = "top-2/3", data }) {
 
     return () => element.removeEventListener('scroll', handleScroll)
   }, [tableRefNumbers.current])
+
+  useEffect(() => {
+    const params = new URLSearchParams(url);
+    params.forEach((value, key) => {
+      if (key !== 'tab') {
+        setOutputs(prevState => {
+          const i = prevState.findIndex(el => el.id === key)
+          prevState[i].value = value
+          return [...prevState]
+        })
+      }
+    })
+    updateTable()
+  }, [url]);
 
   return (
     <div className='pb-9'>
