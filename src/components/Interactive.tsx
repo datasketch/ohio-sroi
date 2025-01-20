@@ -29,6 +29,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
   const [hasLimit, setHasLimit] = useState(false)
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
+  const [link, setLink] = useState('')
 
   console.log(outputs)
 
@@ -73,7 +74,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
     setPrev(parsedValue)
   }
 
-  const updateTable = () => {
+  const updateTable = (change = true) => {
     let social = 0
     let social2 = 0
 
@@ -88,7 +89,9 @@ export default function Interactive({ top = "top-2/3", data, url }) {
         const result = safeEval(fx)
         row.value = result
         row.formula_str = `${fx} = ${result}`
-        row.changed = prevValue !== result
+        if (change) {
+          row.changed = prevValue !== result
+        }
         return total + result
       }, 0)
       tbl.totalValue = totalValue
@@ -136,6 +139,19 @@ export default function Interactive({ top = "top-2/3", data, url }) {
     setTables(update)
   }
 
+  const generateLink = () => {
+    const params = new URLSearchParams();
+    
+    outputs.forEach(item => {
+      params.append(item.id, item.value.toString());
+      if (item.ranges) {
+        params.append(`m_${item.id}`, item.valueMin.toString());
+      }
+    });
+
+    setLink(`${window.location.hostname}?tab=tab2&${params.toString()}#tabs`);
+  }
+
   useEffect(() => {
     const element = tableRefCosts.current
     const { offsetWidth, scrollWidth } = element
@@ -176,16 +192,26 @@ export default function Interactive({ top = "top-2/3", data, url }) {
 
   useEffect(() => {
     const params = new URLSearchParams(url);
+    const tmp = [...outputs];
     params.forEach((value, key) => {
       if (key !== 'tab') {
-        setOutputs(prevState => {
-          const i = prevState.findIndex(el => el.id === key)
-          prevState[i].value = value
-          return [...prevState]
-        })
+        if (key.startsWith('m_')) {
+          const i = tmp.findIndex(el => el.id === key.replace('m_', ''))
+          if (i !== -1) {
+            tmp[i].valueMin = parseFloat(value)
+          }
+        }
+        else {
+          const i = tmp.findIndex(el => el.id === key)
+          if (i !== -1) {
+            tmp[i].value = parseFloat(value)
+          }
+        }
       }
     })
-    updateTable()
+    setOutputs(tmp)
+
+    updateTable(false)
   }, [url]);
 
   return (
@@ -262,7 +288,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
                             {item.ranges && <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>}
                             <CurrencyInput
                               className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                              defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                              value={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
                               onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                               {...getCurrencyInputConfig(item)}
                             />
@@ -273,7 +299,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
                               <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>
                               <CurrencyInput
                                 className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                                defaultValue={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
+                                value={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
                                 onValueChange={(value) => handleFieldChange(value, item.id, item.unit, true)}
                                 {...getCurrencyInputConfig(item)}
                               />
@@ -328,7 +354,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
                             {item.ranges && <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>}
                             <CurrencyInput
                               className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                              defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                              value={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
                               onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                               {...getCurrencyInputConfig(item)}
                             />
@@ -339,7 +365,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
                               <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[low]</p>
                               <CurrencyInput
                                 className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                                defaultValue={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
+                                value={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
                                 onValueChange={(value) => handleFieldChange(value, item.id, item.unit, true)}
                                 {...getCurrencyInputConfig(item)}
                               />
@@ -349,6 +375,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
                       </div>
                     ))
                   }
+
                   <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimitNumbers, 'right-4': !hasLimitNumbers })}>
                     {'>'}
                   </div>
@@ -357,6 +384,19 @@ export default function Interactive({ top = "top-2/3", data, url }) {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className='py-2 px-5 bg-white'>
+              <h3>
+                <button onClick={generateLink}>
+                  Generate link
+                </button>
+                <div>
+                  <input type="text" value={link} />
+                  <button onClick={() => navigator.clipboard.writeText(link)}>
+                    Copy Link
+                  </button>
+                </div>
+              </h3>
             </div>
           </div>
         </div>
