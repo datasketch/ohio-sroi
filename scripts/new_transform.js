@@ -147,9 +147,12 @@ async function main() {
         }
     })
 
+    const public_data = proxys.map(item => omit(item, ["rcd___id", "description", "variables", "variables2", "formula", "formula2"]))
+
 
     // Guardar en filesystem
     await writeFile(path.join(process.cwd(), 'src', 'site-data.json'), JSON.stringify(data))
+    await writeFile(path.join(process.cwd(), 'public', 'data', 'data.json'), JSON.stringify(public_data))
 }
 
 main().catch(err => {
