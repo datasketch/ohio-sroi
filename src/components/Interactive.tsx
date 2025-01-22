@@ -156,7 +156,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
       }
     });
 
-    setLink(`${window.location.hostname}?tab=tab2&${params.toString()}#tabs`);
+    setLink(`${window.location.hostname}${window.location.pathname}?tab=tab2&${params.toString()}#tabs`);
   }
 
 
