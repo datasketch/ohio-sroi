@@ -7,8 +7,8 @@ import type { CurrencyInputProps } from 'react-currency-input-field'
 import OutcomeText from './OutcomeText';
 import hexRgb from 'hex-rgb';
 import Mexp from 'math-expression-evaluator';
-const ReactToPDF = await import('react-to-pdf');
-const { usePDF } = ReactToPDF;
+/* const ReactToPDF = await import('react-to-pdf');
+const { usePDF } = ReactToPDF; */
 const mexp = new Mexp();
 
 const safeEval = (expr: string) => {
@@ -31,14 +31,14 @@ export default function Interactive({ top = "top-2/3", data, url }) {
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
   const [link, setLink] = useState('')
-  const { toPDF, targetRef } = usePDF({
+  /* const { toPDF, targetRef } = usePDF({
     filename: 'calculator-results.pdf',
     page: {
       margin: 20,
       format: 'letter',
       orientation: 'portrait'
     }
-  });
+  }); */
 
   const getCurrencyInputConfig = (item) => {
     const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
@@ -224,7 +224,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
 
   return (
     <div className='pb-9'>
-      <div className='mx-10 pt-10' ref={targetRef}>
+      <div className='mx-10 pt-10' /* ref={targetRef} */>
         <div className="u-container">
           <div className="pb-12">
             <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
@@ -424,7 +424,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
             <div className='w-full h-[1px] bg-black/30'></div>
           </div>
 
-          <button
+          {/* <button
             onClick={() => toPDF()}
             className="flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center hover:text-white mt-5"
             style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}
@@ -435,7 +435,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
               <path d="M19 21H5" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Download
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
