@@ -4,14 +4,22 @@ import Interactive from './Interactive'
 import OutcomeChain from './OutcomeChain';
 import References from './References';
 import * as Switch from '@radix-ui/react-switch';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 export default function TabSection({ color = '#00694E', tabs, url, data }) {
-  const searchParams = new URLSearchParams(url)
-  const tab = searchParams.get("query") === "ref" ? "tab3" : "tab1"
-  const show = searchParams.get("display") !== "false"
-  const [groupByStakeholders, setGroupByStakeholders] = useState(false)
+  const [currentTab, setCurrentTab] = useState('');
+  const [show, setShow] = useState(false);
+  const [groupByStakeholders, setGroupByStakeholders] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(url);
+    const newTab = params.get("tab") ? params.get("tab") : "tab1";
+    const newShow = params.get("display") !== "false";
+    
+    setCurrentTab(newTab);
+    setShow(newShow);
+  }, [url]);
 
   const handleGroupByStakeholders = () => {
     setGroupByStakeholders(!groupByStakeholders)
@@ -19,7 +27,11 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
 
   return (
     // TAB PARENT
-    <Tabs.Root defaultValue={tab} orientation="horizontal">
+    <Tabs.Root 
+      value={currentTab}
+      orientation="horizontal"
+      onValueChange={(value) => setCurrentTab(value)}
+    >
       {/* TABS CHILDREN */}
       <Tabs.List className='u-container flex' aria-label="tabs">
         {
@@ -101,7 +113,7 @@ export default function TabSection({ color = '#00694E', tabs, url, data }) {
               }
               {
                 item.type === 'interactive' && show && (
-                  <Interactive data={JSON.parse(JSON.stringify(data))} />
+                  <Interactive data={JSON.parse(JSON.stringify(data))} url={url}/>
                 )
               }
             </Tabs.Content>

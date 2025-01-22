@@ -6,9 +6,10 @@ import CurrencyInput from 'react-currency-input-field';
 import type { CurrencyInputProps } from 'react-currency-input-field'
 import OutcomeText from './OutcomeText';
 import hexRgb from 'hex-rgb';
-import Mexp from 'math-expression-evaluator'
-
-const mexp = new Mexp()
+import Mexp from 'math-expression-evaluator';
+/* const ReactToPDF = await import('react-to-pdf');
+const { usePDF } = ReactToPDF; */
+const mexp = new Mexp();
 
 const safeEval = (expr: string) => {
   const lexed = mexp.lex(expr);
@@ -16,7 +17,7 @@ const safeEval = (expr: string) => {
   return mexp.postfixEval(postfixed);
 }
 
-export default function Interactive({ top = "top-2/3", data }) {
+export default function Interactive({ top = "top-2/3", data, url }) {
   const color = data.general.theme
   const isGeneric = true
   const [values, setValues] = useState([...data.proxy_inputs, ...data.proxy_values])
@@ -29,6 +30,15 @@ export default function Interactive({ top = "top-2/3", data }) {
   const [hasLimit, setHasLimit] = useState(false)
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
+  const [link, setLink] = useState('')
+  /* const { toPDF, targetRef } = usePDF({
+    filename: 'calculator-results.pdf',
+    page: {
+      margin: 20,
+      format: 'letter',
+      orientation: 'portrait'
+    }
+  }); */
 
   const getCurrencyInputConfig = (item) => {
     const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
@@ -71,7 +81,7 @@ export default function Interactive({ top = "top-2/3", data }) {
     setPrev(parsedValue)
   }
 
-  const updateTable = () => {
+  const updateTable = (change = true) => {
     let social = 0
     let social2 = 0
 
@@ -86,7 +96,9 @@ export default function Interactive({ top = "top-2/3", data }) {
         const result = safeEval(fx)
         row.value = result
         row.formula_str = `${fx} = ${result}`
-        row.changed = prevValue !== result
+        if (change) {
+          row.changed = prevValue !== result
+        }
         return total + result
       }, 0)
       tbl.totalValue = totalValue
@@ -132,34 +144,21 @@ export default function Interactive({ top = "top-2/3", data }) {
     setSocialValue(result)
     setSocialValue2(result2)
     setTables(update)
-
-    // let newTable = [...tables]
-    // let newValues = [...values]
-    // for (let tbl of tables) {
-    //   let total = 0
-    //   for (let row of tbl.rows) {
-    //     const vars = row.variables.split(',')
-    //     let fx = row.formula
-    //     for (let v of vars) {
-    //       const value = values.find(item => item.id === v)?.value
-    //       fx = fx.replaceAll(v, value)
-    //     }
-    //     const prevValue = row.value
-    //     const result = safeEval(fx)
-    //     row.value = result
-    //     row.formula_str = `${fx} = ${result}`
-    //     total += result
-    //     row.changed = prevValue !== result
-    //   }
-    //   tbl.totalValue = total
-    //   social += total
-    // }
-
-    // social = social / (outputs[0].value + outputs[1].value)
-
-    // setTables(tables)
-    // setValues(newValues)
   }
+
+  const generateLink = () => {
+    const params = new URLSearchParams();
+
+    outputs.forEach(item => {
+      params.append(item.id, item.value.toString());
+      if (item.ranges) {
+        params.append(`m_${item.id}`, item.valueMin.toString());
+      }
+    });
+
+    setLink(`${window.location.hostname}?tab=tab2&${params.toString()}#tabs`);
+  }
+
 
   useEffect(() => {
     const element = tableRefCosts.current
@@ -199,9 +198,33 @@ export default function Interactive({ top = "top-2/3", data }) {
     return () => element.removeEventListener('scroll', handleScroll)
   }, [tableRefNumbers.current])
 
+  useEffect(() => {
+    const params = new URLSearchParams(url);
+    const tmp = [...outputs];
+    params.forEach((value, key) => {
+      if (key !== 'tab') {
+        if (key.startsWith('m_')) {
+          const i = tmp.findIndex(el => el.id === key.replace('m_', ''))
+          if (i !== -1) {
+            tmp[i].valueMin = parseFloat(value)
+          }
+        }
+        else {
+          const i = tmp.findIndex(el => el.id === key)
+          if (i !== -1) {
+            tmp[i].value = parseFloat(value)
+          }
+        }
+      }
+    })
+    setOutputs(tmp)
+
+    updateTable(false)
+  }, [url]);
+
   return (
     <div className='pb-9'>
-      <div className='mx-10 pt-10'>
+      <div className='mx-10 pt-10' /* ref={targetRef} */>
         <div className="u-container">
           <div className="pb-12">
             <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
@@ -273,7 +296,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                             {item.ranges && <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>}
                             <CurrencyInput
                               className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                              defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                              value={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
                               onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                               {...getCurrencyInputConfig(item)}
                             />
@@ -284,7 +307,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                               <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>
                               <CurrencyInput
                                 className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                                defaultValue={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
+                                value={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
                                 onValueChange={(value) => handleFieldChange(value, item.id, item.unit, true)}
                                 {...getCurrencyInputConfig(item)}
                               />
@@ -339,7 +362,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                             {item.ranges && <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[high]</p>}
                             <CurrencyInput
                               className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                              defaultValue={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
+                              value={item.unit === 'percentage' ? parseToNumber(item.value) * 100 : parseToNumber(item.value)}
                               onValueChange={(value) => handleFieldChange(value, item.id, item.unit)}
                               {...getCurrencyInputConfig(item)}
                             />
@@ -350,7 +373,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                               <p className={classNames('text-xs lg:text-sm text-right', { 'text-white': !isGeneric, 'text-gray-2': isGeneric })}>[low]</p>
                               <CurrencyInput
                                 className='w-full text-right border rounded-md border-black/30 p-1 inputclass'
-                                defaultValue={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
+                                value={item.unit === 'percentage' ? parseToNumber(item.valueMin) * 100 : parseToNumber(item.valueMin)}
                                 onValueChange={(value) => handleFieldChange(value, item.id, item.unit, true)}
                                 {...getCurrencyInputConfig(item)}
                               />
@@ -360,6 +383,7 @@ export default function Interactive({ top = "top-2/3", data }) {
                       </div>
                     ))
                   }
+
                   <div className={classNames(`absolute ${top} -translate-y-1/2 w-8 h-8 bg-robin-egg-blue text-white text-2xl rounded-full grid place-items-center duration-300 lg:hidden`, { '-right-full': hasLimitNumbers, 'right-4': !hasLimitNumbers })}>
                     {'>'}
                   </div>
@@ -370,6 +394,48 @@ export default function Interactive({ top = "top-2/3", data }) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className='flex justify-end  mx-10 gap-5'>
+        <div className='w-2/3'></div>
+        <div className='py-5 px-5 bg-white rounded-2xl shadow mt-5 w-1/3'>
+          <h3 className='text-xl font-medium'>Share</h3>
+          <p>Share or save your content</p>
+          <button onClick={generateLink} className='flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center mt-3' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 13C10.4295 13.5741 10.9774 14.0492 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9404 15.7513 14.6898C16.4231 14.4392 17.0331 14.0471 17.54 13.54L20.54 10.54C21.4508 9.59699 21.9548 8.33397 21.9434 7.02299C21.932 5.71201 21.4061 4.45794 20.4791 3.5309C19.5521 2.60386 18.298 2.07802 16.987 2.06663C15.676 2.05523 14.413 2.55921 13.47 3.47L11.75 5.18" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14.0002 11C13.5707 10.4259 13.0228 9.95081 12.3936 9.60706C11.7645 9.2633 11.0687 9.05888 10.3535 9.00766C9.63841 8.95645 8.92061 9.05963 8.24885 9.31021C7.5771 9.5608 6.96709 9.95293 6.4602 10.46L3.4602 13.46C2.54941 14.403 2.04544 15.666 2.05683 16.977C2.06822 18.288 2.59407 19.542 3.52111 20.4691C4.44815 21.3961 5.70221 21.922 7.01319 21.9334C8.32418 21.9448 9.58719 21.4408 10.5302 20.53L12.2402 18.82" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10 13C10.4295 13.5741 10.9774 14.0491 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9403 15.7513 14.6897C16.4231 14.4392 17.0331 14.047 17.54 13.54L20.54 10.54C21.4508 9.59695 21.9548 8.33394 21.9434 7.02296C21.932 5.71198 21.4061 4.45791 20.4791 3.53087C19.5521 2.60383 18.298 2.07799 16.987 2.0666C15.676 2.0552 14.413 2.55918 13.47 3.46997L11.75 5.17997" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14.0002 11C13.5707 10.4259 13.0228 9.9508 12.3936 9.60704C11.7645 9.26328 11.0687 9.05886 10.3535 9.00765C9.63841 8.95643 8.92061 9.05961 8.24885 9.3102C7.5771 9.56079 6.96709 9.95291 6.4602 10.46L3.4602 13.46C2.54941 14.403 2.04544 15.666 2.05683 16.977C2.06822 18.288 2.59407 19.542 3.52111 20.4691C4.44815 21.3961 5.70221 21.922 7.01319 21.9334C8.32418 21.9447 9.58719 21.4408 10.5302 20.53L12.2402 18.82" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Generate link
+          </button>
+          <div className='w-full border border-black/30 rounded-lg relative my-3 px-2 py-1.5'>
+            <input type="text" value={link} className='w-full border-black' />
+            <button disabled={!link} onClick={() => navigator.clipboard.writeText(link)} className='absolute right-0 top-[1px] rounded-lg px-2 py-1'
+              style={{ backgroundColor: link ? hexRgb(color, { format: 'css', alpha: 0.99 }) : 'grey', border: `1px solid white`, color: 'white' }}>
+              Copy
+            </button>
+          </div>
+
+          <div className='flex items-center gap-x-2'>
+            <div className='w-full h-[1px] bg-black/30'></div>
+            <p className='text-black/30'>Or</p>
+            <div className='w-full h-[1px] bg-black/30'></div>
+          </div>
+
+          {/* <button
+            onClick={() => toPDF()}
+            className="flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center hover:text-white mt-5"
+            style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 17V3" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M6 11L12 17L18 11" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M19 21H5" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Download
+          </button> */}
         </div>
       </div>
     </div>
