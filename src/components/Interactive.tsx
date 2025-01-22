@@ -7,6 +7,7 @@ import type { CurrencyInputProps } from 'react-currency-input-field'
 import OutcomeText from './OutcomeText';
 import hexRgb from 'hex-rgb';
 import Mexp from 'math-expression-evaluator';
+/* import { usePDF } from 'react-to-pdf'; */
 /* const ReactToPDF = await import('react-to-pdf');
 const { usePDF } = ReactToPDF; */
 const mexp = new Mexp();
@@ -39,6 +40,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
       orientation: 'portrait'
     }
   }); */
+  const contentRef = useRef(null);
 
   const getCurrencyInputConfig = (item) => {
     const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
@@ -159,6 +161,37 @@ export default function Interactive({ top = "top-2/3", data, url }) {
     setLink(`${window.location.hostname}${window.location.pathname}?tab=tab2&${params.toString()}#tabs`);
   }
 
+  const handleDownload = async () => {
+    const element = contentRef.current;
+    const opt = {
+      margin: [10, 10], // [top/bottom, left/right] en mm
+      filename: 'calculator-results.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { 
+        scale: 1, // Reducido de 2 a 1.5 para menor tamaño
+        letterRendering: true
+      },
+      jsPDF: { 
+        unit: 'mm', 
+        format: 'letter', 
+        orientation: 'portrait'
+      },
+      // Añadimos estilos CSS personalizados
+      pagebreak: { mode: 'avoid-all' }
+    };
+
+    // Aplicar estilos temporales para el PDF
+    if (element) {
+      const originalFontSize = element.style.fontSize;
+      element.style.fontSize = '0.85em'; // Reducir tamaño de fuente
+      
+      const html2pdf = (await import('html2pdf.js')).default;
+      await html2pdf().set(opt).from(element).save();
+      
+      // Restaurar el tamaño de fuente original
+      element.style.fontSize = originalFontSize;
+    }
+  };
 
   useEffect(() => {
     const element = tableRefCosts.current
@@ -224,7 +257,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
 
   return (
     <div className='pb-9'>
-      <div className='mx-10 pt-10' /* ref={targetRef} */>
+      <div className='mx-10 pt-10' ref={contentRef}>
         <div className="u-container">
           <div className="pb-12">
             <p className="text-xl md:text-2xl font-semibold" style={{ color }}>
@@ -424,18 +457,18 @@ export default function Interactive({ top = "top-2/3", data, url }) {
             <div className='w-full h-[1px] bg-black/30'></div>
           </div>
 
-          {/* <button
-            onClick={() => toPDF()}
+          <button
+            onClick={handleDownload}
             className="flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center hover:text-white mt-5"
             style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 17V3" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M6 11L12 17L18 11" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M19 21H5" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 17V3" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 11L12 17L18 11" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M19 21H5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Download
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
