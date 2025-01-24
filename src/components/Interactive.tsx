@@ -525,10 +525,6 @@ export default function Interactive({ top = "top-2/3", data, url }) {
           </button>
         </div>
       </div>
-      <div className='mx-10 pt-10' >
-        <h1>prueba pdf</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vero, doloribus nesciunt distinctio repudiandae corporis qui voluptas ab exercitationem autem. Accusamus at rerum, eaque mollitia porro praesentium fugit perspiciatis sed!</p>
-      </div>
     </div>
   )
 }
