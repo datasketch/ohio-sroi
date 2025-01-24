@@ -164,30 +164,42 @@ export default function Interactive({ top = "top-2/3", data, url }) {
   const handleDownload = async () => {
     const element = contentRef.current;
     const opt = {
-      margin: [10, 10], // [top/bottom, left/right] en mm
+      margin: [15, 15],
       filename: 'calculator-results.pdf',
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { 
-        scale: 1, // Reducido de 2 a 1.5 para menor tamaño
-        letterRendering: true
+      image: { 
+        type: 'jpeg', 
+        quality: 0.98
       },
-      jsPDF: { 
-        unit: 'mm', 
-        format: 'letter', 
-        orientation: 'portrait'
+      html2canvas: {
+        scale: 2,
+        letterRendering: true,
+        useCORS: true,
+        logging: false,
+        removeContainer: true,
+        backgroundColor: '#ffffff'
       },
-      // Añadimos estilos CSS personalizados
-      pagebreak: { mode: 'avoid-all' }
+      jsPDF: {
+        unit: 'mm',
+        format: 'letter',
+        orientation: 'landscape',
+        compress: true,
+        precision: 16
+      },
+      pagebreak: { 
+        mode: ['avoid-all', 'css', 'legacy'],
+        before: '.page-break-before',
+        after: '.page-break-after'
+      }
     };
 
     // Aplicar estilos temporales para el PDF
     if (element) {
       const originalFontSize = element.style.fontSize;
-      element.style.fontSize = '0.85em'; // Reducir tamaño de fuente
-      
+      element.style.fontSize = '0.95em'; // Reducir tamaño de fuente
+
       const html2pdf = (await import('html2pdf.js')).default;
       await html2pdf().set(opt).from(element).save();
-      
+
       // Restaurar el tamaño de fuente original
       element.style.fontSize = originalFontSize;
     }
@@ -512,6 +524,10 @@ export default function Interactive({ top = "top-2/3", data, url }) {
             Download
           </button>
         </div>
+      </div>
+      <div className='mx-10 pt-10' >
+        <h1>prueba pdf</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vero, doloribus nesciunt distinctio repudiandae corporis qui voluptas ab exercitationem autem. Accusamus at rerum, eaque mollitia porro praesentium fugit perspiciatis sed!</p>
       </div>
     </div>
   )
