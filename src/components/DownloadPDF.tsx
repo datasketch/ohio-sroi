@@ -1,4 +1,4 @@
-import { Page, Text, View, Document, PDFDownloadLink, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, PDFDownloadLink, StyleSheet, Image } from '@react-pdf/renderer';
 import hexRgb from 'hex-rgb';
 
 // Create styles
@@ -121,7 +121,28 @@ const styles = StyleSheet.create({
     padding: 8,
     color: '#666666',
     fontStyle: 'italic',
-  }
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logo: {
+    width: 120,
+    height: 40,
+    objectFit: 'contain',
+  },
+  date: {
+    fontSize: 10,
+    color: '#666666',
+  },
+  banner: {
+    width: '100%',
+    height: 120,
+    objectFit: 'cover',
+    marginTop: 20,
+  },
 });
 
 const formatCurrency = (value) => {
@@ -134,7 +155,26 @@ const formatCurrency = (value) => {
 const MyPDF = ({ data, color }) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <Text style={[styles.title, { color }]}>Calculator Results</Text>
+      {/* Header with Logo and Date */}
+      <View style={styles.header}>
+        {data.outcome.logo && (
+          <Image src={data.outcome.logo} style={styles.logo} />
+        )}
+        <Text style={styles.date}>
+          {new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </Text>
+      </View>
+
+      {/* Banner at the bottom */}
+      {data.outcome.banner && (
+        <Image src={data.outcome.banner} style={styles.banner} />
+      )}
+
+      <Text style={[styles.title, { color }, { marginTop: 20 }]}>Calculator Results</Text>
 
       {/* SROI Summary */}
       <View style={styles.table}>

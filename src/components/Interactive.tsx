@@ -13,6 +13,8 @@ const mexp = new Mexp();
 interface DataToPDF {
   outcome?: {
     title: string;
+    logo: string;
+    banner: string;
     socialValueMax: number;
     socialValueMin: number;
   };
@@ -45,7 +47,6 @@ export default function Interactive({ top = "top-2/3", data, url }) {
   const [isGeneratedLink, setIsGeneratedLink] = useState(false)
   const [copied, setCopied] = useState(false);
   const [dataToPDF, setDataToPDF] = useState<DataToPDF>({});
-  console.log(data);
 
 
   const getCurrencyInputConfig = (item) => {
@@ -247,6 +248,8 @@ export default function Interactive({ top = "top-2/3", data, url }) {
       setDataToPDF({
         outcome: {
           title: data.general.title,
+          logo: data.general.logo,
+          banner: data.general.main_image,
           socialValueMax: socialValue,
           socialValueMin: socialValue2,
         },
