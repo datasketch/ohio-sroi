@@ -13,7 +13,12 @@ const mexp = new Mexp();
 interface DataToPDF {
   outcome?: {
     title: string;
+    invested: number;
+    ranges: string;
     logo: string;
+    return?: number;
+    returnMin?: number;
+    returnDescription?: string;
     banner: string;
     socialValueMax: number;
     socialValueMin: number;
@@ -47,7 +52,6 @@ export default function Interactive({ top = "top-2/3", data, url }) {
   const [isGeneratedLink, setIsGeneratedLink] = useState(false)
   const [copied, setCopied] = useState(false);
   const [dataToPDF, setDataToPDF] = useState<DataToPDF>({});
-
 
   const getCurrencyInputConfig = (item) => {
     const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
@@ -252,6 +256,11 @@ export default function Interactive({ top = "top-2/3", data, url }) {
           banner: data.general.main_image,
           socialValueMax: socialValue,
           socialValueMin: socialValue2,
+          invested: data.general.invested,
+          ranges: data.general.ranges,
+          return: data.general.return,
+          returnMin: data.general.returnMin,
+          returnDescription: data.general.returnDescription
         },
         generalInformation: tables,
         whatAreTheCosts: outputs.filter(item => item.type === 'cost'),

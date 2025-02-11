@@ -174,7 +174,19 @@ const MyPDF = ({ data, color }) => (
         <Image src={data.outcome.banner} style={styles.banner} />
       )}
 
-      <Text style={[styles.title, { color }, { marginTop: 20 }]}>Calculator Results</Text>
+      <View style={[styles.section, { marginTop: 40 }]}>
+        <Text style={[{ textAlign: 'center' }]}>
+          {data.outcome.ranges === 'yes' ? (
+            <>
+              For every <Text style={[{ color }, { fontWeight: 'bold' }]}>${data.outcome.invested}</Text> invested, {data.outcome.title} creates an estimated <Text style={[{ color }, { fontWeight: 'bold' }]}>${parseFloat(data.outcome.returnMin).toFixed(2)} - ${parseFloat(data.outcome.return).toFixed(2)}</Text> {data.outcome.returnDescription}
+            </>
+          ) : (
+            <>
+              For every <Text style={[{ color }, { fontWeight: 'bold' }]}>${data.outcome.invested}</Text> invested, {data.outcome.title} creates an estimated <Text style={[{ color }, { fontWeight: 'bold' }]}>${parseFloat(data.outcome.return).toFixed(2)}</Text> {data.outcome.returnDescription}
+            </>
+          )}
+        </Text>
+      </View>
 
       {/* SROI Summary */}
       <View style={styles.table}>
