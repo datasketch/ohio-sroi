@@ -300,14 +300,34 @@ const MyPDF = ({ data, color }) => {
               <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Min Value</Text>
             </View>
             {data.whatAreTheNumbers.map((item, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={[styles.tableCell, styles.cellWide]}>{item.description}</Text>
-                <Text style={[styles.tableCell, styles.cellNarrow]}>
-                  {item.unit === 'currency' ? formatCurrency(item.value) : item.value}
-                </Text>
-                <Text style={[styles.tableCell, styles.cellNarrow]}>
-                  {item.valueMin ? (item.unit === 'currency' ? formatCurrency(item.valueMin) : item.valueMin) : '-'}
-                </Text>
+              <View key={index}>
+                <View style={styles.tableRow}>
+                  <Text style={[styles.tableCell, styles.cellWide]}>{item.description}</Text>
+                  <Text style={[styles.tableCell, styles.cellNarrow]}>
+                    {item.unit === 'currency' ? formatCurrency(item.value) : item.value}
+                  </Text>
+                  <Text style={[styles.tableCell, styles.cellNarrow]}>
+                    {item.valueMin ? (item.unit === 'currency' ? formatCurrency(item.valueMin) : item.valueMin) : '-'}
+                  </Text>
+                </View>
+                {item?.rows?.length > 0 && (
+                  <View style={{ marginLeft: 20 }}>
+                    {item.rows.map((subRow, k) => (
+                      <View key={k} style={styles.tableRow}>
+                        <View style={[styles.tableCell, styles.cellWide]}>
+                          <Text style={styles.subRow}>└ {subRow.description}</Text>
+                        </View>
+                        <Text style={[styles.tableCell, styles.cellNarrow]}>
+                          {subRow.unit === 'currency' ? formatCurrency(subRow.value) : subRow.value}
+                        </Text>
+                        <Text style={[styles.tableCell, styles.cellNarrow]}>-</Text>
+                      </View>
+                    ))}
+                    {item.formula_str && (
+                      <Text style={styles.formula}>Formula: {item.formula_str}</Text>
+                    )}
+                  </View>
+                )}
               </View>
             ))}
           </View>
