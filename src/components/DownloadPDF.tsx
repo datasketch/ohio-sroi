@@ -152,154 +152,170 @@ const formatCurrency = (value) => {
   }).format(value);
 };
 
-const MyPDF = ({ data, color }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Header with Logo and Date */}
-      <View style={styles.header}>
-        {data.outcome.logo && (
-          <Image src={data.outcome.logo} style={styles.logo} />
-        )}
-        <Text style={styles.date}>
-          {new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </Text>
-      </View>
+const MyPDF = ({ data, color }) => {
+  // Helper function to chunk array into groups
+  const chunkArray = (array, size) => {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunks.push(array.slice(i, i + size));
+    }
+    return chunks;
+  };
 
-      {/* Banner at the bottom */}
-      {data.outcome.banner && (
-        <Image src={data.outcome.banner} style={styles.banner} />
-      )}
+  // Split general information into chunks of 3 sections per page
+  const generalInfoChunks = chunkArray(data.generalInformation, 3);
 
-      <View style={[styles.section, { marginTop: 40 }]}>
-        <Text style={[{ textAlign: 'center' }]}>
-          {data.outcome.ranges === 'yes' ? (
-            <>
-              For every <Text style={[{ color }, { fontWeight: 'bold' }]}>${data.outcome.invested}</Text> invested, {data.outcome.title} creates an estimated <Text style={[{ color }, { fontWeight: 'bold' }]}>${parseFloat(data.outcome.returnMin).toFixed(2)} - ${parseFloat(data.outcome.return).toFixed(2)}</Text> {data.outcome.returnDescription}
-            </>
-          ) : (
-            <>
-              For every <Text style={[{ color }, { fontWeight: 'bold' }]}>${data.outcome.invested}</Text> invested, {data.outcome.title} creates an estimated <Text style={[{ color }, { fontWeight: 'bold' }]}>${parseFloat(data.outcome.return).toFixed(2)}</Text> {data.outcome.returnDescription}
-            </>
-          )}
-        </Text>
-      </View>
-
-      {/* SROI Summary */}
-      <View style={styles.table}>
-        <View style={styles.tableHeader}>
-          <Text style={[styles.headerCell, { color }]}>Company</Text>
-          <Text style={[styles.headerCell, { color }]}>Maximum</Text>
-          <Text style={[styles.headerCell, { color }]}>Minimum</Text>
+  return (
+    <Document>
+      {/* First page with summary */}
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          {data.outcome.logo && <Image src={data.outcome.logo} style={styles.logo} />}
+          <Text style={styles.date}>
+            {new Date().toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </Text>
         </View>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>{data.outcome.title}</Text>
-          <Text style={styles.tableCell}>{formatCurrency(data.outcome.socialValueMax)}</Text>
-          <Text style={styles.tableCell}>{formatCurrency(data.outcome.socialValueMin)}</Text>
-        </View>
-      </View>
 
-      {/* General Information Table */}
-      {data.generalInformation.map((section, i) => (
-        <View key={i} style={styles.section}>
-          <View style={{ flexDirection: 'column', marginBottom: 8 }}>
-            <Text style={[styles.subtitle, { color }]}>{section.title}</Text>
-            <View style={{ flexDirection: 'column' }}>
-              {section.totalValue && (
-                <Text style={{ fontSize: 12, color: '#4a4a4a' }}>
-                  Total value: {formatCurrency(section.totalValue)}
-                </Text>
-              )}
-              {section.totalValueMin && (
-                <Text style={{ fontSize: 12, color: '#4a4a4a' }}>
-                  Min total value: {formatCurrency(section.totalValueMin)}
-                </Text>
-              )}
-            </View>
+        {data.outcome.banner && <Image src={data.outcome.banner} style={styles.banner} />}
+
+        <View style={[styles.section, { marginTop: 40 }]}>
+          <Text style={[{ textAlign: 'center' }]}>
+            {data.outcome.ranges === 'yes' ? (
+              <>
+                For every <Text style={[{ color }, { fontWeight: 'bold' }]}>${data.outcome.invested}</Text> invested, {data.outcome.title} creates an estimated <Text style={[{ color }, { fontWeight: 'bold' }]}>${parseFloat(data.outcome.returnMin).toFixed(2)} - ${parseFloat(data.outcome.return).toFixed(2)}</Text> {data.outcome.returnDescription}
+              </>
+            ) : (
+              <>
+                For every <Text style={[{ color }, { fontWeight: 'bold' }]}>${data.outcome.invested}</Text> invested, {data.outcome.title} creates an estimated <Text style={[{ color }, { fontWeight: 'bold' }]}>${parseFloat(data.outcome.return).toFixed(2)}</Text> {data.outcome.returnDescription}
+              </>
+            )}
+          </Text>
+        </View>
+
+        {/* SROI Summary Table */}
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <Text style={[styles.headerCell, { color }]}>Company</Text>
+            <Text style={[styles.headerCell, { color }]}>Maximum</Text>
+            <Text style={[styles.headerCell, { color }]}>Minimum</Text>
           </View>
-          <View style={styles.table}>
-            <View style={styles.tableHeader}>
-              <Text style={[styles.headerCell, styles.cellWide, { color }]}>Stakeholders/Description</Text>
-              <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Value</Text>
-              <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Min Value</Text>
-            </View>
-            {section.rows.map((row, j) => (
-              <View key={j}>
-                <View style={styles.tableRow}>
-                  <View style={[styles.tableCell, styles.cellWide]}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 10 }}>{row.stakeholders}</Text>
-                    <Text style={{ fontSize: 10 }}>{row.description}</Text>
-                  </View>
-                  <Text style={[styles.tableCell, styles.cellNarrow]}>{formatCurrency(row.value)}</Text>
-                  <Text style={[styles.tableCell, styles.cellNarrow]}>{row.valueMin ? formatCurrency(row.valueMin) : '-'}</Text>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableCell}>{data.outcome.title}</Text>
+            <Text style={styles.tableCell}>{formatCurrency(data.outcome.socialValueMax)}</Text>
+            <Text style={styles.tableCell}>{formatCurrency(data.outcome.socialValueMin)}</Text>
+          </View>
+        </View>
+      </Page>
+
+      {/* General Information Pages */}
+      {generalInfoChunks.map((chunk, pageIndex) => (
+        <Page key={pageIndex} size="A4" style={styles.page}>
+          {chunk.map((section, i) => (
+            <View key={i} style={styles.section}>
+              <View style={{ flexDirection: 'column', marginBottom: 8 }}>
+                <Text style={[styles.subtitle, { color }]}>{section.title}</Text>
+                <View style={{ flexDirection: 'column' }}>
+                  {section.totalValue && (
+                    <Text style={{ fontSize: 12, color: '#4a4a4a' }}>
+                      Total value: {formatCurrency(section.totalValue)}
+                    </Text>
+                  )}
+                  {section.totalValueMin && (
+                    <Text style={{ fontSize: 12, color: '#4a4a4a' }}>
+                      Min total value: {formatCurrency(section.totalValueMin)}
+                    </Text>
+                  )}
                 </View>
-                {row?.rows?.length > 0 && (
-                  <View style={{ marginLeft: 20 }}>
-                    {row.rows.map((subRow, k) => (
-                      <View key={k} style={styles.tableRow}>
-                        <View style={[styles.tableCell, styles.cellWide]}>
-                          <Text style={styles.subRow}>└ {subRow.description}</Text>
-                        </View>
-                        <Text style={[styles.tableCell, styles.cellNarrow]}>{formatCurrency(subRow.value)}</Text>
-                        <Text style={[styles.tableCell, styles.cellNarrow]}>-</Text>
-                      </View>
-                    ))}
-                    <Text style={styles.formula}>Formula: {row.formula_str}</Text>
-                  </View>
-                )}
               </View>
-            ))}
-          </View>
-        </View>
+              <View style={styles.table}>
+                <View style={styles.tableHeader}>
+                  <Text style={[styles.headerCell, styles.cellWide, { color }]}>Stakeholders/Description</Text>
+                  <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Value</Text>
+                  <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Min Value</Text>
+                </View>
+                {section.rows.map((row, j) => (
+                  <View key={j}>
+                    <View style={styles.tableRow}>
+                      <View style={[styles.tableCell, styles.cellWide]}>
+                        <Text style={{ fontWeight: 'bold', fontSize: 10 }}>{row.stakeholders}</Text>
+                        <Text style={{ fontSize: 10 }}>{row.description}</Text>
+                      </View>
+                      <Text style={[styles.tableCell, styles.cellNarrow]}>{formatCurrency(row.value)}</Text>
+                      <Text style={[styles.tableCell, styles.cellNarrow]}>{row.valueMin ? formatCurrency(row.valueMin) : '-'}</Text>
+                    </View>
+                    {row?.rows?.length > 0 && (
+                      <View style={{ marginLeft: 20 }}>
+                        {row.rows.map((subRow, k) => (
+                          <View key={k} style={styles.tableRow}>
+                            <View style={[styles.tableCell, styles.cellWide]}>
+                              <Text style={styles.subRow}>└ {subRow.description}</Text>
+                            </View>
+                            <Text style={[styles.tableCell, styles.cellNarrow]}>{formatCurrency(subRow.value)}</Text>
+                            <Text style={[styles.tableCell, styles.cellNarrow]}>-</Text>
+                          </View>
+                        ))}
+                        <Text style={styles.formula}>Formula: {row.formula_str}</Text>
+                      </View>
+                    )}
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+        </Page>
       ))}
 
-      {/* Costs Table */}
-      {data.whatAreTheCosts && data.whatAreTheCosts.length > 0 && (
+      {/* Costs and Numbers Page */}
+      <Page size="A4" style={styles.page}>
+        {/* Costs Table */}
+        {data.whatAreTheCosts && data.whatAreTheCosts.length > 0 && (
+          <View style={styles.section}>
+            <Text style={[styles.subtitle, { color }]}>What are the costs?</Text>
+            <View style={styles.table}>
+              <View style={styles.tableHeader}>
+                <Text style={[styles.headerCell, styles.cellWide, { color }]}>Description</Text>
+                <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Value</Text>
+              </View>
+              {data.whatAreTheCosts.map((item, index) => (
+                <View key={index} style={styles.tableRow}>
+                  <Text style={[styles.tableCell, styles.cellWide]}>{item.description}</Text>
+                  <Text style={[styles.tableCell, styles.cellNarrow]}>{item.value}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Numbers Table */}
         <View style={styles.section}>
-          <Text style={[styles.subtitle, { color }]}>What are the costs?</Text>
+          <Text style={[styles.subtitle, { color }]}>What are the numbers?</Text>
           <View style={styles.table}>
             <View style={styles.tableHeader}>
               <Text style={[styles.headerCell, styles.cellWide, { color }]}>Description</Text>
               <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Value</Text>
+              <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Min Value</Text>
             </View>
-            {data.whatAreTheCosts.map((item, index) => (
+            {data.whatAreTheNumbers.map((item, index) => (
               <View key={index} style={styles.tableRow}>
                 <Text style={[styles.tableCell, styles.cellWide]}>{item.description}</Text>
-                <Text style={[styles.tableCell, styles.cellNarrow]}>{item.value}</Text>
+                <Text style={[styles.tableCell, styles.cellNarrow]}>
+                  {item.unit === 'currency' ? formatCurrency(item.value) : item.value}
+                </Text>
+                <Text style={[styles.tableCell, styles.cellNarrow]}>
+                  {item.valueMin ? (item.unit === 'currency' ? formatCurrency(item.valueMin) : item.valueMin) : '-'}
+                </Text>
               </View>
             ))}
           </View>
         </View>
-      )}
-
-      {/* Numbers Table */}
-      <View style={styles.section}>
-        <Text style={[styles.subtitle, { color }]}>What are the numbers?</Text>
-        <View style={styles.table}>
-          <View style={styles.tableHeader}>
-            <Text style={[styles.headerCell, styles.cellWide, { color }]}>Description</Text>
-            <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Value</Text>
-            <Text style={[styles.headerCell, styles.cellNarrow, { color }]}>Min Value</Text>
-          </View>
-          {data.whatAreTheNumbers.map((item, index) => (
-            <View key={index} style={styles.tableRow}>
-              <Text style={[styles.tableCell, styles.cellWide]}>{item.description}</Text>
-              <Text style={[styles.tableCell, styles.cellNarrow]}>
-                {item.unit === 'currency' ? formatCurrency(item.value) : item.value}
-              </Text>
-              <Text style={[styles.tableCell, styles.cellNarrow]}>
-                {item.valueMin ? (item.unit === 'currency' ? formatCurrency(item.valueMin) : item.valueMin) : '-'}
-              </Text>
-            </View>
-          ))}
-        </View>
-      </View>
-    </Page>
-  </Document>
-);
+      </Page>
+    </Document>
+  );
+};
 
 export default function DownloadPDF({ data, color }) {
   return (
