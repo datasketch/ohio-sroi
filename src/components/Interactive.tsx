@@ -258,8 +258,8 @@ export default function Interactive({ top = "top-2/3", data, url }) {
           socialValueMin: socialValue2,
           invested: data.general.invested,
           ranges: data.general.ranges,
-          return: data.general.return,
-          returnMin: data.general.returnMin,
+          return: socialValue,
+          returnMin: socialValue2,
           returnDescription: data.general.returnDescription
         },
         generalInformation: tables,
