@@ -7,10 +7,26 @@ import type { CurrencyInputProps } from 'react-currency-input-field'
 import OutcomeText from './OutcomeText';
 import hexRgb from 'hex-rgb';
 import Mexp from 'math-expression-evaluator';
-/* import { usePDF } from 'react-to-pdf'; */
-/* const ReactToPDF = await import('react-to-pdf');
-const { usePDF } = ReactToPDF; */
+import DownloadPDF from './DownloadPDF';
 const mexp = new Mexp();
+
+interface DataToPDF {
+  outcome?: {
+    title: string;
+    invested: number;
+    ranges: string;
+    logo: string;
+    return?: number;
+    returnMin?: number;
+    returnDescription?: string;
+    banner: string;
+    socialValueMax: number;
+    socialValueMin: number;
+  };
+  generalInformation?: any;
+  whatAreTheCosts?: any[];
+  whatAreTheNumbers?: any[];
+}
 
 const safeEval = (expr: string) => {
   const lexed = mexp.lex(expr);
@@ -32,15 +48,10 @@ export default function Interactive({ top = "top-2/3", data, url }) {
   const [hasLimitNumbers, setHasLimitNumbers] = useState(false)
   const [prev, setPrev] = useState(0)
   const [link, setLink] = useState('')
-  /* const { toPDF, targetRef } = usePDF({
-    filename: 'calculator-results.pdf',
-    page: {
-      margin: 20,
-      format: 'letter',
-      orientation: 'portrait'
-    }
-  }); */
   const contentRef = useRef(null);
+  const [isGeneratedLink, setIsGeneratedLink] = useState(false)
+  const [copied, setCopied] = useState(false);
+  const [dataToPDF, setDataToPDF] = useState<DataToPDF>({});
 
   const getCurrencyInputConfig = (item) => {
     const config: CurrencyInputProps = { decimalsLimit: 2, allowNegativeValue: false, step: 1 }
@@ -150,7 +161,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
 
   const generateLink = () => {
     const params = new URLSearchParams();
-
+    setIsGeneratedLink(true)
     outputs.forEach(item => {
       params.append(item.id, item.value.toString());
       if (item.ranges) {
@@ -161,48 +172,10 @@ export default function Interactive({ top = "top-2/3", data, url }) {
     setLink(`${window.location.hostname}${window.location.pathname}?tab=tab2&${params.toString()}#tabs`);
   }
 
-  const handleDownload = async () => {
-    const element = contentRef.current;
-    const opt = {
-      margin: [15, 15],
-      filename: 'calculator-results.pdf',
-      image: { 
-        type: 'jpeg', 
-        quality: 0.98
-      },
-      html2canvas: {
-        scale: 2,
-        letterRendering: true,
-        useCORS: true,
-        logging: false,
-        removeContainer: true,
-        backgroundColor: '#ffffff'
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'letter',
-        orientation: 'landscape',
-        compress: true,
-        precision: 16
-      },
-      pagebreak: { 
-        mode: ['avoid-all', 'css', 'legacy'],
-        before: '.page-break-before',
-        after: '.page-break-after'
-      }
-    };
-
-    // Aplicar estilos temporales para el PDF
-    if (element) {
-      const originalFontSize = element.style.fontSize;
-      element.style.fontSize = '0.95em'; // Reducir tamaño de fuente
-
-      const html2pdf = (await import('html2pdf.js')).default;
-      await html2pdf().set(opt).from(element).save();
-
-      // Restaurar el tamaño de fuente original
-      element.style.fontSize = originalFontSize;
-    }
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(link);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
   };
 
   useEffect(() => {
@@ -267,6 +240,35 @@ export default function Interactive({ top = "top-2/3", data, url }) {
     updateTable(false)
   }, [url]);
 
+  useEffect(() => {
+    if (outputs) {
+      setLink('')
+      setIsGeneratedLink(false)
+    }
+  }, [outputs])
+
+  useEffect(() => {
+    if (socialValue && socialValue2 && tables && outputs) {
+      setDataToPDF({
+        outcome: {
+          title: data.general.title,
+          logo: data.general.logo,
+          banner: data.general.main_image,
+          socialValueMax: socialValue,
+          socialValueMin: socialValue2,
+          invested: data.general.invested,
+          ranges: data.general.ranges,
+          return: socialValue,
+          returnMin: socialValue2,
+          returnDescription: data.general.returnDescription
+        },
+        generalInformation: tables,
+        whatAreTheCosts: outputs.filter(item => item.type === 'cost'),
+        whatAreTheNumbers: outputs.filter(item => item.type !== 'cost')
+      })
+    }
+  }, [socialValue, socialValue2, tables, outputs])
+
   return (
     <div className='pb-9'>
       <div className='flex lg:hidden lg:justify-end  mx-10 lg:gap-5'>
@@ -274,7 +276,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
         <div className='py-5 px-5 bg-white rounded-2xl shadow mt-5 w-full lg:w-1/3'>
           <h3 className='text-xl font-medium'>Share</h3>
           <p>Share or save your content</p>
-          <button onClick={generateLink} className='flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center mt-3' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}>
+          <button disabled={isGeneratedLink} onClick={generateLink} className='flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center mt-3 disabled:cursor-not-allowed disabled:opacity-60' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 13C10.4295 13.5741 10.9774 14.0492 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9404 15.7513 14.6898C16.4231 14.4392 17.0331 14.0471 17.54 13.54L20.54 10.54C21.4508 9.59699 21.9548 8.33397 21.9434 7.02299C21.932 5.71201 21.4061 4.45794 20.4791 3.5309C19.5521 2.60386 18.298 2.07802 16.987 2.06663C15.676 2.05523 14.413 2.55921 13.47 3.47L11.75 5.18" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M14.0002 11C13.5707 10.4259 13.0228 9.95081 12.3936 9.60706C11.7645 9.2633 11.0687 9.05888 10.3535 9.00766C9.63841 8.95645 8.92061 9.05963 8.24885 9.31021C7.5771 9.5608 6.96709 9.95293 6.4602 10.46L3.4602 13.46C2.54941 14.403 2.04544 15.666 2.05683 16.977C2.06822 18.288 2.59407 19.542 3.52111 20.4691C4.44815 21.3961 5.70221 21.922 7.01319 21.9334C8.32418 21.9448 9.58719 21.4408 10.5302 20.53L12.2402 18.82" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -285,9 +287,26 @@ export default function Interactive({ top = "top-2/3", data, url }) {
           </button>
           <div className='w-full border border-black/30 rounded-lg relative my-3 px-2 py-1.5'>
             <input type="text" value={link} className='w-full border-black' />
-            <button disabled={!link} onClick={() => navigator.clipboard.writeText(link)} className='absolute right-0 top-[1px] rounded-lg px-2 py-1'
-              style={{ backgroundColor: link ? hexRgb(color, { format: 'css', alpha: 0.99 }) : 'grey', border: `1px solid white`, color: 'white' }}>
-              Copy
+            <button
+              disabled={!link}
+              onClick={handleCopy}
+              className='absolute right-0 top-[1px] rounded-lg px-2 py-1 flex items-center gap-x-1'
+              style={{
+                backgroundColor: link ? hexRgb(color, { format: 'css', alpha: 0.99 }) : 'grey',
+                border: `1px solid white`,
+                color: 'white'
+              }}
+            >
+              {copied ? (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Copied!
+                </>
+              ) : (
+                'Copy'
+              )}
             </button>
           </div>
 
@@ -296,19 +315,9 @@ export default function Interactive({ top = "top-2/3", data, url }) {
             <p className='text-black/30'>Or</p>
             <div className='w-full h-[1px] bg-black/30'></div>
           </div>
-
-          <button
-            onClick={handleDownload}
-            className="flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center hover:text-white mt-5"
-            style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 17V3" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M6 11L12 17L18 11" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M19 21H5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Download
-          </button>
+          {dataToPDF?.outcome?.socialValueMax && (
+            <DownloadPDF data={dataToPDF} color={color} />
+          )}
         </div>
       </div>
       <div className='mx-10 pt-10' ref={contentRef}>
@@ -488,7 +497,7 @@ export default function Interactive({ top = "top-2/3", data, url }) {
         <div className='py-5 px-5 bg-white rounded-2xl shadow mt-5 w-full lg:w-1/3'>
           <h3 className='text-xl font-medium'>Share</h3>
           <p>Share or save your content</p>
-          <button onClick={generateLink} className='flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center mt-3' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}>
+          <button disabled={isGeneratedLink} onClick={generateLink} className='flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center mt-3 disabled:cursor-not-allowed disabled:opacity-60' style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 13C10.4295 13.5741 10.9774 14.0492 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9404 15.7513 14.6898C16.4231 14.4392 17.0331 14.0471 17.54 13.54L20.54 10.54C21.4508 9.59699 21.9548 8.33397 21.9434 7.02299C21.932 5.71201 21.4061 4.45794 20.4791 3.5309C19.5521 2.60386 18.298 2.07802 16.987 2.06663C15.676 2.05523 14.413 2.55921 13.47 3.47L11.75 5.18" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M14.0002 11C13.5707 10.4259 13.0228 9.95081 12.3936 9.60706C11.7645 9.2633 11.0687 9.05888 10.3535 9.00766C9.63841 8.95645 8.92061 9.05963 8.24885 9.31021C7.5771 9.5608 6.96709 9.95293 6.4602 10.46L3.4602 13.46C2.54941 14.403 2.04544 15.666 2.05683 16.977C2.06822 18.288 2.59407 19.542 3.52111 20.4691C4.44815 21.3961 5.70221 21.922 7.01319 21.9334C8.32418 21.9448 9.58719 21.4408 10.5302 20.53L12.2402 18.82" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -499,9 +508,26 @@ export default function Interactive({ top = "top-2/3", data, url }) {
           </button>
           <div className='w-full border border-black/30 rounded-lg relative my-3 px-2 py-1.5'>
             <input type="text" value={link} className='w-full border-black' />
-            <button disabled={!link} onClick={() => navigator.clipboard.writeText(link)} className='absolute right-0 top-[1px] rounded-lg px-2 py-1'
-              style={{ backgroundColor: link ? hexRgb(color, { format: 'css', alpha: 0.99 }) : 'grey', border: `1px solid white`, color: 'white' }}>
-              Copy
+            <button
+              disabled={!link}
+              onClick={handleCopy}
+              className='absolute right-0 top-[1px] rounded-lg px-2 py-1 flex items-center gap-x-1'
+              style={{
+                backgroundColor: link ? hexRgb(color, { format: 'css', alpha: 0.99 }) : 'grey',
+                border: `1px solid white`,
+                color: 'white'
+              }}
+            >
+              {copied ? (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Copied!
+                </>
+              ) : (
+                'Copy'
+              )}
             </button>
           </div>
 
@@ -510,19 +536,9 @@ export default function Interactive({ top = "top-2/3", data, url }) {
             <p className='text-black/30'>Or</p>
             <div className='w-full h-[1px] bg-black/30'></div>
           </div>
-
-          <button
-            onClick={handleDownload}
-            className="flex items-center gap-x-2 w-full py-2 px-4 rounded-lg justify-center hover:text-white mt-5"
-            style={{ backgroundColor: hexRgb(color, { format: 'css', alpha: 0.05 }), border: `1px solid ${color}`, color: color }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 17V3" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M6 11L12 17L18 11" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M19 21H5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Download
-          </button>
+          {dataToPDF?.outcome?.socialValueMax && (
+            <DownloadPDF data={dataToPDF} color={color} />
+          )}
         </div>
       </div>
     </div>
